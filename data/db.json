@@ -1,0 +1,406 @@
+
+{
+  "usuarios": 
+  [
+    {
+      "id": 1,
+      "nombre": "Guillema",
+      "email": "gdevoiels0@hostgator.com",
+      "rol": "Project Manager",
+      "genero": "Female",
+      "tipo_usuario": "Sales",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 2,
+      "nombre": "Ax",
+      "email": "acreed1@cloudflare.com",
+      "rol": "Subcontractor",
+      "genero": "Non-binary",
+      "tipo_usuario": "Legal",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 3,
+      "nombre": "Amory",
+      "email": "afearney2@google.com.au",
+      "rol": "Architect",
+      "genero": "Genderqueer",
+      "tipo_usuario": "Sales",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 4,
+      "nombre": "Timofei",
+      "email": "teatherton3@seesaa.net",
+      "rol": "Construction Manager",
+      "genero": "Genderqueer",
+      "tipo_usuario": "Support",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 5,
+      "nombre": "Megen",
+      "email": "madamolli4@nydailynews.com",
+      "rol": "Project Manager",
+      "genero": "Female",
+      "tipo_usuario": "Business Development",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 6,
+      "nombre": "Janene",
+      "email": "jswitzer5@amazon.de",
+      "rol": "Supervisor",
+      "genero": "Female",
+      "tipo_usuario": "Training",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 7,
+      "nombre": "Bride",
+      "email": "bgiffkins6@yellowpages.com",
+      "rol": "Construction Worker",
+      "genero": "Female",
+      "tipo_usuario": "Engineering",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 8,
+      "nombre": "Charo",
+      "email": "cbenesevich7@sakura.ne.jp",
+      "rol": "Architect",
+      "genero": "Female",
+      "tipo_usuario": "Accounting",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 9,
+      "nombre": "Cynthy",
+      "email": "cruss8@imageshack.us",
+      "rol": "Engineer",
+      "genero": "Female",
+      "tipo_usuario": "Business Development",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 10,
+      "nombre": "Worthy",
+      "email": "wshearman9@digg.com",
+      "rol": "Estimator",
+      "genero": "Male",
+      "tipo_usuario": "Research and Development",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 11,
+      "nombre": "Andie",
+      "email": "asimonicha@naver.com",
+      "rol": "Engineer",
+      "genero": "Male",
+      "tipo_usuario": "Engineering",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 12,
+      "nombre": "Ferdinanda",
+      "email": "fskrzynskib@amazon.co.jp",
+      "rol": "Construction Manager",
+      "genero": "Female",
+      "tipo_usuario": "Product Management",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 13,
+      "nombre": "Annadiana",
+      "email": "acauleyc@bloglovin.com",
+      "rol": "Subcontractor",
+      "genero": "Female",
+      "tipo_usuario": "Support",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 14,
+      "nombre": "Lisle",
+      "email": "lferenczid@vkontakte.ru",
+      "rol": "Supervisor",
+      "genero": "Male",
+      "tipo_usuario": "Human Resources",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 15,
+      "nombre": "Lorin",
+      "email": "lforthe@loc.gov",
+      "rol": "Construction Worker",
+      "genero": "Male",
+      "tipo_usuario": "Human Resources",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 16,
+      "nombre": "Dru",
+      "email": "dsawersf@51.la",
+      "rol": "Project Manager",
+      "genero": "Female",
+      "tipo_usuario": "Legal",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 17,
+      "nombre": "Joe",
+      "email": "jbaderg@cornell.edu",
+      "rol": "Electrician",
+      "genero": "Male",
+      "tipo_usuario": "Support",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 18,
+      "nombre": "Shela",
+      "email": "smacareeh@utexas.edu",
+      "rol": "Architect",
+      "genero": "Female",
+      "tipo_usuario": "Legal",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 19,
+      "nombre": "Cherida",
+      "email": "cbaradeli@ihg.com",
+      "rol": "Supervisor",
+      "genero": "Female",
+      "tipo_usuario": "Legal",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 20,
+      "nombre": "Xena",
+      "email": "xpresleyj@psu.edu",
+      "rol": "Project Manager",
+      "genero": "Female",
+      "tipo_usuario": "Research and Development",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 21,
+      "nombre": "Thibaut",
+      "email": "tbullek@bbb.org",
+      "rol": "Project Manager",
+      "genero": "Male",
+      "tipo_usuario": "Business Development",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 22,
+      "nombre": "Phillipp",
+      "email": "pknotonl@cloudflare.com",
+      "rol": "Construction Worker",
+      "genero": "Male",
+      "tipo_usuario": "Services",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 23,
+      "nombre": "Cristian",
+      "email": "cashleighm@desdev.cn",
+      "rol": "Construction Worker",
+      "genero": "Male",
+      "tipo_usuario": "Product Management",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 24,
+      "nombre": "Siward",
+      "email": "semblenn@comsenz.com",
+      "rol": "Surveyor",
+      "genero": "Male",
+      "tipo_usuario": "Product Management",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 25,
+      "nombre": "Sharline",
+      "email": "sblasgeno@hatena.ne.jp",
+      "rol": "Supervisor",
+      "genero": "Female",
+      "tipo_usuario": "Business Development",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 26,
+      "nombre": "Talbert",
+      "email": "tmaciverp@networkadvertising.org",
+      "rol": "Construction Expeditor",
+      "genero": "Male",
+      "tipo_usuario": "Training",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 27,
+      "nombre": "Muire",
+      "email": "moakeq@kickstarter.com",
+      "rol": "Construction Worker",
+      "genero": "Female",
+      "tipo_usuario": "Sales",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 28,
+      "nombre": "Matelda",
+      "email": "mgoddertsfr@usatoday.com",
+      "rol": "Architect",
+      "genero": "Female",
+      "tipo_usuario": "Services",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 29,
+      "nombre": "Verine",
+      "email": "vcahanis@instagram.com",
+      "rol": "Construction Worker",
+      "genero": "Female",
+      "tipo_usuario": "Engineering",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 30,
+      "nombre": "Shandra",
+      "email": "sbeckinsalet@cyberchimps.com",
+      "rol": "Engineer",
+      "genero": "Female",
+      "tipo_usuario": "Support",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 31,
+      "nombre": "Broddie",
+      "email": "bslayfordu@yahoo.com",
+      "rol": "Estimator",
+      "genero": "Male",
+      "tipo_usuario": "Research and Development",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 32,
+      "nombre": "Bernardina",
+      "email": "bgreatrexv@yelp.com",
+      "rol": "Construction Worker",
+      "genero": "Female",
+      "tipo_usuario": "Human Resources",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 33,
+      "nombre": "Chaddie",
+      "email": "cyellepw@shinystat.com",
+      "rol": "Engineer",
+      "genero": "Male",
+      "tipo_usuario": "Sales",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 34,
+      "nombre": "Roth",
+      "email": "rstrasex@tripod.com",
+      "rol": "Engineer",
+      "genero": "Male",
+      "tipo_usuario": "Human Resources",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 35,
+      "nombre": "Dill",
+      "email": "dkreuzery@wordpress.org",
+      "rol": "Engineer",
+      "genero": "Male",
+      "tipo_usuario": "Training",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 36,
+      "nombre": "Kaye",
+      "email": "ktingcombz@slate.com",
+      "rol": "Supervisor",
+      "genero": "Non-binary",
+      "tipo_usuario": "Sales",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 37,
+      "nombre": "Legra",
+      "email": "lkarsh10@posterous.com",
+      "rol": "Construction Foreman",
+      "genero": "Female",
+      "tipo_usuario": "Business Development",
+      "estado": false,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 38,
+      "nombre": "Violetta",
+      "email": "vbrandolini11@feedburner.com",
+      "rol": "Construction Worker",
+      "genero": "Female",
+      "tipo_usuario": "Services",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 39,
+      "nombre": "Cody",
+      "email": "csink12@hugedomains.com",
+      "rol": "Supervisor",
+      "genero": "Agender",
+      "tipo_usuario": "Engineering",
+      "estado": true,
+      "direccion": "Alabama"
+    },
+    {
+      "id": 40,
+      "nombre": "Karine",
+      "email": "kmccaughen13@telegraph.co.uk",
+      "rol": "Supervisor",
+      "genero": "Female",
+      "tipo_usuario": "Legal",
+      "estado": true,
+      "direccion": "Alabama"
+    }
+  ]
+}
