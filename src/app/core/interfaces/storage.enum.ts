@@ -1,5 +1,6 @@
 export const enum KEY_STORAGE {
-	DATA_USER = 'DATA_USER'
+	DATA_USER = 'DATA_USER',
+  ACCESS_TOKEN = 'ACCESS_TOKEN',
 }
 
 

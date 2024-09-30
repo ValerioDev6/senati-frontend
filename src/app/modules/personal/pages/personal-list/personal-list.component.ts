@@ -14,7 +14,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PersonalService } from '../../../../core/services/personal.service';
-import { IPersonal, IPersonalResponse } from '../../../../core/interfaces/personal.interface';
+import { IPersonalResponse, Personal } from '../../../../core/interfaces/personal.interface';
 @Component({
   selector: 'app-personal-list',
   standalone: true,
@@ -43,10 +43,10 @@ export default class PersonalListComponent implements OnInit{
 
   private readonly _personalService = inject(PersonalService)
 
-  personal : IPersonal[] = []; 
+  personal : Personal[] = [];
   loading = false;
   search: string = ''
-  
+
   ngOnInit(): void {
     this.loadDataPersonal();
   }
@@ -55,14 +55,14 @@ export default class PersonalListComponent implements OnInit{
   loadDataPersonal(): void {
     this.loading = true;
     this._personalService.getPersonalData().subscribe({
-      next: (response: IPersonal[]) => {
-        this.personal = response;
-        this.loading = false;  
+      next: (response: IPersonalResponse) => {
+        this.personal = response.personal;
+        this.loading = false;
         console.log(response);
-        
+
       },
       error: (err) => {
-        console.error('Error al cargar datos personales', err);  
+        console.error('Error al cargar datos personales', err);
         this.loading = false
       }
     });

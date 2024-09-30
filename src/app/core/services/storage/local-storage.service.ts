@@ -20,4 +20,14 @@ export class LocalStorageService extends StorageService {
     clearAuthData():void {
       this.removeItem(KEY_STORAGE.DATA_USER);
     }
+
+     // Method to update the token in local storage
+   updateAccessToken(token: string): void {
+    const authData = this.getItem<any>(KEY_STORAGE.DATA_USER);
+    if (authData) {
+       authData.access_token = token;
+       this.setItem(KEY_STORAGE.DATA_USER, authData);
+       console.log('Access token updated in local storage.');
+    }
+ }
 }

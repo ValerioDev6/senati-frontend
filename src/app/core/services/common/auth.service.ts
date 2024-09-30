@@ -5,7 +5,7 @@ import { LocalStorageService } from '../storage/local-storage.service';
 import { BehaviorSubject, Observable, catchError, delay, ignoreElements, map, of, switchMap, tap, throwError } from 'rxjs';
 import { IResponseSingIn, User } from '../../interfaces/login-response.interface';
 import { KEY_STORAGE, STATUS_USER } from '../../interfaces/storage.enum';
-import { URL_AUTH_CHECK_STATUS, URL_AUTH_SIGNIN } from '../../config/api/config.url';
+import { URL_AUTH_CHECK_STATUS, URL_AUTH_REFRESH, URL_AUTH_SIGNIN } from '../../config/api/config.url';
 import { CheckStatusResponse } from '../../interfaces/get-status.interface';
 
 @Injectable({
@@ -60,6 +60,7 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Ocurrió un error inesperado';
 
@@ -137,6 +138,31 @@ export class AuthService {
   private pushNewUser(user: User | null): void {
     this.user.next(user);
   }
+
+  // calcular el tiempo de vida
+  // private isTokenExpired(token: string) {
+  //   const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+  //   return expiry * 1000 > Date.now();
+  // }
+
+
+
+  refreshTokenAndGetNewJWT(): Observable<any> {
+    console.log('Attempting to refresh token...');
+
+    return this._httpClient.post<any>(URL_AUTH_REFRESH, {}).pipe(
+      tap((response: any) => {
+        console.log('New JWT received:', response.access_token);
+        this.pushNewJWT(response.access_token); // Ensure this updates the internal JWT observable
+      }),
+      catchError((error) => {
+        console.error('Failed to refresh token, logging out...', error);
+        this.logout();
+        return throwError(() => error);
+      })
+    );
+  }
+
 
 
 }
