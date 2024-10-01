@@ -27,7 +27,6 @@ export interface Personal {
 export interface TBPersonas {
   id_persona:        string;
   nombres:           string;
-  correo:            string;
   apellido_p:        string;
   apellido_m:        string;
   fecha_nacimiento:  Date;

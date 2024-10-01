@@ -12,6 +12,9 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzSelectModule } from 'ng-zorro-antd/select'
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+
 import { RouterModule } from '@angular/router';
 import { PersonalService } from '../../../../core/services/personal.service';
 import { IPersonalResponse, Personal } from '../../../../core/interfaces/personal.interface';
@@ -35,6 +38,10 @@ import { IPersonalResponse, Personal } from '../../../../core/interfaces/persona
     FormsModule,
     NzDropDownModule,
     NzDividerModule,
+    NzCardModule,
+    NzTagModule,
+    NzIconModule
+
   ],
   templateUrl: './personal-list.component.html',
   styleUrl: './personal-list.component.scss'
@@ -45,30 +52,40 @@ export default class PersonalListComponent implements OnInit{
 
   personal : Personal[] = [];
   loading = false;
-  search: string = ''
+  search: string = '';
+  page: number = 1;
+  limit: number = 10;
+  total: number = 0;
 
   ngOnInit(): void {
     this.loadDataPersonal();
   }
 
-
   loadDataPersonal(): void {
     this.loading = true;
-    this._personalService.getPersonalData().subscribe({
+    this._personalService.getPersonalData(this.page, this.limit, this.search).subscribe({
       next: (response: IPersonalResponse) => {
         this.personal = response.personal;
+        this.total = response.info.total;
         this.loading = false;
         console.log(response);
-
       },
       error: (err) => {
         console.error('Error al cargar datos personales', err);
-        this.loading = false
+        this.loading = false;
       }
     });
   }
 
-  searchTo() {
-
+  searchTo(): void {
+    this.page = 1; // Resetear a la primera página
+    this.loadDataPersonal();
   }
+
+  onPageChange(page: number): void {
+    this.page = page;
+    this.loadDataPersonal();
+  }
+
+
 }

@@ -13,7 +13,8 @@ import {
   SearchOutline,
   DatabaseOutline,
   DeleteOutline,
-  FolderOutline
+  FolderOutline,
+  TeamOutline
 } from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
@@ -31,7 +32,8 @@ const icons = [
   SearchOutline,
   DatabaseOutline,
   DeleteOutline,
-  FolderOutline
+  FolderOutline,
+  TeamOutline
 ];
 export function provideNzIcons(): EnvironmentProviders {
   return importProvidersFrom(NzIconModule.forRoot(icons));
