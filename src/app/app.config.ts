@@ -14,12 +14,12 @@ import { AuthInterceptorHttpService } from './core/interceptors/api.interceptor'
 registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
-    provideNzIcons(),
-    provideNzI18n(en_US),
-    importProvidersFrom(FormsModule),
-    provideAnimationsAsync(),
-    provideHttpClient(withInterceptors([AuthInterceptorHttpService]))
-  ]
+	providers: [
+		provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
+		provideNzIcons(),
+		provideNzI18n(en_US),
+		importProvidersFrom(FormsModule),
+		provideAnimationsAsync(),
+		provideHttpClient(withInterceptors([AuthInterceptorHttpService])),
+	],
 };

@@ -4,7 +4,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { AuthService } from '../services/common/auth.service';
 
-export const isLoggedGuard: CanActivateFn = (route, state) => {
+export const isLoggedGuard: CanActivateFn = () => {
 
   const router: Router = inject(Router);
 
@@ -13,7 +13,7 @@ export const isLoggedGuard: CanActivateFn = (route, state) => {
   );
 };
 
-export const isntLoggedGuard: CanActivateFn = (route, state) => {
+export const isntLoggedGuard: CanActivateFn = () => {
 
   const router: Router = inject(Router);
   return inject(AuthService).isLoggedIn$.pipe(

@@ -1,0 +1,107 @@
+<div class="bg-gray-100 min-h-screen">
+	<div class="container mx-auto py-8">
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+			<!-- Columna izquierda: Información personal -->
+			<div class="md:col-span-1">
+				<div class="bg-white shadow rounded-lg p-6">
+					<div class="flex flex-col items-center">
+						<img
+							src="{{ personalData.personal_img || 'https://via.placeholder.com/150' }}"
+							class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0 object-cover"
+							alt="Imagen de perfil"
+						/>
+						<h1 class="text-xl font-bold">
+							{{ personalData.tb_personas.nombres }} {{ personalData.tb_personas.apellido_paterno }}
+							{{ personalData.tb_personas.apellido_m }}
+						</h1>
+						<p class="text-gray-700">{{ personalData.tb_rol.nombre_rol }}</p>
+						<div class="mt-6 flex flex-wrap gap-4 justify-center">
+							<a
+								href="mailto:{{ personalData.email }}"
+								class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+								>Contactar</a
+							>
+						</div>
+					</div>
+					<hr class="my-6 border-t border-gray-300" />
+					<div class="flex flex-col">
+						<span class="text-gray-700 uppercase font-bold tracking-wider mb-2">Datos Personales</span>
+						<ul class="text-gray-700">
+							<li class="mb-2"><span class="font-semibold">Email:</span> {{ personalData.email }}</li>
+							<li class="mb-2">
+								<span class="font-semibold">Fecha de Nacimiento:</span>
+								{{ personalData.tb_personas.fecha_nacimiento | date: 'dd/MM/yyyy' }}
+							</li>
+							<li class="mb-2"><span class="font-semibold">Sexo:</span> {{ personalData.tb_personas.tb_sexo.sexo }}</li>
+							<li class="mb-2">
+								<span class="font-semibold">Tipo de Persona:</span>
+								{{ personalData.tb_personas.tb_tipo_persona.tipo_persona }}
+							</li>
+							<li class="mb-2">
+								<span class="font-semibold">Documento:</span>
+								{{ personalData.tb_personas.tb_tipo_documento.documento }}
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- Columna derecha: Detalles y ubicación -->
+			<div class="md:col-span-2">
+				<div class="bg-white shadow rounded-lg p-6 mb-6">
+					<h2 class="text-xl font-bold mb-4">Ubicación</h2>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<div>
+							<h3 class="font-semibold mb-2">Dirección</h3>
+							<p class="text-gray-700">{{ personalData.tb_personas.tb_direccion.direccion }}</p>
+						</div>
+						<div>
+							<h3 class="font-semibold mb-2">País</h3>
+							<p class="text-gray-700">{{ personalData.tb_personas.tb_pais.nombre }}</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="bg-white shadow rounded-lg p-6 mb-6">
+					<h2 class="text-xl font-bold mb-4">Información de Contacto</h2>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<div>
+							<h3 class="font-semibold mb-2">Teléfono</h3>
+							<p class="text-gray-700">
+								{{ personalData.tb_personas.tb_telefonos_persona[0].numero_telefono || 'No disponible' }}
+							</p>
+							<p class="text-gray-600 text-sm">
+								{{ personalData.tb_personas.tb_tipo_telefono.tipo_telefono || 'Tipo no especificado' }}
+							</p>
+						</div>
+						<div>
+							<h3 class="font-semibold mb-2">Email</h3>
+							<p class="text-gray-700">{{ personalData.email || 'No disponible' }}</p>
+						</div>
+						<div>
+							<h3 class="font-semibold mb-2">Dirección</h3>
+							<p class="text-gray-700">{{ personalData.tb_personas.tb_direccion.direccion || 'No disponible' }}</p>
+						</div>
+						<div>
+							<h3 class="font-semibold mb-2">País</h3>
+							<p class="text-gray-700">{{ personalData.tb_personas.tb_pais.nombre || 'No especificado' }}</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="bg-white shadow rounded-lg p-6">
+					<h2 class="text-xl font-bold mb-4">Información Profesional</h2>
+					<div class="mb-6">
+						<h3 class="font-semibold mb-2">Rol</h3>
+						<p class="text-gray-700">{{ personalData.tb_rol.nombre_rol }}</p>
+						<p class="text-gray-600 mt-1">{{ personalData.tb_rol.descripcion }}</p>
+					</div>
+					<div>
+						<h3 class="font-semibold mb-2">Estado</h3>
+						<p class="text-gray-700">{{ personalData.estado ? 'Activo' : 'Inactivo' }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

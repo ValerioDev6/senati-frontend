@@ -1,0 +1,66 @@
+<div class="container mx-auto py-6">
+	<div class="flex flex-col md:flex-row justify-between items-center mb-6">
+		<h3 class="text-xl font-semibold text-gray-800 mb-4 md:mb-0 flex items-center">
+			<span nz-icon nzType="team" nzTheme="outline" class="mr-2"></span>
+			Gestión de Roles
+		</h3>
+		<div class="flex items-center space-x-4">
+			<nz-input-group [nzSuffix]="suffixIconSearch" class="w-64">
+				<input type="text" nz-input placeholder="Buscar usuarios" [(ngModel)]="search" (keyup.enter)="searchTo()" />
+			</nz-input-group>
+			<ng-template #suffixIconSearch>
+				<span nz-icon nzType="search"></span>
+			</ng-template>
+			<button (click)="openAgregarRolModal()" nz-button nzType="primary" class="flex items-center">
+				<span nz-icon nzType="user-add" nzTheme="outline"></span>
+				Agregar rol
+			</button>
+		</div>
+	</div>
+
+	<nz-table
+		#basicTable
+		[nzData]="roles"
+		[nzLoading]="loading"
+		[nzPageSize]="limit"
+		[nzTotal]="total"
+		[nzFrontPagination]="false"
+		(nzPageIndexChange)="onPageChange($event)"
+		nzShowSizeChanger
+		[nzShowQuickJumper]="true"
+	>
+		<thead>
+			<tr>
+				<th nzColumnKey="Nombre Rol">Rol</th>
+				<th nzColumnKey="Descripcion">Descripcion</th>
+				<th nzColumnKey="estado">Estado</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for (rol of basicTable.data; track rol.id_rol) {
+				<tr>
+					<td>{{ rol.nombre_rol }}</td>
+					<td>{{ rol.descripcion }}</td>
+					<td>
+						<nz-tag [nzColor]="rol.estado ? 'success' : 'error'">
+							{{ rol.estado ? 'Activo' : 'Inactivo' }}
+						</nz-tag>
+					</td>
+					<td>
+						<a nz-button nzType="link" [routerLink]="['/admin/personal/configuracion', rol.id_rol]">
+							<span nz-icon nzType="edit" nzTheme="outline"></span>
+						</a>
+						<a nz-button nzType="link" nzDanger>
+							<span nz-icon nzType="delete" nzTheme="outline"></span>
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</nz-table>
+
+	<div class="mt-4 text-right text-sm text-gray-600">
+		<strong>Total de Roles: {{ total }}</strong>
+	</div>
+</div>

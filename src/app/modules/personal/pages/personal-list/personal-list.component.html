@@ -78,80 +78,70 @@
 </div> -->
 
 <div class="container mx-auto py-6">
-  <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-    <h3 class="text-xl font-semibold text-gray-800 mb-4 md:mb-0 flex items-center">
-      <span nz-icon nzType="team" nzTheme="outline" class="mr-2"></span>
-      Gestión Personal
-    </h3>    <div class="flex items-center space-x-4">
-      <nz-input-group [nzSuffix]="suffixIconSearch" class="w-64">
-        <input
-          type="text"
-          nz-input
-          placeholder="Buscar usuarios"
-          [(ngModel)]="search"
-          (keyup.enter)="searchTo()"
-        />
-      </nz-input-group>
-      <ng-template #suffixIconSearch>
-        <span nz-icon nzType="search"></span>
-      </ng-template>
-      <button
-        nz-button
-        nzType="primary"
-        routerLink="../create"
-        class="flex items-center"
-      >
-        <span nz-icon nzType="user-add" nzTheme="outline"></span>
-        Agregar usuario
-      </button>
-    </div>
-  </div>
+	<div class="flex flex-col md:flex-row justify-between items-center mb-6">
+		<h3 class="text-xl font-semibold text-gray-800 mb-4 md:mb-0 flex items-center">
+			<span nz-icon nzType="team" nzTheme="outline" class="mr-2"></span>
+			Gestión Personal
+		</h3>
+		<div class="flex items-center space-x-4">
+			<nz-input-group [nzSuffix]="suffixIconSearch" class="w-64">
+				<input type="text" nz-input placeholder="Buscar usuarios" [(ngModel)]="search" (keyup.enter)="searchTo()" />
+			</nz-input-group>
+			<ng-template #suffixIconSearch>
+				<span nz-icon nzType="search"></span>
+			</ng-template>
+			<button nz-button nzType="primary" routerLink="../crear-personal" class="flex items-center">
+				<span nz-icon nzType="user-add" nzTheme="outline"></span>
+				Agregar personal
+			</button>
+		</div>
+	</div>
 
-  <nz-table
-    #basicTable
-    [nzData]="personal"
-    [nzLoading]="loading"
-    [nzPageSize]="limit"
-    [nzTotal]="total"
-    [nzFrontPagination]="false"
-    (nzPageIndexChange)="onPageChange($event)"
-    nzShowSizeChanger
-    [nzShowQuickJumper]="true"
-  >
-    <thead>
-      <tr>
-        <th nzColumnKey="nombre">Nombre</th>
-        <th nzColumnKey="email">Email</th>
-        <th nzColumnKey="rol">Rol</th>
-        <th nzColumnKey="tipo">Tipo usuario</th>
-        <th nzColumnKey="estado">Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let persona of basicTable.data">
-        <td>{{ persona.tb_personas.nombres }}</td>
-        <td>{{ persona.email }}</td>
-        <td>{{ persona.tb_rol.nombre_rol }}</td>
-        <td>{{ persona.personal_img }}</td>
-        <td>
-          <nz-tag [nzColor]="persona.estado ? 'success' : 'error'">
-            {{ persona.estado ? 'Activo' : 'Inactivo' }}
-          </nz-tag>
-        </td>
-        <td>
-          <a nz-button nzType="link" [routerLink]="['/admin/categorias/editar', persona.id_personal]">
-            <span nz-icon nzType="edit" nzTheme="outline"></span>
-          </a>
-          <a nz-button nzType="link" nzDanger>
-            <span nz-icon nzType="delete" nzTheme="outline"></span>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
+	<nz-table
+		#basicTable
+		[nzData]="personal"
+		[nzLoading]="loading"
+		[nzPageSize]="limit"
+		[nzTotal]="total"
+		[nzFrontPagination]="false"
+		(nzPageIndexChange)="onPageChange($event)"
+		nzShowSizeChanger
+		[nzShowQuickJumper]="true"
+	>
+		<thead>
+			<tr>
+				<th nzColumnKey="nombre">Nombre</th>
+				<th nzColumnKey="email">Email</th>
+				<th nzColumnKey="rol">Rol</th>
+				<th nzColumnKey="tipo">Tipo usuario</th>
+				<th nzColumnKey="estado">Estado</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let persona of basicTable.data">
+				<td>{{ persona.tb_personas.nombres }}</td>
+				<td>{{ persona.email }}</td>
+				<td>{{ persona.tb_rol.nombre_rol }}</td>
+				<td>{{ persona.personal_img }}</td>
+				<td>
+					<nz-tag [nzColor]="persona.estado ? 'success' : 'error'">
+						{{ persona.estado ? 'Activo' : 'Inactivo' }}
+					</nz-tag>
+				</td>
+				<td>
+					<a nz-button nzType="link" [routerLink]="['/admin/personal/configuracion', persona.id_personal]">
+						<span nz-icon nzType="edit" nzTheme="outline"></span>
+					</a>
+					<a nz-button nzType="link" nzDanger>
+						<span nz-icon nzType="delete" nzTheme="outline"></span>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</nz-table>
 
-  <div class="mt-4 text-right text-sm text-gray-600">
-    <strong>Total de Personal: {{ total }}</strong>
-  </div>
+	<div class="mt-4 text-right text-sm text-gray-600">
+		<strong>Total de Personal: {{ total }}</strong>
+	</div>
 </div>

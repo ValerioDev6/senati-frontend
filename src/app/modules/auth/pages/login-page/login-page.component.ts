@@ -13,70 +13,73 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login-page',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    NzFormModule,
-    NzInputModule,
-    NzCheckboxModule,
-    NzButtonModule,
-    NzGridModule,
-    NzIconModule,
-    CommonModule
-  ],
-  templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.scss'
+	selector: 'app-login-page',
+	standalone: true,
+	imports: [
+		ReactiveFormsModule,
+		NzFormModule,
+		NzInputModule,
+		NzCheckboxModule,
+		NzButtonModule,
+		NzGridModule,
+		NzIconModule,
+		CommonModule,
+	],
+	templateUrl: './login-page.component.html',
+	styleUrl: './login-page.component.scss',
 })
 export class LoginPageComponent {
-  private readonly _authService = inject(AuthService);
-  passwordVisible = false;
-  isLoading = false;
+	private readonly _authService = inject(AuthService);
+	passwordVisible = false;
+	isLoading = false;
 
-  togglePasswordVisibility(): void {
-    this.passwordVisible = !this.passwordVisible;
-  }
-  validateForm: FormGroup<{
-    email: FormControl<string>;
-    password: FormControl<string>;
-    remember: FormControl<boolean>;
-  }> = this.fb.group({
-    email: ['valerio@gmail.com', [Validators.required, Validators.email]],
-    password: ['valerio2003', [Validators.required]],
-    remember: [true]
-  });
+	togglePasswordVisibility(): void {
+		this.passwordVisible = !this.passwordVisible;
+	}
+	validateForm: FormGroup<{
+		email: FormControl<string>;
+		password: FormControl<string>;
+		remember: FormControl<boolean>;
+	}> = this.fb.group({
+		email: ['valerio@gmail.com', [Validators.required, Validators.email]],
+		password: ['valerio2003', [Validators.required]],
+		remember: [true],
+	});
 
-  submitForm(): void {
-    if (this.validateForm.valid) {
-      this.isLoading = true;
-      const { email, password } = this.validateForm.getRawValue();
-      this._authService.login(email, password).pipe(
-        catchError((error: HttpErrorResponse) => {
-          const errorMessage = error.message;
-          this.showError(errorMessage);
-          return EMPTY;
-        }),
-        finalize(() => {
-          this.isLoading = false;
-        })
-      ).subscribe();
-    } else {
-      // Manejo de validaciones de formulario
-      Object.values(this.validateForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-        }
-      });
-    }
-  }
+	submitForm(): void {
+		if (this.validateForm.valid) {
+			this.isLoading = true;
+			const { email, password } = this.validateForm.getRawValue();
+			this._authService
+				.login(email, password)
+				.pipe(
+					catchError((error: HttpErrorResponse) => {
+						const errorMessage = error.message;
+						this.showError(errorMessage);
+						return EMPTY;
+					}),
+					finalize(() => {
+						this.isLoading = false;
+					})
+				)
+				.subscribe();
+		} else {
+			// Manejo de validaciones de formulario
+			Object.values(this.validateForm.controls).forEach((control) => {
+				if (control.invalid) {
+					control.markAsDirty();
+					control.updateValueAndValidity({ onlySelf: true });
+				}
+			});
+		}
+	}
 
-  private showError(message: string): void {
-    Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: message,  // El mensaje personalizado del backend se muestra aquí
-    });
-  }
-  constructor(private fb: NonNullableFormBuilder) {}
+	private showError(message: string): void {
+		Swal.fire({
+			icon: 'error',
+			title: 'Error',
+			text: message, // El mensaje personalizado del backend se muestra aquí
+		});
+	}
+	constructor(private fb: NonNullableFormBuilder) {}
 }
