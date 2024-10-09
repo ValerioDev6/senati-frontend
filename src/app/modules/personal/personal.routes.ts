@@ -5,7 +5,7 @@ export const PERSONAL_ROUTES: Routes = [
 		path: 'lista-personal',
 		loadComponent: () => import('./pages/personal-list/personal-list.component'),
 		data: {
-			breadcrumb: 'Listado de Personal',
+			breadcrumb: 'Personal',
 		},
 	},
 	{
@@ -22,6 +22,7 @@ export const PERSONAL_ROUTES: Routes = [
 			breadcrumb: 'Perfil de Personal',
 		},
 	},
+
 	{
 		path: 'configuracion/:id',
 		loadComponent: () => import('./pages/configuracion-personal/configuracion-personal.component'),

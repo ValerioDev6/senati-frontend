@@ -1,5 +1,6 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withViewTransitions } from '@angular/router';
+import { provideNzConfig } from 'ng-zorro-antd/core/config';
 
 import { routes } from './app.routes';
 import { provideNzIcons } from './icons-provider';
@@ -20,6 +21,16 @@ export const appConfig: ApplicationConfig = {
 		provideNzI18n(en_US),
 		importProvidersFrom(FormsModule),
 		provideAnimationsAsync(),
+		provideNzConfig({
+			message: {
+				nzTop: 24,
+				nzDuration: 3000,
+				nzMaxStack: 7,
+				nzPauseOnHover: true,
+				nzAnimate: true,
+				nzDirection: 'ltr',
+			},
+		}),
 		provideHttpClient(withInterceptors([AuthInterceptorHttpService])),
 	],
 };

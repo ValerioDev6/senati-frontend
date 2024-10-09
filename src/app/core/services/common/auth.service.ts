@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../storage/local-storage.service';
 import { BehaviorSubject, Observable, catchError, map, of, tap, throwError } from 'rxjs';
-import { IResponseSingIn, User } from '../../interfaces/login-response.interface';
+import { IResponseSingIn, Personal } from '../../interfaces/login-response.interface';
 import { KEY_STORAGE, STATUS_USER } from '../../interfaces/storage.enum';
 import { URL_AUTH_CHECK_STATUS, URL_AUTH_SIGNIN } from '../../config/api/config.url';
 import { CheckStatusResponse } from '../../interfaces/get-status.interface';
@@ -16,7 +16,7 @@ export class AuthService {
 	private _router = inject(Router);
 
 	private _localStorageService = inject(LocalStorageService);
-	private user = new BehaviorSubject<User | null>(null);
+	private user = new BehaviorSubject<Personal | null>(null);
 	private jwt = new BehaviorSubject<string | null>(null);
 
 	user$ = this.user.asObservable();
@@ -41,7 +41,7 @@ export class AuthService {
 	login(email: string, password: string): Observable<IResponseSingIn> {
 		return this._httpClient.post<IResponseSingIn>(URL_AUTH_SIGNIN, { email, password }).pipe(
 			map((response: IResponseSingIn) => {
-				if (response.user && response.user.estado === false) {
+				if (response.personal && response.personal.estado === false) {
 					throw new HttpErrorResponse({
 						error: { message: 'Usuario inactivo, contacte al administrador' },
 						status: 401,
@@ -89,7 +89,7 @@ export class AuthService {
 	private handleLoginResponse(response: IResponseSingIn): void {
 		this.saveTokenToLocalStore(response);
 		this.pushNewJWT(response.access_token);
-		this.pushNewUser(response.user);
+		this.pushNewUser(response.personal);
 	}
 	private removeStatusUserFromLocalStorage(): void {
 		this._localStorageService.removeItem(STATUS_USER.STATUS_USER);
@@ -110,7 +110,7 @@ export class AuthService {
 		const authData = this._localStorageService.getItem<IResponseSingIn>(KEY_STORAGE.DATA_USER);
 		if (authData) {
 			this.pushNewJWT(authData.access_token);
-			this.pushNewUser(authData.user);
+			this.pushNewUser(authData.personal);
 		}
 	}
 
@@ -124,7 +124,7 @@ export class AuthService {
 		this.jwt.next(token);
 	}
 
-	private pushNewUser(user: User | null): void {
+	private pushNewUser(user: Personal | null): void {
 		this.user.next(user);
 	}
 

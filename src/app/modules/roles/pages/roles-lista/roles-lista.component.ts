@@ -19,7 +19,11 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { IRolesResponse, Role } from '../../../../core/interfaces/roles.interface';
 import { RolesService } from '../../../../core/services/roles.service';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
 import { CrearRolesComponent } from '../../components/crear-roles/crear-roles.component';
+import Swal from 'sweetalert2';
+import { ActualizaRolComponent } from '../../components/actualiza-rol/actualiza-rol.component';
 
 const NZ_MODULES = [
 	NzInputModule,
@@ -48,7 +52,10 @@ const NZ_MODULES = [
 export default class RolesListaComponent implements OnInit {
 	private readonly _rolesService = inject(RolesService);
 
-	constructor(private readonly _modal: NzModalService) {}
+	constructor(
+		private readonly _modal: NzModalService,
+		private readonly message: NzMessageService
+	) {}
 	roles: Role[] = [];
 	loading = false;
 	search: string = '';
@@ -85,16 +92,70 @@ export default class RolesListaComponent implements OnInit {
 		this.loadDataRoles();
 	}
 
-	deleteRoles(roles: Role) {
-		console.log('Elimianr rol: ', roles);
-	}
-
 	openAgregarRolModal(): void {
-		this._modal.create({
+		const modal = this._modal.create({
 			nzTitle: 'Agregar Nuevo Rol',
 			nzContent: CrearRolesComponent,
 			nzFooter: null,
 			nzWidth: '600px',
 		});
+
+		modal.afterClose.subscribe((result: boolean) => {
+			if (result) {
+				this.loadDataRoles();
+			}
+		});
+	}
+
+	openEditarModal(role: Role): void {
+		const modal = this._modal.create({
+			nzTitle: 'Editar Rol',
+			nzContent: ActualizaRolComponent,
+			nzData: { id_rol: role.id_rol },
+			nzFooter: null,
+			nzWidth: '600px',
+		});
+
+		modal.afterClose.subscribe((result: boolean) => {
+			if (result) {
+				this.loadDataRoles();
+			}
+		});
+	}
+
+	deleteRol(role: Role): void {
+		Swal.fire({
+			title: '¿Está seguro?',
+			text: `Este proceso no es reversible, está a punto de eliminar su rol , ${role.nombre_rol}`,
+			showCancelButton: true,
+			confirmButtonText: 'Sí, eliminar',
+			cancelButtonText: 'No, cancelar',
+			customClass: {
+				popup: 'swal2-popup-custom',
+				title: 'swal2-title-custom',
+				htmlContainer: 'swal2-html-container-custom',
+				confirmButton: 'swal2-confirm-button-custom',
+				cancelButton: 'swal2-cancel-button-custom',
+			},
+			buttonsStyling: false,
+			iconHtml:
+				'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-red-500"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				this.loading = true;
+				this._rolesService.deleteRole(role.id_rol).subscribe({
+					next: () => {
+						this.loadDataRoles();
+						this.message.success('Categoría eliminada con éxito');
+					},
+					error: () => {
+						this.loading = false;
+						this.message.error('Error al eliminar la categoría');
+					},
+				});
+			}
+		});
 	}
 }
+
+// en huskyy npm test

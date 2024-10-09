@@ -1,88 +1,3 @@
-<!-- <nz-layout class="app-layout">
-    <nz-sider class="menu-sidebar"
-      nzCollapsible
-      nzWidth="256px"
-      nzBreakpoint="md"
-      [(nzCollapsed)]="isCollapsed"
-      [nzTrigger]="null">
-      <div class="sidebar-logo">
-        <a href="https://ng.ant.design/" target="_blank">
-          <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-          <h1>Icase´s Store</h1>
-        </a>
-      </div>
-      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-
-        <li  class="user-item"  nz-menu-item  nzDisable="true">
-          <i nz-icon nzType="user"></i>
-          <span> {{ email }} </span>
-        </li>
-
-
-        <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="home">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a routerLink="./dashboard">Dashboard</a>
-            </li>
-          </ul>
-        </li>
-
-
-        <li nz-submenu nzOpen nzTitle="Personal" nzIcon="user">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a routerLink="./personal/lista-personal">Listado de Personal</a>
-            </li>
-          </ul>
-        </li>
-
-        <li nz-submenu nzOpen nzTitle="Categorias" nzIcon="tags">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a routerLink="./categorias/lista-categorias">Categorias</a>
-            </li>
-          </ul>
-        </li>
-
-        <li nz-submenu nzOpen nzTitle="Productos" nzIcon="shopping-cart">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a routerLink="./productos/lista-productos">Productos</a>
-            </li>
-          </ul>
-        </li>
-
-        <li nz-menu-item (click)="logout()">
-          <i nz-icon nzType="logout"></i>
-          <span>Logout</span>
-        </li>
-      </ul>
-
-    </nz-sider>
-
-    <nz-layout>
-      <nz-header>
-        <div class="app-header">
-          <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-              <span class="trigger"
-                 nz-icon
-                 [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-              ></span>
-          </span>
-        </div>
-
-
-      </nz-header>
-
-      <nz-content>
-        <div class="inner-content">
-          <router-outlet></router-outlet>
-        </div>
-      </nz-content>
-
-
-    </nz-layout>
-  </nz-layout> -->
 <nz-layout class="app-layout">
 	<nz-sider
 		class="menu-sidebar"
@@ -98,59 +13,83 @@
 				<h1>Icase's Store</h1>
 			</a>
 		</div>
-		<div class="user-profile" *ngIf="!isCollapsed">
-			<nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="personal.personal_img"></nz-avatar>
-			<h3>{{ userName }}</h3>
-			<p>{{ userRole }}</p>
-		</div>
-		<ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-			<li nz-menu-item nzMatchRouter>
-				<i nz-icon nzType="dashboard"></i>
-				<span>Dashboard</span>
-				<a routerLink="./dashboard"></a>
+
+		<ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" class="bg-chestnut-900">
+			<p
+				class="menu-item-group-title uppercase font-bold p-2 ml-3 text-chestnut-300 hidden mt-5 mb-2 md:block"
+				[ngClass]="{ 'md:hidden': isCollapsed }"
+			>
+				Menu
+			</p>
+			<li nz-menu-item nzMatchRouter class="bg-chestnut-900">
+				<a routerLink="./dashboard" routerLinkActive="active-link">
+					<i class="text-gray-100 font-normal" nz-icon nzType="dashboard"></i>
+					<span class="text-gray-100 font-normal">Dashboard</span>
+				</a>
 			</li>
-			<li nz-submenu nzOpen nzTitle="Personal" nzIcon="team">
-				<ul>
-					<li nz-menu-item nzMatchRouter>
-						<a routerLink="./personal/lista-personal">Listado de Personal</a>
-					</li>
-					<li nz-menu-item nzMatchRouter>
-						<a routerLink="./personal/agregar-personal">Agregar Personal</a>
-					</li>
-					<li nz-menu-item nzMatchRouter>
-						<a routerLink="./personal/editar-personal">Editar Personal</a>
-					</li>
-				</ul>
+			<p
+				class="uppercase font-bold p-2 ml-3 text-chestnut-300 mt-4 mb-4 hidden md:block"
+				[ngClass]="{ 'md:hidden': isCollapsed }"
+			>
+				Mantenimiento
+			</p>
+
+			<li nz-menu-item nzMatchRouter>
+				<a routerLink="./marcas/marcas-lista" routerLinkActive="active-link">
+					<i class="text-gray-100" nz-icon nzType="folder" nzTheme="outline"></i>
+					<span class="text-gray-100 font-normal">Marcas</span>
+				</a>
 			</li>
 
 			<li nz-menu-item nzMatchRouter>
-				<i nz-icon nzType="tag"></i>
-				<span>Roles</span>
-				<a routerLink="./roles/lista-roles"></a>
+				<a routerLink="./categorias/lista-categorias" routerLinkActive="active-link">
+					<i class="text-gray-100" class="text-gray-100" nz-icon nzType="folder" nzTheme="outline"></i>
+					<span class="text-gray-100 font-normal">Categorías</span>
+				</a>
 			</li>
+
 			<li nz-menu-item nzMatchRouter>
-				<i nz-icon nzType="tag"></i>
-				<span>Categorías</span>
-				<a routerLink="./categorias/lista-categorias"></a>
+				<a routerLink="./productos/lista-productos" routerLinkActive="active-link">
+					<i class="text-gray-100" nz-icon nzType="folder" nzTheme="outline"></i>
+					<span class="text-gray-100 font-normal">Productos</span>
+				</a>
 			</li>
+
 			<li nz-menu-item nzMatchRouter>
-				<i nz-icon nzType="shopping"></i>
-				<span>Productos</span>
-				<a routerLink="./productos/lista-productos"></a>
+				<a routerLink="./productos/lista-productos" routerLinkActive="active-link">
+					<i class="text-gray-100" nz-icon nzType="folder" nzTheme="outline"></i>
+					<span class="text-gray-100 font-normal">Clientes</span>
+				</a>
+			</li>
+
+			<li nz-menu-item nzMatchRouter>
+				<a routerLink="./personal/lista-personal" routerLinkActive="active-link">
+					<i class="text-gray-100" nz-icon nzType="folder" nzTheme="outline"></i>
+					<span class="text-gray-100 font-normal">Personal</span>
+				</a>
+			</li>
+
+			<li nz-menu-item nzMatchRouter>
+				<a routerLink="./roles/lista-roles" routerLinkActive="active-link">
+					<i class="text-gray-100 font-normal" nz-icon nzType="folder"></i>
+					<span class="text-gray-100 font-normal">Roles</span>
+				</a>
+			</li>
+
+			<li nz-menu-item nzMatchRouter>
+				<a routerLink="./genero/lista-generos" routerLinkActive="active-link">
+					<i class="text-gray-100 font-normal" nz-icon nzType="folder"></i>
+					<span class="text-gray-100 font-normal">Generos</span>
+				</a>
 			</li>
 		</ul>
-		<div class="sidebar-footer">
-			<button nz-button nzType="link" (click)="logout()">
-				<i nz-icon nzType="logout"></i>
-				<span>Cerrar sesión</span>
-			</button>
-		</div>
 	</nz-sider>
+
 	<nz-layout>
 		<nz-header>
 			<div class="app-header">
 				<span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-					<i nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+					<i class="text-white" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
 				</span>
 				<div class="header-actions">
 					<nz-input-group [nzSuffix]="suffixIconSearch" style="width: 300px">
@@ -160,7 +99,7 @@
 						<i nz-icon nzType="search"></i>
 					</ng-template>
 					<nz-badge [nzCount]="5">
-						<i nz-icon nzType="bell" nzTheme="outline"></i>
+						<i class="text-white" nz-icon nzType="bell" nzTheme="outline"></i>
 					</nz-badge>
 					<a nz-dropdown [nzDropdownMenu]="menu">
 						<nz-avatar [nzSize]="32" nzIcon="user" [nzSrc]="personal.personal_img"></nz-avatar>
@@ -176,10 +115,132 @@
 				</div>
 			</div>
 		</nz-header>
-		<nz-content>
-			<div class="inner-content">
+
+		<app-breadcrumb></app-breadcrumb>
+		<nz-content class="p-4">
+			<div class="inner-content bg-white rounded-lg shadow-lg p-6 min-h-full">
 				<router-outlet></router-outlet>
 			</div>
 		</nz-content>
 	</nz-layout>
 </nz-layout>
+<!-- <nz-layout class="min-h-screen">
+	<nz-sider
+		class="menu-sidebar"
+		nzCollapsible
+		nzWidth="256px"
+		nzBreakpoint="md"
+		[(nzCollapsed)]="isCollapsed"
+		[nzTrigger]="null"
+	>
+		<div class="sidebar-logo bg-chestnut-950 p-4">
+			<a href="https://ng.ant.design/" target="_blank" class="flex items-center">
+				<img src="https://ng.ant.design/assets/img/logo.svg" alt="logo" class="w-8 h-8" />
+				<h1 class="text-white ml-2 text-lg font-semibold">Icase's Store</h1>
+			</a>
+		</div>
+		<div class="user-profile p-4 text-center text-white" *ngIf="!isCollapsed">
+			<nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="personal.personal_img"></nz-avatar>
+			<h3 class="mt-2 font-semibold">{{ userName }}</h3>
+			<p class="text-sm opacity-75">{{ userRole }}</p>
+		</div>
+		<ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" class="bg-chestnut-950">
+			<li class="menu-item-group-title uppercase font-bold p-2 ml-3 text-chestnut-300 hidden md:block">Menu</li>
+			<li nz-menu-item nzMatchRouter>
+				<a routerLink="./dashboard" routerLinkActive="active-link">
+					<i nz-icon nzType="dashboard"></i>
+					<span>Dashboard</span>
+				</a>
+			</li>
+			<li class="menu-item-group-title uppercase font-bold p-2 ml-3 text-chestnut-300 hidden md:block mt-4">
+				Mantenimiento
+			</li>
+			<li nz-submenu nzTitle="Almacén" nzIcon="home">
+				<ul>
+					<li nz-menu-item nzMatchRouter>
+						<a routerLink="./marcas/marcas-lista" routerLinkActive="active-link">
+							<i nz-icon nzType="folder" nzTheme="outline"></i>
+							<span>Marcas</span>
+						</a>
+					</li>
+					<li nz-menu-item nzMatchRouter>
+						<a routerLink="./categorias/lista-categorias" routerLinkActive="active-link">
+							<i nz-icon nzType="folder" nzTheme="outline"></i>
+							<span>Categorías</span>
+						</a>
+					</li>
+					<li nz-menu-item nzMatchRouter>
+						<a routerLink="./productos/lista-productos" routerLinkActive="active-link">
+							<i nz-icon nzType="folder" nzTheme="outline"></i>
+							<span>Productos</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li nz-submenu nzTitle="Personal" nzIcon="team">
+				<ul>
+					<li nz-menu-item nzMatchRouter>
+						<a routerLink="./personal/lista-personal" routerLinkActive="active-link">Listado de Personal</a>
+					</li>
+					<li nz-menu-item nzMatchRouter>
+						<a routerLink="./personal/crear-personal" routerLinkActive="active-link">Agregar Personal</a>
+					</li>
+				</ul>
+			</li>
+			<li nz-menu-item nzMatchRouter>
+				<a routerLink="./genero/lista-generos" routerLinkActive="active-link">
+					<i nz-icon nzType="tag"></i>
+					<span>Generos</span>
+				</a>
+			</li>
+			<li nz-menu-item nzMatchRouter>
+				<a routerLink="./roles/lista-roles" routerLinkActive="active-link">
+					<i nz-icon nzType="tag"></i>
+					<span>Roles</span>
+				</a>
+			</li>
+		</ul>
+		<div class="sidebar-footer absolute bottom-0 w-full p-4 text-center">
+			<button nz-button nzType="link" (click)="logout()" class="text-white hover:text-yellow-400">
+				<i nz-icon nzType="logout"></i>
+				<span>Cerrar sesión</span>
+			</button>
+		</div>
+	</nz-sider>
+	<nz-layout>
+		<nz-header class="bg-white shadow-md">
+			<div class="app-header flex justify-between items-center px-4 h-16">
+				<span class="header-trigger cursor-pointer text-xl" (click)="isCollapsed = !isCollapsed">
+					<i nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+				</span>
+				<div class="header-actions flex items-center space-x-4">
+					<nz-input-group [nzSuffix]="suffixIconSearch" class="w-64">
+						<input type="text" nz-input placeholder="Buscar..." />
+					</nz-input-group>
+					<ng-template #suffixIconSearch>
+						<i nz-icon nzType="search"></i>
+					</ng-template>
+					<nz-badge [nzCount]="5">
+						<i nz-icon nzType="bell" nzTheme="outline" class="text-xl"></i>
+					</nz-badge>
+					<a nz-dropdown [nzDropdownMenu]="menu">
+						<nz-avatar [nzSize]="32" nzIcon="user" [nzSrc]="personal.personal_img"></nz-avatar>
+					</a>
+					<nz-dropdown-menu #menu="nzDropdownMenu">
+						<ul nz-menu>
+							<li nz-menu-item [routerLink]="['./personal/perfil', personal.id_personal]">Ver perfil</li>
+							<li nz-menu-item [routerLink]="['/admin/personal/configuracion', personal.id_personal]">Configuración</li>
+							<li nz-menu-divider></li>
+							<li nz-menu-item (click)="logout()">Cerrar sesión</li>
+						</ul>
+					</nz-dropdown-menu>
+				</div>
+			</div>
+		</nz-header>
+		<nz-content class="p-6">
+			<div class="inner-content bg-white rounded-lg shadow-lg p-6 min-h-full">
+				<router-outlet></router-outlet>
+			</div>
+		</nz-content>
+	</nz-layout>
+</nz-layout> -->

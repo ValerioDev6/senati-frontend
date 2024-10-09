@@ -5,6 +5,7 @@ export const ADMIN_ROUTES: Routes = [
 	{
 		path: '',
 		component: MainLayoutComponent,
+
 		children: [
 			{
 				path: '',
@@ -15,32 +16,45 @@ export const ADMIN_ROUTES: Routes = [
 				path: 'dashboard',
 				loadChildren: () => import('../dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
 				title: 'App - Dashboard',
-				data: { breadcrumb: 'Dashboard' },
 			},
 			{
 				path: 'personal',
 				loadChildren: () => import('../personal/personal.routes').then((m) => m.PERSONAL_ROUTES),
 				title: 'App - Personal',
-				data: { breadcrumb: 'Personal' },
+				data: { breadcrumb: 'Mantenimiento Personal' },
 			},
 
 			{
 				path: 'roles',
 				loadChildren: () => import('../roles/roles.routes').then((m) => m.ROLES_ROUTES),
 				title: 'App - Roles',
-				data: { breadcrumb: 'Roles' },
+				data: { breadcrumb: 'Mantenimiento Roles' },
+			},
+
+			{
+				path: 'marcas',
+				loadChildren: () => import('../marcas/marcas.routes').then((m) => m.MARCAS_ROUTES),
+				title: 'App - Roles',
+				data: { breadcrumb: 'Mantenimiento Marcas' },
+			},
+
+			{
+				path: 'genero',
+				loadChildren: () => import('../sexo/sexo.routes').then((m) => m.SEXO_ROUTES),
+				title: 'App - Genero',
+				data: { breadcrumb: ' Mantenimiento Genero' },
 			},
 			{
 				path: 'categorias',
 				loadChildren: () => import('../categorias/categorias.routes').then((m) => m.CATEGORIAS_ROUTES),
 				title: 'App - Categorias',
-				data: { breadcrumb: 'Categorias' },
+				data: { breadcrumb: 'Mantenimiento Categorias' },
 			},
 			{
 				path: 'productos',
 				loadChildren: () => import('../productos/productos.routes').then((m) => m.PRODUCTOS_ROUTES),
 				title: 'App - Productos',
-				data: { breadcrumb: 'Productos' },
+				data: { breadcrumb: ' Mantenimiento Productos' },
 			},
 		],
 	},

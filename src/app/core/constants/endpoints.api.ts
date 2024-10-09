@@ -11,4 +11,5 @@ export const endpoint = {
 	// USUARIOS
 	USUARIO_ENDPOINT: 'personal',
 	ROLES_ENDPOINT: 'roles',
+	SEXO_ENDPOINT: 'sexo',
 };

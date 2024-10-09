@@ -17,3 +17,9 @@ export interface Role {
 	descripcion: string;
 	estado: boolean;
 }
+
+export interface IRoleSubmit {
+	nombre_rol: string;
+	descripcion: string;
+	estado: boolean;
+}

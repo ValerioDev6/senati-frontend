@@ -17,7 +17,6 @@ export interface TBPersonas {
 	id_tipo_persona: string;
 	id_tipo_documento: string;
 	id_sexo: string;
-	apellido_m: null;
 	fecha_nacimiento: Date;
 	id_direccion: string;
 	id_pais: string;

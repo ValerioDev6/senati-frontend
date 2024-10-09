@@ -16,6 +16,9 @@ import {
 	FolderOutline,
 	TeamOutline,
 	SaveOutline,
+	SwitcherOutline,
+	CaretRightFill,
+	FolderFill,
 } from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
@@ -36,7 +39,11 @@ const icons = [
 	FolderOutline,
 	TeamOutline,
 	SaveOutline,
+	SwitcherOutline,
+	CaretRightFill,
+	FolderFill,
 ];
+
 export function provideNzIcons(): EnvironmentProviders {
 	return importProvidersFrom(NzIconModule.forRoot(icons));
 }

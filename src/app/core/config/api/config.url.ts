@@ -10,3 +10,5 @@ export const URL_AUTH_CHANGE_PASSWORD = `${BASE_URL}/${endpoint.CHANGE_PASSWORD}
 
 export const URL_PERSONAL_ALL = `${BASE_URL}/${endpoint.USUARIO_ENDPOINT}`;
 export const URL_ROLES_ALL = `${BASE_URL}/${endpoint.ROLES_ENDPOINT}`;
+
+export const URL_SEXO_ALL = `${BASE_URL}/${endpoint.SEXO_ENDPOINT}`;

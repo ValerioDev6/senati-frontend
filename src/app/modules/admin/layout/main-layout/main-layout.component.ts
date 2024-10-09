@@ -11,41 +11,41 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { BreadcrumbComponent } from '../../../../shared/components/breadcrumb.component';
+
 @Component({
-  selector: 'app-main-layout',
-  standalone: true,
-  imports: [
-    RouterLink,
-    AsyncPipe,
-    RouterOutlet,
-    NzIconModule,
-    NzLayoutModule,
-    NzMenuModule,
-    NzInputModule,
-    NzBadgeModule,
-    NzAvatarModule,
-    NzDropDownModule,
-    CommonModule
-  ],
-  templateUrl: './main-layout.component.html',
-  styleUrl: './main-layout.component.scss'
+	selector: 'app-main-layout',
+	standalone: true,
+	imports: [
+		RouterLink,
+		AsyncPipe,
+		RouterOutlet,
+		NzIconModule,
+		NzLayoutModule,
+		NzMenuModule,
+		NzInputModule,
+		NzBadgeModule,
+		NzAvatarModule,
+		NzDropDownModule,
+		CommonModule,
+		NzBreadCrumbModule,
+		BreadcrumbComponent,
+	],
+	templateUrl: './main-layout.component.html',
+	styleUrl: './main-layout.component.scss',
 })
-export class MainLayoutComponent implements OnInit{
-  personal !:CheckStatusResponse;
-  email: string = ''
-  isCollapsed = false;
-  private readonly _authService = inject(AuthService);
-  userName = 'valerio'
-  userRole = 'Administrador'
-  ngOnInit(): void {
-    this._authService.checkAuthStatus().subscribe((response: CheckStatusResponse) => {
-      this.personal = response;
-      this.email = response.email
-    });
-  }
+export class MainLayoutComponent implements OnInit {
+	personal!: CheckStatusResponse;
+	isCollapsed = false;
+	private readonly _authService = inject(AuthService);
+	ngOnInit(): void {
+		this._authService.checkAuthStatus().subscribe((response: CheckStatusResponse) => {
+			this.personal = response;
+		});
+	}
 
-  logout(){
-    this._authService.logout()
-
-  }
+	logout() {
+		this._authService.logout();
+	}
 }
