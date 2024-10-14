@@ -24,6 +24,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { CrearRolesComponent } from '../../components/crear-roles/crear-roles.component';
 import Swal from 'sweetalert2';
 import { ActualizaRolComponent } from '../../components/actualiza-rol/actualiza-rol.component';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 const NZ_MODULES = [
 	NzInputModule,
@@ -39,7 +40,7 @@ const NZ_MODULES = [
 	NzDividerModule,
 	NzCardModule,
 	NzTagModule,
-	NzIconModule,
+	NzBreadCrumbModule,
 ];
 @Component({
 	selector: 'app-roles-lista',
@@ -146,11 +147,11 @@ export default class RolesListaComponent implements OnInit {
 				this._rolesService.deleteRole(role.id_rol).subscribe({
 					next: () => {
 						this.loadDataRoles();
-						this.message.success('Categoría eliminada con éxito');
+						this.message.success('roles eliminada con éxito');
 					},
 					error: () => {
 						this.loading = false;
-						this.message.error('Error al eliminar la categoría');
+						this.message.error('Error al eliminar el Rol');
 					},
 				});
 			}

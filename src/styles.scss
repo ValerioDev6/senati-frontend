@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,6 +8,11 @@
 
 * {
   @apply m-0 p-0 box-border;
+}
+
+
+body {
+  @apply font-normal text-base;
 }
 
 /* SweetAlert2 custom popup styling */
@@ -54,3 +61,18 @@
 .ant-modal-header {
   border-radius: 15px;
 }
+
+.ant-table-tbody>tr>td {
+  padding: 7px;
+}
+
+
+
+.ant-table-thead>tr>th {
+  color: rgb(240, 236, 236);
+  background-color: #1890FF;
+}
+
+// .ant-layout-sider-children {
+//   background-color: rebeccapurple;
+// }

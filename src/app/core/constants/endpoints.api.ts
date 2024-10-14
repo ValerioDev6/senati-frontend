@@ -1,7 +1,4 @@
 export const endpoint = {
-	PRODUCT_ENDPOINT: 'admin/productos',
-	CATEGORA_ENDPOINT: 'admin/categorias',
-
 	// AUTH COMPONENT
 	LOGIN_ENDPOINT: 'auth/login',
 	CHECK_STATUS_ENDPOINT: 'auth/check-auth-status',
@@ -12,4 +9,18 @@ export const endpoint = {
 	USUARIO_ENDPOINT: 'personal',
 	ROLES_ENDPOINT: 'roles',
 	SEXO_ENDPOINT: 'sexo',
+
+	// ALMACEN
+	MARCAS_ENDPOINT: 'marcas',
+	CATEGORIES_ENPOINT: 'categorie',
+	PRODUCTOS_ENDOINT: 'productos',
+
+	//sucursal
+	SUCURSAL_ENDPOINT: 'surcursal',
+	DIRECCION_ENDPOINT: 'direccion',
+	TIPO_TELEFONO_ENDPOINT: 'tipo-telefono',
+	PAIS_ENPOINT: 'pais',
+	// direcciones
+	TIPO_VIA: 'tipo-via',
+	TIPO_ZONA: 'tipo-zona',
 };

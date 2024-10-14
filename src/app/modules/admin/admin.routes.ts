@@ -56,6 +56,13 @@ export const ADMIN_ROUTES: Routes = [
 				title: 'App - Productos',
 				data: { breadcrumb: ' Mantenimiento Productos' },
 			},
+
+			{
+				path: 'sucursal',
+				loadChildren: () => import('../sucursal/sucursal.routes').then((m) => m.SUCURSALES_ROUTES),
+				title: 'App - Sucursal',
+				data: { breadcrumb: 'Mantenimiento Sucursales' },
+			},
 		],
 	},
 ];

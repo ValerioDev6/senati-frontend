@@ -12,3 +12,15 @@ export const URL_PERSONAL_ALL = `${BASE_URL}/${endpoint.USUARIO_ENDPOINT}`;
 export const URL_ROLES_ALL = `${BASE_URL}/${endpoint.ROLES_ENDPOINT}`;
 
 export const URL_SEXO_ALL = `${BASE_URL}/${endpoint.SEXO_ENDPOINT}`;
+
+export const URL_MARCAS_ALL = `${BASE_URL}/${endpoint.MARCAS_ENDPOINT}`;
+export const URL_CATEGORIAS = `${BASE_URL}/${endpoint.CATEGORIES_ENPOINT}`;
+
+export const URL_TIPO_ZONA_ALL = `${BASE_URL}/${endpoint.TIPO_ZONA}`;
+export const URL_TIPO_VIA_ALL = `${BASE_URL}/${endpoint.TIPO_VIA}`;
+
+export const URL_SUCURSAL_ALL = `${BASE_URL}/${endpoint.SUCURSAL_ENDPOINT}`;
+
+export const URL_DIRECCION_ALL = `${BASE_URL}/${endpoint.DIRECCION_ENDPOINT}`;
+export const URL_PAIS_ALL = `${BASE_URL}/${endpoint.PAIS_ENPOINT}`;
+export const URL_TIPO_TELEFONO_ALL = `${BASE_URL}/${endpoint.TIPO_TELEFONO_ENDPOINT}`;

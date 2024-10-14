@@ -1,4 +1,4 @@
-<nz-layout class="app-layout">
+<nz-layout class="min-h-screen">
 	<nz-sider
 		class="menu-sidebar"
 		nzCollapsible
@@ -7,171 +7,42 @@
 		[(nzCollapsed)]="isCollapsed"
 		[nzTrigger]="null"
 	>
-		<div class="sidebar-logo">
-			<a href="https://ng.ant.design/" target="_blank">
-				<img src="https://ng.ant.design/assets/img/logo.svg" alt="logo" />
-				<h1>Icase's Store</h1>
-			</a>
-		</div>
-
-		<ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" class="bg-chestnut-900">
-			<p
-				class="menu-item-group-title uppercase font-bold p-2 ml-3 text-chestnut-300 hidden mt-5 mb-2 md:block"
-				[ngClass]="{ 'md:hidden': isCollapsed }"
-			>
-				Menu
-			</p>
-			<li nz-menu-item nzMatchRouter class="bg-chestnut-900">
-				<a routerLink="./dashboard" routerLinkActive="active-link">
-					<i class="text-gray-100 font-normal" nz-icon nzType="dashboard"></i>
-					<span class="text-gray-100 font-normal">Dashboard</span>
-				</a>
-			</li>
-			<p
-				class="uppercase font-bold p-2 ml-3 text-chestnut-300 mt-4 mb-4 hidden md:block"
-				[ngClass]="{ 'md:hidden': isCollapsed }"
-			>
-				Mantenimiento
-			</p>
-
-			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./marcas/marcas-lista" routerLinkActive="active-link">
-					<i class="text-gray-100" nz-icon nzType="folder" nzTheme="outline"></i>
-					<span class="text-gray-100 font-normal">Marcas</span>
-				</a>
-			</li>
-
-			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./categorias/lista-categorias" routerLinkActive="active-link">
-					<i class="text-gray-100" class="text-gray-100" nz-icon nzType="folder" nzTheme="outline"></i>
-					<span class="text-gray-100 font-normal">Categorías</span>
-				</a>
-			</li>
-
-			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./productos/lista-productos" routerLinkActive="active-link">
-					<i class="text-gray-100" nz-icon nzType="folder" nzTheme="outline"></i>
-					<span class="text-gray-100 font-normal">Productos</span>
-				</a>
-			</li>
-
-			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./productos/lista-productos" routerLinkActive="active-link">
-					<i class="text-gray-100" nz-icon nzType="folder" nzTheme="outline"></i>
-					<span class="text-gray-100 font-normal">Clientes</span>
-				</a>
-			</li>
-
-			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./personal/lista-personal" routerLinkActive="active-link">
-					<i class="text-gray-100" nz-icon nzType="folder" nzTheme="outline"></i>
-					<span class="text-gray-100 font-normal">Personal</span>
-				</a>
-			</li>
-
-			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./roles/lista-roles" routerLinkActive="active-link">
-					<i class="text-gray-100 font-normal" nz-icon nzType="folder"></i>
-					<span class="text-gray-100 font-normal">Roles</span>
-				</a>
-			</li>
-
-			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./genero/lista-generos" routerLinkActive="active-link">
-					<i class="text-gray-100 font-normal" nz-icon nzType="folder"></i>
-					<span class="text-gray-100 font-normal">Generos</span>
-				</a>
-			</li>
-		</ul>
-	</nz-sider>
-
-	<nz-layout>
-		<nz-header>
-			<div class="app-header">
-				<span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-					<i class="text-white" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
-				</span>
-				<div class="header-actions">
-					<nz-input-group [nzSuffix]="suffixIconSearch" style="width: 300px">
-						<input type="text" nz-input placeholder="Buscar..." />
-					</nz-input-group>
-					<ng-template #suffixIconSearch>
-						<i nz-icon nzType="search"></i>
-					</ng-template>
-					<nz-badge [nzCount]="5">
-						<i class="text-white" nz-icon nzType="bell" nzTheme="outline"></i>
-					</nz-badge>
-					<a nz-dropdown [nzDropdownMenu]="menu">
-						<nz-avatar [nzSize]="32" nzIcon="user" [nzSrc]="personal.personal_img"></nz-avatar>
-					</a>
-					<nz-dropdown-menu #menu="nzDropdownMenu">
-						<ul nz-menu>
-							<li nz-menu-item [routerLink]="['./personal/perfil', personal.id_personal]">Ver perfil</li>
-							<li nz-menu-item [routerLink]="['/admin/personal/configuracion', personal.id_personal]">Configuración</li>
-							<li nz-menu-divider></li>
-							<li nz-menu-item (click)="logout()">Cerrar sesión</li>
-						</ul>
-					</nz-dropdown-menu>
-				</div>
-			</div>
-		</nz-header>
-
-		<app-breadcrumb></app-breadcrumb>
-		<nz-content class="p-4">
-			<div class="inner-content bg-white rounded-lg shadow-lg p-6 min-h-full">
-				<router-outlet></router-outlet>
-			</div>
-		</nz-content>
-	</nz-layout>
-</nz-layout>
-<!-- <nz-layout class="min-h-screen">
-	<nz-sider
-		class="menu-sidebar"
-		nzCollapsible
-		nzWidth="256px"
-		nzBreakpoint="md"
-		[(nzCollapsed)]="isCollapsed"
-		[nzTrigger]="null"
-	>
-		<div class="sidebar-logo bg-chestnut-950 p-4">
-			<a href="https://ng.ant.design/" target="_blank" class="flex items-center">
-				<img src="https://ng.ant.design/assets/img/logo.svg" alt="logo" class="w-8 h-8" />
-				<h1 class="text-white ml-2 text-lg font-semibold">Icase's Store</h1>
+		<div class="sidebar-logo p-4">
+			<a class="flex items-center">
+				<img src="./assets/icase-logo.jpeg" alt="logo" class="rounded-full w-10 h-10" />
+				<h1 class="text-white ml-2 text-lg xl:text-[18px] xl:font-bold uppercase" *ngIf="!isCollapsed">Icase'Store</h1>
 			</a>
 		</div>
 		<div class="user-profile p-4 text-center text-white" *ngIf="!isCollapsed">
 			<nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="personal.personal_img"></nz-avatar>
-			<h3 class="mt-2 font-semibold">{{ userName }}</h3>
-			<p class="text-sm opacity-75">{{ userRole }}</p>
+			<!-- <h3 class="mt-2 font-semibold">{{ userName }}</h3>
+			<p class="text-sm opacity-75">{{ userRole }}</p> -->
 		</div>
-		<ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" class="bg-chestnut-950">
-			<li class="menu-item-group-title uppercase font-bold p-2 ml-3 text-chestnut-300 hidden md:block">Menu</li>
+		<ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
 			<li nz-menu-item nzMatchRouter>
 				<a routerLink="./dashboard" routerLinkActive="active-link">
 					<i nz-icon nzType="dashboard"></i>
 					<span>Dashboard</span>
 				</a>
 			</li>
-			<li class="menu-item-group-title uppercase font-bold p-2 ml-3 text-chestnut-300 hidden md:block mt-4">
-				Mantenimiento
-			</li>
+
 			<li nz-submenu nzTitle="Almacén" nzIcon="home">
 				<ul>
 					<li nz-menu-item nzMatchRouter>
 						<a routerLink="./marcas/marcas-lista" routerLinkActive="active-link">
-							<i nz-icon nzType="folder" nzTheme="outline"></i>
+							<i nz-icon nzType="tag" nzTheme="outline"></i>
 							<span>Marcas</span>
 						</a>
 					</li>
 					<li nz-menu-item nzMatchRouter>
 						<a routerLink="./categorias/lista-categorias" routerLinkActive="active-link">
-							<i nz-icon nzType="folder" nzTheme="outline"></i>
+							<i nz-icon nzType="appstore" nzTheme="outline"></i>
 							<span>Categorías</span>
 						</a>
 					</li>
 					<li nz-menu-item nzMatchRouter>
 						<a routerLink="./productos/lista-productos" routerLinkActive="active-link">
-							<i nz-icon nzType="folder" nzTheme="outline"></i>
+							<i nz-icon nzType="shopping" nzTheme="outline"></i>
 							<span>Productos</span>
 						</a>
 					</li>
@@ -188,59 +59,99 @@
 				</ul>
 			</li>
 			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./genero/lista-generos" routerLinkActive="active-link">
-					<i nz-icon nzType="tag"></i>
-					<span>Generos</span>
+				<a routerLink="./sucursal/sucursales-lista" routerLinkActive="active-link">
+					<i nz-icon nzType="environment"></i>
+					<span>Sucursales</span>
 				</a>
 			</li>
+			<!-- <li nz-menu-item nzMatchRouter>
+				<a routerLink="./genero/lista-generos" routerLinkActive="active-link">
+					<i nz-icon nzType="team"></i>
+					<span>Géneros</span>
+				</a>
+			</li> -->
 			<li nz-menu-item nzMatchRouter>
 				<a routerLink="./roles/lista-roles" routerLinkActive="active-link">
-					<i nz-icon nzType="tag"></i>
+					<i nz-icon nzType="safety-certificate"></i>
 					<span>Roles</span>
 				</a>
 			</li>
 		</ul>
-		<div class="sidebar-footer absolute bottom-0 w-full p-4 text-center">
-			<button nz-button nzType="link" (click)="logout()" class="text-white hover:text-yellow-400">
-				<i nz-icon nzType="logout"></i>
-				<span>Cerrar sesión</span>
-			</button>
-		</div>
 	</nz-sider>
 	<nz-layout>
-		<nz-header class="bg-white shadow-md">
+		<nz-header class="shadow-sm">
 			<div class="app-header flex justify-between items-center px-4 h-16">
-				<span class="header-trigger cursor-pointer text-xl" (click)="isCollapsed = !isCollapsed">
-					<i nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
-				</span>
-				<div class="header-actions flex items-center space-x-4">
-					<nz-input-group [nzSuffix]="suffixIconSearch" class="w-64">
-						<input type="text" nz-input placeholder="Buscar..." />
+				<div class="flex items-center">
+					<span
+						class="header-trigger cursor-pointer text-xl rounded-full transition-colors duration-200 mr-4"
+						(click)="isCollapsed = !isCollapsed"
+					>
+						<i nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" class="text-gray-600"></i>
+					</span>
+					<nz-input-group [nzSuffix]="suffixIconSearch" class="w-64 md:w-80 lg:w-96">
+						<input type="text" nz-input placeholder="Buscar..." class="rounded-full" />
 					</nz-input-group>
 					<ng-template #suffixIconSearch>
-						<i nz-icon nzType="search"></i>
+						<i nz-icon nzType="search" class="text-gray-400"></i>
 					</ng-template>
-					<nz-badge [nzCount]="5">
-						<i nz-icon nzType="bell" nzTheme="outline" class="text-xl"></i>
-					</nz-badge>
-					<a nz-dropdown [nzDropdownMenu]="menu">
-						<nz-avatar [nzSize]="32" nzIcon="user" [nzSrc]="personal.personal_img"></nz-avatar>
+				</div>
+
+				<div class="header-actions flex items-center space-x-4">
+					<button
+						nz-button
+						nzType="default"
+						nzShape="circle"
+						nzSize="large"
+						class="flex items-center justify-center hover:bg-gray-100"
+					>
+						<nz-badge [nzCount]="5">
+							<i nz-icon nzType="bell" nzTheme="outline" class="text-xl text-gray-600"></i>
+						</nz-badge>
+					</button>
+
+					<a nz-dropdown [nzDropdownMenu]="menu" class="flex items-center space-x-2 cursor-pointer">
+						<nz-avatar
+							[nzSize]="40"
+							nzIcon="user"
+							[nzSrc]="personal.personal_img"
+							class="border-2 border-blue-500"
+						></nz-avatar>
+						<span class="hidden md:inline text-gray-700 font-medium">{{ personal.persona.nombres }}</span>
+						<i nz-icon nzType="down" class="text-gray-500"></i>
 					</a>
+
 					<nz-dropdown-menu #menu="nzDropdownMenu">
-						<ul nz-menu>
-							<li nz-menu-item [routerLink]="['./personal/perfil', personal.id_personal]">Ver perfil</li>
-							<li nz-menu-item [routerLink]="['/admin/personal/configuracion', personal.id_personal]">Configuración</li>
+						<ul nz-menu class="w-56">
+							<li
+								nz-menu-item
+								[routerLink]="['./personal/perfil', personal.id_personal]"
+								class="flex items-center px-4 py-2"
+							>
+								<i nz-icon nzType="user" class="mr-2 text-blue-500"></i>
+								<span>Ver perfil</span>
+							</li>
+							<li
+								nz-menu-item
+								[routerLink]="['/admin/personal/configuracion', personal.id_personal]"
+								class="flex items-center px-4 py-2"
+							>
+								<i nz-icon nzType="setting" class="mr-2 text-gray-500"></i>
+								<span>Configuración</span>
+							</li>
 							<li nz-menu-divider></li>
-							<li nz-menu-item (click)="logout()">Cerrar sesión</li>
+							<li nz-menu-item (click)="logout()" class="flex items-center px-4 py-2 text-red-500">
+								<i nz-icon nzType="logout" class="mr-2"></i>
+								<span>Cerrar sesión</span>
+							</li>
 						</ul>
 					</nz-dropdown-menu>
 				</div>
 			</div>
 		</nz-header>
-		<nz-content class="p-6">
-			<div class="inner-content bg-white rounded-lg shadow-lg p-6 min-h-full">
+		<nz-content>
+			<div class="inner-content rounded-lg shadow-lg p-6 min-h-full">
 				<router-outlet></router-outlet>
 			</div>
 		</nz-content>
 	</nz-layout>
-</nz-layout> -->
+</nz-layout>

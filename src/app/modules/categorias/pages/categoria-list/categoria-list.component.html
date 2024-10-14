@@ -1,1 +1,86 @@
-<p>categoria-list works!</p>
+<div>
+	<nz-breadcrumb class="font-bold text-sm" [nzAutoGenerate]="true"> </nz-breadcrumb>
+</div>
+<div class="container mx-auto py-6">
+	<div class="flex flex-col md:flex-row justify-between items-center mb-6">
+		<h3 class="text-xl font-semibold text-gray-800 mb-4 md:mb-0 flex items-center">
+			<svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" viewBox="0 0 32 32">
+				<path
+					fill="#000000"
+					d="m6.76 6l.45.89L7.76 8H12v5H4V6zm.62-2H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H9l-.72-1.45a1 1 0 0 0-.9-.55m15.38 2l.45.89l.55 1.11H28v5h-8V6zm.62-2H19a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-4l-.72-1.45a1 1 0 0 0-.9-.55M6.76 19l.45.89l.55 1.11H12v5H4v-7zm.62-2H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1H9l-.72-1.45a1 1 0 0 0-.9-.55m15.38 2l.45.89l.55 1.11H28v5h-8v-7zm.62-2H19a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-4l-.72-1.45a1 1 0 0 0-.9-.55"
+				/>
+			</svg>
+			Gestión de Categorias
+		</h3>
+
+		<div class="flex items-center space-x-4">
+			<nz-input-group [nzSuffix]="suffixIconSearch" class="w-64">
+				<input type="text" nz-input placeholder="Buscar marcas" [(ngModel)]="search" (keyup.enter)="searchTo()" />
+			</nz-input-group>
+			<ng-template #suffixIconSearch>
+				<span nz-icon nzType="search"></span>
+			</ng-template>
+			<button
+				(click)="openAgregarCategoriasModal()"
+				nz-button
+				nzType="primary"
+				class="flex items-center justify-center"
+			>
+				<span nz-icon nzType="plus" nzTheme="outline"></span>
+			</button>
+		</div>
+	</div>
+
+	<nz-table
+		#basicTable
+		[nzData]="categorias"
+		[nzLoading]="loading"
+		[nzPageSize]="limit"
+		[nzTotal]="total"
+		[nzFrontPagination]="false"
+		(nzPageIndexChange)="onPageChange($event)"
+		nzShowSizeChanger
+		[nzShowQuickJumper]="true"
+	>
+		<thead>
+			<tr>
+				<th nzColumnKey="Nombre Rol">Categoria</th>
+				<th nzColumnKey="Descripcion">Fecha Creacion</th>
+				<th nzColumnKey="estado">Estado</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for (categorie of basicTable.data; track categorie.id_categoria) {
+				<tr>
+					<td>{{ categorie.nombre_cat }}</td>
+					<td>{{ categorie.created_at | date: 'MMM d, y, h:mm a' }}</td>
+					<td>
+						<nz-tag [nzColor]="categorie.estado ? 'success' : 'error'">
+							{{ categorie.estado ? 'Activo' : 'Inactivo' }}
+						</nz-tag>
+					</td>
+					<td>
+						<a nz-tooltip nzTooltipTitle="Editar" (click)="openEditarModal(categorie)" nz-button nzType="link">
+							<span nz-icon nzType="edit" nzTheme="outline"></span>
+						</a>
+						<a
+							nz-tooltip
+							nzTooltipTitle="Eliminar"
+							(click)="deleteCategorie(categorie)"
+							nz-button
+							nzType="link"
+							nzDanger
+						>
+							<span nz-icon nzType="delete" nzTheme="outline"></span>
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</nz-table>
+
+	<div class="mt-4 text-right text-sm text-gray-600">
+		<strong>Total de Roles: {{ total }}</strong>
+	</div>
+</div>

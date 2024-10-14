@@ -18,12 +18,10 @@ import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { CommonModule } from '@angular/common';
-import { MarcasService } from '../../../../core/services/marcas.service';
-import { IMarcasResponseData, Marca } from '../../../../core/interfaces/marcas.interface';
+import { ISucursalResponse, Sucursale } from '../../../../core/interfaces/sucursales.interface';
+import { SucursalService } from '../../../../core/services/sucursales.service';
 import Swal from 'sweetalert2';
-import { CrearMarcaComponent } from '../../components/crear-marca/crear-marca.component';
-import { UpdateMarcaComponent } from '../../components/update-marca/update-marca.component';
-
+import { CrearSucursalComponent } from '../../components/crear-sucursal/crear-sucursal.component';
 const NZ_MODULES = [
 	NzInputModule,
 	NzIconModule,
@@ -41,14 +39,14 @@ const NZ_MODULES = [
 	NzToolTipModule,
 ];
 @Component({
-	selector: 'app-marcas-lista',
+	selector: 'app-sucursal-page-lista',
 	standalone: true,
 	imports: [NZ_MODULES, RouterModule, ReactiveFormsModule, FormsModule, CommonModule, NzModalModule],
-	templateUrl: './marcas-lista.component.html',
-	styleUrl: './marcas-lista.component.scss',
+	templateUrl: './sucursal-page-lista.component.html',
+	styleUrl: './sucursal-page-lista.component.scss',
 })
-export default class MarcasListaComponent implements OnInit {
-	marcas: Marca[] = [];
+export default class SucursalPageListaComponent implements OnInit {
+	sucursales: Sucursale[] = [];
 	loading = false;
 	search: string = '';
 	page: number = 1;
@@ -56,19 +54,20 @@ export default class MarcasListaComponent implements OnInit {
 	total: number = 0;
 
 	constructor(
-		private readonly _marcasService: MarcasService,
+		private readonly _sucursalesService: SucursalService,
 		private readonly _modal: NzModalService,
 		private readonly message: NzMessageService
 	) {}
+
 	ngOnInit(): void {
-		this.loadDataMarcas();
+		this.loadDataSucursales();
 	}
 
-	loadDataMarcas() {
+	loadDataSucursales() {
 		this.loading = true;
-		this._marcasService.getMarcasData(this.page, this.limit, this.search).subscribe({
-			next: (response: IMarcasResponseData) => {
-				this.marcas = response.marcas;
+		this._sucursalesService.getSucursalData(this.page, this.limit, this.search).subscribe({
+			next: (response: ISucursalResponse) => {
+				this.sucursales = response.sucursales;
 				this.total = response.info.total;
 				this.loading = false;
 			},
@@ -77,48 +76,31 @@ export default class MarcasListaComponent implements OnInit {
 
 	searchTo() {
 		this.page = 1;
-		this.loadDataMarcas();
+		this.loadDataSucursales();
 	}
 
 	onPageChange(page: number) {
 		this.page = page;
-		this.loadDataMarcas();
+		this.loadDataSucursales();
 	}
-
-	openAgregarMarcaModal(): void {
+	openAgregarSucursalModal(): void {
 		const modal = this._modal.create({
-			nzTitle: 'Agregar Nueva Marca',
-			nzContent: CrearMarcaComponent,
+			nzTitle: 'Agregar Nuevo Sucursal',
+			nzContent: CrearSucursalComponent,
 			nzFooter: null,
-			nzWidth: '600px',
+			nzWidth: '500px',
 		});
 
 		modal.afterClose.subscribe((result: boolean) => {
 			if (result) {
-				this.loadDataMarcas();
+				this.loadDataSucursales();
 			}
 		});
 	}
-	openEditarModal(marca: Marca): void {
-		const modal = this._modal.create({
-			nzTitle: 'Editar Marca',
-			nzContent: UpdateMarcaComponent,
-			nzData: { id_marca: marca.id_marca },
-			nzFooter: null,
-			nzWidth: '600px',
-		});
-
-		modal.afterClose.subscribe((result: boolean) => {
-			if (result) {
-				this.loadDataMarcas();
-			}
-		});
-	}
-
-	deleteMarca(marca: Marca) {
+	deleteSucursal(sucursal: Sucursale) {
 		Swal.fire({
 			title: '¿Está seguro?',
-			text: `Este proceso no es reversible, está a punto de eliminar su marca , ${marca.nombre_marca}`,
+			text: `Este proceso no es reversible, está a punto de eliminar la sucursal , ${sucursal.nombre_sucursal}`,
 			showCancelButton: true,
 			confirmButtonText: 'Sí, eliminar',
 			cancelButtonText: 'No, cancelar',
@@ -135,14 +117,14 @@ export default class MarcasListaComponent implements OnInit {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				this.loading = true;
-				this._marcasService.deleteMarcaById(marca.id_marca).subscribe({
+				this._sucursalesService.deleteSucursal(sucursal.id_sucursal).subscribe({
 					next: () => {
-						this.loadDataMarcas();
-						this.message.success('Marca eliminada con éxito');
+						this.loadDataSucursales();
+						this.message.success('Sucursal eliminada con éxito');
 					},
 					error: () => {
 						this.loading = false;
-						this.message.error('Error al eliminar la Marca');
+						this.message.error('Error al eliminar la Sucursal');
 					},
 				});
 			}

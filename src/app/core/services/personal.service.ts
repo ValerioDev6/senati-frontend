@@ -13,7 +13,6 @@ export class PersonalService {
 
 	getPersonalData(page: number, limit: number, search: string = ''): Observable<IPersonalResponse> {
 		const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString()).set('search', search);
-
 		return this._httpClient.get<IPersonalResponse>(this.API_URL, { params }).pipe(delay(1000));
 	}
 

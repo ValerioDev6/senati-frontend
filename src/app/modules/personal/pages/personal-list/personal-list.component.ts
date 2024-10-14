@@ -18,6 +18,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { RouterModule } from '@angular/router';
 import { PersonalService } from '../../../../core/services/personal.service';
 import { IPersonalResponse, Personal } from '../../../../core/interfaces/personal.interface';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 @Component({
 	selector: 'app-personal-list',
@@ -41,6 +42,7 @@ import { IPersonalResponse, Personal } from '../../../../core/interfaces/persona
 		NzCardModule,
 		NzTagModule,
 		NzIconModule,
+		NzBreadCrumbModule,
 	],
 	templateUrl: './personal-list.component.html',
 	styleUrl: './personal-list.component.scss',

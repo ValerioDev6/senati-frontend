@@ -12,7 +12,6 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { BreadcrumbComponent } from '../../../../shared/components/breadcrumb.component';
 
 @Component({
 	selector: 'app-main-layout',
@@ -30,7 +29,6 @@ import { BreadcrumbComponent } from '../../../../shared/components/breadcrumb.co
 		NzDropDownModule,
 		CommonModule,
 		NzBreadCrumbModule,
-		BreadcrumbComponent,
 	],
 	templateUrl: './main-layout.component.html',
 	styleUrl: './main-layout.component.scss',
