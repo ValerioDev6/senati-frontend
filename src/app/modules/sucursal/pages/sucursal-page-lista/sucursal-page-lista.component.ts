@@ -22,6 +22,7 @@ import { ISucursalResponse, Sucursale } from '../../../../core/interfaces/sucurs
 import { SucursalService } from '../../../../core/services/sucursales.service';
 import Swal from 'sweetalert2';
 import { CrearSucursalComponent } from '../../components/crear-sucursal/crear-sucursal.component';
+import { ActualizarSucursalComponent } from '../../components/actualizar-sucursal/actualizar-sucursal.component';
 const NZ_MODULES = [
 	NzInputModule,
 	NzIconModule,
@@ -87,6 +88,22 @@ export default class SucursalPageListaComponent implements OnInit {
 		const modal = this._modal.create({
 			nzTitle: 'Agregar Nuevo Sucursal',
 			nzContent: CrearSucursalComponent,
+			nzFooter: null,
+			nzWidth: '500px',
+		});
+
+		modal.afterClose.subscribe((result: boolean) => {
+			if (result) {
+				this.loadDataSucursales();
+			}
+		});
+	}
+
+	openEditarModal(sucursal: Sucursale): void {
+		const modal = this._modal.create({
+			nzTitle: 'Editar Sucursal',
+			nzContent: ActualizarSucursalComponent,
+			nzData: { id_sucursal: sucursal.id_sucursal },
 			nzFooter: null,
 			nzWidth: '500px',
 		});

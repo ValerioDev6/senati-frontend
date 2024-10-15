@@ -23,7 +23,8 @@ import { IMarcasResponseData, Marca } from '../../../../core/interfaces/marcas.i
 import Swal from 'sweetalert2';
 import { CrearMarcaComponent } from '../../components/crear-marca/crear-marca.component';
 import { UpdateMarcaComponent } from '../../components/update-marca/update-marca.component';
-
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
 const NZ_MODULES = [
 	NzInputModule,
 	NzIconModule,
@@ -39,6 +40,8 @@ const NZ_MODULES = [
 	NzTagModule,
 	NzBreadCrumbModule,
 	NzToolTipModule,
+	NzPopconfirmModule,
+	NzSpaceModule,
 ];
 @Component({
 	selector: 'app-marcas-lista',
@@ -54,6 +57,7 @@ export default class MarcasListaComponent implements OnInit {
 	page: number = 1;
 	limit: number = 10;
 	total: number = 0;
+	deletingMarcaId: string | null = null;
 
 	constructor(
 		private readonly _marcasService: MarcasService,

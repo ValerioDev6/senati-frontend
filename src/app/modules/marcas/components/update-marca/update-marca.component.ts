@@ -95,7 +95,6 @@ export class UpdateMarcaComponent implements OnInit {
 				},
 				error: (error) => {
 					console.error('Error al actualizar la marca', error);
-					this.message.error('Error al actualizar la marca');
 				},
 			});
 		} else {

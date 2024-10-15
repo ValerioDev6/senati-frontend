@@ -10,6 +10,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
@@ -29,6 +30,7 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 		NzDropDownModule,
 		CommonModule,
 		NzBreadCrumbModule,
+		NzToolTipModule,
 	],
 	templateUrl: './main-layout.component.html',
 	styleUrl: './main-layout.component.scss',

@@ -56,7 +56,7 @@
 					<td>{{ sucursal.tb_pais.nombre }}</td>
 
 					<td>
-						<a nz-tooltip nzTooltipTitle="Editar" nz-button nzType="link">
+						<a nz-tooltip nzTooltipTitle="Editar" (click)="openEditarModal(sucursal)" nz-button nzType="link">
 							<span nz-icon nzType="edit" nzTheme="outline"></span>
 						</a>
 						<a nz-tooltip nzTooltipTitle="Eliminar" (click)="deleteSucursal(sucursal)" nz-button nzType="link" nzDanger>

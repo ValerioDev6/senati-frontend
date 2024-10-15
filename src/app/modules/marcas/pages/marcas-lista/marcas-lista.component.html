@@ -50,27 +50,36 @@
 					</nz-tag>
 				</td>
 				<td class="text-gray-600">{{ marca.created_at | date: 'MMM d, y, h:mm a' }}</td>
-				<td>
-					<a
-						(click)="openEditarModal(marca)"
-						nz-button
-						nzType="link"
-						nz-tooltip
-						nzTooltipTitle="Editar"
-						class="text-blue-500 hover:text-blue-700"
-					>
-						<span nz-icon nzType="edit" nzTheme="outline"></span>
-					</a>
-					<a
-						nz-button
-						nzType="link"
-						nz-tooltip
-						nzTooltipTitle="Eliminar"
-						(click)="deleteMarca(marca)"
-						class="text-red-500 hover:text-red-700"
-					>
-						<span nz-icon nzType="delete" nzTheme="outline"></span>
-					</a>
+				<td nzAlign="center">
+					<nz-space [nzSize]="8">
+						<ng-container *nzSpaceItem>
+							<button
+								nz-button
+								nzType="primary"
+								nzShape="circle"
+								nzSize="small"
+								nz-tooltip
+								nzTooltipTitle="Editar"
+								(click)="openEditarModal(marca)"
+							>
+								<span nz-icon nzType="edit" nzTheme="outline"></span>
+							</button>
+						</ng-container>
+						<ng-container *nzSpaceItem>
+							<button
+								nz-button
+								nzType="primary"
+								nzDanger
+								nzShape="circle"
+								nzSize="small"
+								nz-tooltip
+								nzTooltipTitle="Eliminar"
+								(click)="deleteMarca(marca)"
+							>
+								<span nz-icon nzType="delete" nzTheme="outline"></span>
+							</button>
+						</ng-container>
+					</nz-space>
 				</td>
 			</tr>
 		</tbody>
