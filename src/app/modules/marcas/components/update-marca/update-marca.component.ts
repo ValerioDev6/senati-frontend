@@ -89,7 +89,7 @@ export class UpdateMarcaComponent implements OnInit {
 				...this.formGroup.value,
 			};
 			this.marcaService.updateMarca(updatedMarca).subscribe({
-				next: () => {
+				next: () => {	
 					this.message.success('Marca  actualizada correctamente');
 					this.modalRef.close(true);
 				},

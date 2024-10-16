@@ -24,3 +24,5 @@ export const URL_SUCURSAL_ALL = `${BASE_URL}/${endpoint.SUCURSAL_ENDPOINT}`;
 export const URL_DIRECCION_ALL = `${BASE_URL}/${endpoint.DIRECCION_ENDPOINT}`;
 export const URL_PAIS_ALL = `${BASE_URL}/${endpoint.PAIS_ENPOINT}`;
 export const URL_TIPO_TELEFONO_ALL = `${BASE_URL}/${endpoint.TIPO_TELEFONO_ENDPOINT}`;
+
+export const URL_PROVEEDORES_ALL = `${BASE_URL}/${endpoint.PROVEEDORES_ENDPOINT}`;

@@ -23,4 +23,6 @@ export const endpoint = {
 	// direcciones
 	TIPO_VIA: 'tipo-via',
 	TIPO_ZONA: 'tipo-zona',
+
+	PROVEEDORES_ENDPOINT: 'proveedores',
 };
