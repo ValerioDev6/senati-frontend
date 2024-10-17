@@ -25,6 +25,7 @@ import { CrearMarcaComponent } from '../../components/crear-marca/crear-marca.co
 import { UpdateMarcaComponent } from '../../components/update-marca/update-marca.component';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { ReportesService } from '../../../../core/services/reportes.service';
 const NZ_MODULES = [
 	NzInputModule,
 	NzIconModule,
@@ -39,14 +40,13 @@ const NZ_MODULES = [
 	NzCardModule,
 	NzTagModule,
 	NzBreadCrumbModule,
-	NzToolTipModule,
 	NzPopconfirmModule,
 	NzSpaceModule,
 ];
 @Component({
 	selector: 'app-marcas-lista',
 	standalone: true,
-	imports: [NZ_MODULES, RouterModule, ReactiveFormsModule, FormsModule, CommonModule, NzModalModule],
+	imports: [NZ_MODULES, NzToolTipModule, RouterModule, ReactiveFormsModule, FormsModule, CommonModule, NzModalModule],
 	templateUrl: './marcas-lista.component.html',
 	styleUrl: './marcas-lista.component.scss',
 })
@@ -62,12 +62,28 @@ export default class MarcasListaComponent implements OnInit {
 	constructor(
 		private readonly _marcasService: MarcasService,
 		private readonly _modal: NzModalService,
-		private readonly message: NzMessageService
+		private readonly message: NzMessageService,
+		private reportesService: ReportesService
 	) {}
 	ngOnInit(): void {
 		this.loadDataMarcas();
 	}
-
+	downloadPDF() {
+		this.reportesService.downloadMarcasPDF().subscribe(
+			(blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_categorias.pdf';
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			(error) => {
+				this.message.error('Error al descargar el PDF');
+				console.error('Error downloading PDF:', error);
+			}
+		);
+	}
 	loadDataMarcas() {
 		this.loading = true;
 		this._marcasService.getMarcasData(this.page, this.limit, this.search).subscribe({

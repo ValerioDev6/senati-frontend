@@ -17,7 +17,29 @@
 				<span nz-icon nzType="search"></span>
 			</ng-template>
 			<button (click)="openAgregarMarcaModal()" nz-button nzType="primary" class="flex items-center justify-center">
-				<span nz-icon nzType="plus" nzTheme="outline"></span>
+				<span nz-tooltip nzTooltipTitle="Agrega Marca" nz-icon nzType="plus" nzTheme="outline"></span>
+			</button>
+
+			<button
+				(click)="downloadPDF()"
+				nz-button
+				nzType="primary"
+				class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+				nz-tooltip
+				nzTooltipTitle="Descargar PDF"
+			>
+				<span nz-icon nzType="file-pdf" nzTheme="outline" class="mr-2"></span>
+				PDF
+			</button>
+			<button
+				nz-button
+				nzType="primary"
+				class="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+				nz-tooltip
+				nzTooltipTitle="Descargar Excel"
+			>
+				<span nz-icon nzType="file-excel" nzTheme="outline" class="mr-2"></span>
+				Excel
 			</button>
 		</div>
 	</div>
@@ -50,7 +72,7 @@
 					</nz-tag>
 				</td>
 				<td class="text-gray-600">{{ marca.created_at | date: 'MMM d, y, h:mm a' }}</td>
-				<td nzAlign="center">
+				<td nzAlign="left">
 					<nz-space [nzSize]="8">
 						<ng-container *nzSpaceItem>
 							<button

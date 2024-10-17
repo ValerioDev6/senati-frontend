@@ -174,61 +174,99 @@
 			<nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="personal.personal_img"></nz-avatar>
 		</div>
 		<ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./dashboard" routerLinkActive="active-link">
-					<i nz-icon nzType="dashboard"></i>
-					<span>Dashboard</span>
-				</a>
-			</li>
-			<li nz-submenu nzTitle="Almacén" nzIcon="home">
-				<ul>
-					<li nz-menu-item nzMatchRouter>
-						<a routerLink="./marcas/marcas-lista" routerLinkActive="active-link">
-							<i nz-icon nzType="tag" nzTheme="outline"></i>
-							<span>Marcas</span>
-						</a>
-					</li>
-					<li nz-menu-item nzMatchRouter>
-						<a routerLink="./categorias/lista-categorias" routerLinkActive="active-link">
-							<i nz-icon nzType="appstore" nzTheme="outline"></i>
-							<span>Categorías</span>
-						</a>
-					</li>
-					<li nz-menu-item nzMatchRouter>
-						<a routerLink="./productos/lista-productos" routerLinkActive="active-link">
-							<i nz-icon nzType="shopping" nzTheme="outline"></i>
-							<span>Productos</span>
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li nz-submenu nzTitle="Personal" nzIcon="team">
-				<ul>
-					<li nz-menu-item nzMatchRouter>
-						<a routerLink="./personal/lista-personal" routerLinkActive="active-link">Listado de Personal</a>
-					</li>
-					<li nz-menu-item nzMatchRouter>
-						<a routerLink="./personal/crear-personal" routerLinkActive="active-link">Agregar Personal</a>
-					</li>
-				</ul>
-			</li>
-			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./sucursal/sucursales-lista" routerLinkActive="active-link">
-					<i nz-icon nzType="environment"></i>
-					<span>Sucursales</span>
-				</a>
-			</li>
-			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./proveedor/proveedor-lista" routerLinkActive="active-link">
-					<i nz-icon nzType="shop"></i>
-					<span>Proveedores</span>
+			<!-- Dashboard -->
+			<li nz-menu-item nzMatchRouter class="hover:bg-blue-50">
+				<a
+					routerLink="./dashboard"
+					routerLinkActive="text-blue-600"
+					class="flex items-center space-x-2 text-gray-700 font-semibold"
+				>
+					<i nz-icon nzType="dashboard" class="text-blue-500 text-lg"></i>
+					<span class="text-sm">Dashboard</span>
 				</a>
 			</li>
 
-			<li nz-menu-item nzMatchRouter>
-				<a routerLink="./roles/lista-roles" routerLinkActive="active-link">
-					<i nz-icon nzType="safety-certificate"></i>
-					<span>Roles</span>
+			<!-- Almacén -->
+			<li nz-submenu nzTitle="Almacén" nzIcon="home" class="font-semibold text-gray-700">
+				<ul class="bg-white">
+					<li nz-menu-item nzMatchRouter class="hover:bg-blue-50">
+						<a routerLink="./marcas/marcas-lista" routerLinkActive="text-blue-600" class="flex items-center space-x-2">
+							<i nz-icon nzType="tag" nzTheme="outline" class="text-blue-500"></i>
+							<span class="text-sm">Marcas</span>
+						</a>
+					</li>
+					<li nz-menu-item nzMatchRouter class="hover:bg-blue-50">
+						<a
+							routerLink="./categorias/lista-categorias"
+							routerLinkActive="text-blue-600"
+							class="flex items-center space-x-2"
+						>
+							<i nz-icon nzType="appstore" nzTheme="outline" class="text-blue-500"></i>
+							<span class="text-sm">Categorías</span>
+						</a>
+					</li>
+					<li nz-menu-item nzMatchRouter class="hover:bg-blue-50">
+						<a
+							routerLink="./productos/lista-productos"
+							routerLinkActive="text-blue-600"
+							class="flex items-center space-x-2"
+						>
+							<i nz-icon nzType="shopping" nzTheme="outline" class="text-blue-500"></i>
+							<span class="text-sm">Productos</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+
+			<!-- Personal -->
+			<li nz-submenu nzTitle="Personal" nzIcon="team" class="font-semibold text-gray-700">
+				<ul class="bg-white">
+					<li nz-menu-item nzMatchRouter class="hover:bg-blue-50">
+						<a routerLink="./personal/lista-personal" routerLinkActive="text-blue-600" class="text-sm"
+							>Listado de Personal</a
+						>
+					</li>
+					<li nz-menu-item nzMatchRouter class="hover:bg-blue-50">
+						<a routerLink="./personal/crear-personal" routerLinkActive="text-blue-600" class="text-sm"
+							>Agregar Personal</a
+						>
+					</li>
+				</ul>
+			</li>
+
+			<!-- Sucursales -->
+			<li nz-menu-item nzMatchRouter class="hover:bg-blue-50">
+				<a
+					routerLink="./sucursal/sucursales-lista"
+					routerLinkActive="text-blue-600"
+					class="flex items-center space-x-2 text-gray-700 font-semibold"
+				>
+					<i nz-icon nzType="environment" class="text-blue-500"></i>
+					<span class="text-sm">Sucursales</span>
+				</a>
+			</li>
+
+			<!-- Proveedores -->
+			<li nz-menu-item nzMatchRouter class="hover:bg-blue-50">
+				<a
+					routerLink="./proveedor/proveedor-lista"
+					routerLinkActive="text-blue-600"
+					class="flex items-center space-x-2 text-gray-700 font-semibold"
+				>
+					<i nz-icon nzType="shop" class="text-blue-500"></i>
+					<span class="text-sm">Proveedores</span>
+				</a>
+			</li>
+
+			<!-- Roles -->
+			<li nz-menu-item nzMatchRouter class="hover:bg-blue-50">
+				<a
+					routerLink="./roles/lista-roles"
+					routerLinkActive="text-blue-600"
+					class="flex items-center space-x-2 text-gray-700 font-semibold"
+				>
+					<i nz-icon nzType="safety-certificate" class="text-blue-500"></i>
+					<span class="text-sm">Roles</span>
 				</a>
 			</li>
 		</ul>
