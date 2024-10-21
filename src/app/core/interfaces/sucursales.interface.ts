@@ -42,8 +42,17 @@ export interface TBTipoTelefono {
 	descripcion: string;
 }
 
-
 export interface ISucursaleSubmit {
+	nombre_sucursal: string;
+	telefono: string;
+	email: string;
+	id_direccion: string;
+	id_tipo_telefono: string;
+	id_pais: string;
+}
+
+export interface ISucursalComboBox {
+	id_sucursal: string;
 	nombre_sucursal: string;
 	telefono: string;
 	email: string;

@@ -1,5 +1,5 @@
 <div>
-	<nz-breadcrumb class="font-bold text-sm" [nzAutoGenerate]="true"> </nz-breadcrumb>
+	<nz-breadcrumb class="font-bold text-sm text-white" [nzAutoGenerate]="true"> </nz-breadcrumb>
 </div>
 <div class="container mx-auto py-6">
 	<div class="flex flex-col md:flex-row justify-between items-center mb-6">
@@ -10,35 +10,40 @@
 		</h1>
 
 		<div class="flex items-center space-x-4">
-			<nz-input-group [nzSuffix]="suffixIconSearch" class="w-64">
+			<nz-input-group [nzSuffix]="suffixIconSearch" class="w-64 p-2 rounded-lg">
 				<input type="text" nz-input placeholder="Buscar marcas" [(ngModel)]="search" (keyup.enter)="searchTo()" />
 			</nz-input-group>
 			<ng-template #suffixIconSearch>
 				<span nz-icon nzType="search"></span>
 			</ng-template>
-			<button (click)="openAgregarMarcaModal()" nz-button nzType="primary" class="flex items-center justify-center">
-				<span nz-tooltip nzTooltipTitle="Agrega Marca" nz-icon nzType="plus" nzTheme="outline"></span>
+
+			<button
+				(click)="openAgregarMarcaModal()"
+				nz-button
+				nzType="primary"
+				class="flex rounded-lg cursor-pointer uppercase font-bold items-center h-10 px-4 space-x-2 bg-mantis-600 border-none hover:bg-mantis-500 focus:outline-none focus:ring-2 focus:ring-mantis-400 focus:ring-offset-2 shadow-sm transition-all duration-200"
+			>
+				<span nz-icon nzType="plus" nzTheme="outline"></span>
+				<span class="font-medium">Agregar </span>
 			</button>
 
 			<button
 				(click)="downloadPDF()"
-				nz-button
-				nzType="primary"
-				class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+				class="flex items-center justify-center bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mr-4"
 				nz-tooltip
 				nzTooltipTitle="Descargar PDF"
 			>
-				<span nz-icon nzType="file-pdf" nzTheme="outline" class="mr-2"></span>
+				<span nz-icon nzType="file-pdf" nzTheme="outline" class="mr-2 text-lg"></span>
 				PDF
 			</button>
+
 			<button
-				nz-button
-				nzType="primary"
-				class="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+				(click)="descargarExcel()"
+				class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
 				nz-tooltip
 				nzTooltipTitle="Descargar Excel"
 			>
-				<span nz-icon nzType="file-excel" nzTheme="outline" class="mr-2"></span>
+				<span nz-icon nzType="file-excel" nzTheme="outline" class="mr-2 text-lg"></span>
 				Excel
 			</button>
 		</div>
@@ -53,6 +58,7 @@
 		[nzFrontPagination]="false"
 		(nzPageIndexChange)="onPageChange($event)"
 		nzShowSizeChanger
+		[nzBordered]="true"
 		[nzShowQuickJumper]="true"
 	>
 		<thead>

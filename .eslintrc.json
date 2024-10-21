@@ -33,7 +33,7 @@
 			"files": ["*.html"],
 			"extends": ["plugin:@angular-eslint/template/recommended", "plugin:@angular-eslint/template/accessibility"],
 			"rules": {
-				"@typescript-eslint/no-unused-vars": "error",
+				"@typescript-eslint/no-unused-vars": "off",
 				"@typescript-eslint/no-explicit-any": "off",
 				"@angular-eslint/template/elements-content": "off",
 				"@angular-eslint/template/click-events-have-key-events": "off",

@@ -11,7 +11,7 @@ import { forkJoin } from 'rxjs';
 import { TipoTelefonoService } from '../../../../core/services/tipo-telefono.service';
 import { IPaisResponse } from '../../../../core/interfaces/pais.interface';
 import { ITelefonoResponse } from '../../../../core/interfaces/tipo-telefono.inteface';
-import { Direccione } from '../../../../core/interfaces/direcciones.interface';
+import { IComboBoxDireccion } from '../../../../core/interfaces/direcciones.interface';
 import { CommonModule } from '@angular/common';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -19,6 +19,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { RouterLink } from '@angular/router';
 interface ModalData {
 	id_sucursal: string;
 }
@@ -35,6 +36,7 @@ interface ModalData {
 		NzSelectModule,
 		NzButtonModule,
 		NzIconModule,
+		RouterLink,
 	],
 	templateUrl: './actualizar-sucursal.component.html',
 	styleUrl: './actualizar-sucursal.component.scss',
@@ -47,7 +49,7 @@ export class ActualizarSucursalComponent implements OnInit {
 	private readonly _direccionService = inject(DireccionService);
 	paises: IPaisResponse[] = [];
 	tiposTelefono: ITelefonoResponse[] = [];
-	direcciones: Direccione[] = [];
+	direcciones: IComboBoxDireccion[] = [];
 	private readonly modalRef = inject(NzModalRef);
 	private readonly data = inject<ModalData>(NZ_MODAL_DATA);
 	private readonly message = inject(NzMessageService);
@@ -115,12 +117,12 @@ export class ActualizarSucursalComponent implements OnInit {
 		forkJoin({
 			paises: this._paisService.getPaisesData(),
 			tiposTelefono: this._tipoTelefonoService.getTiposTelefonosData(),
-			direcciones: this._direccionService.getDireccionData(1, 100),
+			direcciones: this._direccionService.getComboBoxDireccionesAll(),
 		}).subscribe({
 			next: (results) => {
 				this.paises = results.paises;
 				this.tiposTelefono = results.tiposTelefono;
-				this.direcciones = results.direcciones.direcciones;
+				this.direcciones = results.direcciones;
 				this.isLoading = false;
 			},
 			error: (error) => {

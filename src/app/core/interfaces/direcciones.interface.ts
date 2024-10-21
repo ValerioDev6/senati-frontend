@@ -31,3 +31,10 @@ export interface Info {
 	next: string;
 	prev: null;
 }
+
+export interface IComboBoxDireccion {
+	id_direccion: string;
+	direccion: string;
+	id_tipo_via: string;
+	id_tipo_zona: string;
+}

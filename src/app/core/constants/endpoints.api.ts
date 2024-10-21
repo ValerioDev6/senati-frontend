@@ -25,4 +25,6 @@ export const endpoint = {
 	TIPO_ZONA: 'tipo-zona',
 
 	PROVEEDORES_ENDPOINT: 'proveedores',
+
+	TIPOS_PROPIETARIOS: 'tipo-propietario',
 };

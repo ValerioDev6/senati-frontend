@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, delay, map, Observable, of } from 'rxjs';
-import { IMarcasResponseData, IMarcaSubmit, Marca } from '../interfaces/marcas.interface';
+import { IMarcaComboBox, IMarcasResponseData, IMarcaSubmit, Marca } from '../interfaces/marcas.interface';
 import { URL_MARCAS_ALL } from '../config/api/config.url';
 
 @Injectable({
@@ -15,6 +15,9 @@ export class MarcasService {
 		return this._httpClient.get<IMarcasResponseData>(URL_MARCAS_ALL, { params }).pipe(delay(1000));
 	}
 
+	getComboBoxMarcasAll(): Observable<IMarcaComboBox[]> {
+		return this._httpClient.get<IMarcaComboBox[]>(`${URL_MARCAS_ALL}/combo`);
+	}
 	createMarcas(data: IMarcaSubmit): Observable<IMarcaSubmit> {
 		return this._httpClient.post<IMarcaSubmit>(URL_MARCAS_ALL, data);
 	}

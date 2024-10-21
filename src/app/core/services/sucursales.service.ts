@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, delay, map, Observable, of } from 'rxjs';
-import { ISucursaleSubmit, ISucursalResponse, Sucursale } from '../interfaces/sucursales.interface';
+import { ISucursalComboBox, ISucursaleSubmit, ISucursalResponse, Sucursale } from '../interfaces/sucursales.interface';
 import { URL_SUCURSAL_ALL } from '../config/api/config.url';
 
 @Injectable({
@@ -13,6 +13,10 @@ export class SucursalService {
 	getSucursalData(page: number, limit: number, search: string = ''): Observable<ISucursalResponse> {
 		const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString()).set('search', search);
 		return this._httpClient.get<ISucursalResponse>(URL_SUCURSAL_ALL, { params }).pipe(delay(1000));
+	}
+
+	getComboBoxSucursalesAll(): Observable<ISucursalComboBox[]> {
+		return this._httpClient.get<ISucursalComboBox[]>(`${URL_SUCURSAL_ALL}/combo`);
 	}
 
 	createSucursal(data: ISucursaleSubmit): Observable<ISucursaleSubmit> {

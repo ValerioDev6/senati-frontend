@@ -9,7 +9,7 @@ import { forkJoin } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { IPaisResponse } from '../../../../core/interfaces/pais.interface';
 import { ITelefonoResponse } from '../../../../core/interfaces/tipo-telefono.inteface';
-import { Direccione } from '../../../../core/interfaces/direcciones.interface';
+import { IComboBoxDireccion } from '../../../../core/interfaces/direcciones.interface';
 import { PaisService } from '../../../../core/services/pais.service';
 import { TipoTelefonoService } from '../../../../core/services/tipo-telefono.service';
 import { DireccionService } from '../../../../core/services/direccion.service';
@@ -39,7 +39,7 @@ export class CrearSucursalComponent implements OnInit {
 	sucursalForm: FormGroup;
 	paises: IPaisResponse[] = [];
 	tiposTelefono: ITelefonoResponse[] = [];
-	direcciones: Direccione[] = [];
+	direcciones: IComboBoxDireccion[] = [];
 	isLoading = true;
 
 	constructor(
@@ -93,12 +93,12 @@ export class CrearSucursalComponent implements OnInit {
 		forkJoin({
 			paises: this.paisService.getPaisesData(),
 			tiposTelefono: this.tipoTelefonoService.getTiposTelefonosData(),
-			direcciones: this.direccionService.getDireccionData(1, 100),
+			direcciones: this.direccionService.getComboBoxDireccionesAll(),
 		}).subscribe({
 			next: (results) => {
 				this.paises = results.paises;
 				this.tiposTelefono = results.tiposTelefono;
-				this.direcciones = results.direcciones.direcciones;
+				this.direcciones = results.direcciones;
 				this.isLoading = false;
 			},
 			error: (error) => {

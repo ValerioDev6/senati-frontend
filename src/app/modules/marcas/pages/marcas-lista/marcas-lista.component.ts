@@ -25,7 +25,7 @@ import { CrearMarcaComponent } from '../../components/crear-marca/crear-marca.co
 import { UpdateMarcaComponent } from '../../components/update-marca/update-marca.component';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { ReportesService } from '../../../../core/services/reportes.service';
+import { ReportesService } from '../../../../core/services/reports/reportes.service';
 const NZ_MODULES = [
 	NzInputModule,
 	NzIconModule,
@@ -57,7 +57,6 @@ export default class MarcasListaComponent implements OnInit {
 	page: number = 1;
 	limit: number = 10;
 	total: number = 0;
-	deletingMarcaId: string | null = null;
 
 	constructor(
 		private readonly _marcasService: MarcasService,
@@ -65,8 +64,26 @@ export default class MarcasListaComponent implements OnInit {
 		private readonly message: NzMessageService,
 		private reportesService: ReportesService
 	) {}
+
 	ngOnInit(): void {
 		this.loadDataMarcas();
+	}
+
+	descargarExcel(): void {
+		this.reportesService.descargarExcelMarcas().subscribe(
+			(blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_marcas.xlsx'; // Nombre del archivo Excel
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			(error) => {
+				this.message.error('Error al descargar el Excel');
+				console.error('Error downloading Excel:', error);
+			}
+		);
 	}
 	downloadPDF() {
 		this.reportesService.downloadMarcasPDF().subscribe(

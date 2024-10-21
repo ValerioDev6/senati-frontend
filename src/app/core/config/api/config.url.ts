@@ -15,6 +15,7 @@ export const URL_SEXO_ALL = `${BASE_URL}/${endpoint.SEXO_ENDPOINT}`;
 
 export const URL_MARCAS_ALL = `${BASE_URL}/${endpoint.MARCAS_ENDPOINT}`;
 export const URL_CATEGORIAS = `${BASE_URL}/${endpoint.CATEGORIES_ENPOINT}`;
+export const URL_PRODUCTOS_ALL = `${BASE_URL}/${endpoint.PRODUCTOS_ENDOINT}`;
 
 export const URL_TIPO_ZONA_ALL = `${BASE_URL}/${endpoint.TIPO_ZONA}`;
 export const URL_TIPO_VIA_ALL = `${BASE_URL}/${endpoint.TIPO_VIA}`;
@@ -26,3 +27,5 @@ export const URL_PAIS_ALL = `${BASE_URL}/${endpoint.PAIS_ENPOINT}`;
 export const URL_TIPO_TELEFONO_ALL = `${BASE_URL}/${endpoint.TIPO_TELEFONO_ENDPOINT}`;
 
 export const URL_PROVEEDORES_ALL = `${BASE_URL}/${endpoint.PROVEEDORES_ENDPOINT}`;
+
+export const URL_TIPO_PROPIETARIO = `${BASE_URL}/${endpoint.TIPOS_PROPIETARIOS}`;

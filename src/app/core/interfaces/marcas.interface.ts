@@ -23,3 +23,11 @@ export interface IMarcaSubmit {
 	estado: boolean;
 	created_at: Date;
 }
+
+export interface IMarcaComboBox {
+	id_marca: string;
+	nombre_marca: string;
+	estado: boolean;
+	created_at: Date;
+	updated_at: Date;
+}

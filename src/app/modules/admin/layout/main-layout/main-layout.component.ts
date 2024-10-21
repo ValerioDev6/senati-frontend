@@ -39,6 +39,7 @@ export class MainLayoutComponent implements OnInit {
 	personal!: CheckStatusResponse;
 	isCollapsed = false;
 	private readonly _authService = inject(AuthService);
+
 	ngOnInit(): void {
 		this._authService.checkAuthStatus().subscribe((response: CheckStatusResponse) => {
 			this.personal = response;

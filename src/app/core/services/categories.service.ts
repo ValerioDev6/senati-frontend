@@ -1,6 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Category, ICategorieResponseData, ICategorySubmit } from '../interfaces/categories.interface';
+import {
+	Category,
+	ICategorieResponseData,
+	ICategorySubmit,
+	IComboBoxCategorie,
+} from '../interfaces/categories.interface';
 import { catchError, delay, map, Observable, of } from 'rxjs';
 import { URL_CATEGORIAS } from '../config/api/config.url';
 
@@ -13,6 +18,10 @@ export class CategoriesService {
 	getCategoriesData(page: number, limit: number, search: string = ''): Observable<ICategorieResponseData> {
 		const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString()).set('search', search);
 		return this._httpClient.get<ICategorieResponseData>(URL_CATEGORIAS, { params }).pipe(delay(1000));
+	}
+
+	getComboBoxCategoriaAll(): Observable<IComboBoxCategorie[]> {
+		return this._httpClient.get<IComboBoxCategorie[]>(`${URL_CATEGORIAS}/combo`);
 	}
 
 	createCategorias(data: ICategorySubmit): Observable<ICategorySubmit> {

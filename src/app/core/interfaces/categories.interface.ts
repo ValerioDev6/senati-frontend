@@ -19,6 +19,14 @@ export interface Info {
 	prev: null;
 }
 
+export interface IComboBoxCategorie {
+	id_categoria: string;
+	nombre_cat: string;
+	estado: boolean;
+	created_at: Date;
+	updated_at: Date;
+}
+
 export interface ICategorySubmit {
 	nombre_cat: string;
 	estado: boolean;
