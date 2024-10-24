@@ -8,4 +8,8 @@ export const CATEGORIAS_ROUTES: Routes = [
 			breadcrumb: 'Categorias',
 		},
 	},
+	{
+		path: '**',
+		redirectTo: 'lista-categorias',
+	},
 ];

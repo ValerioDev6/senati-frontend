@@ -35,6 +35,7 @@
 			<div class="flex space-x-2">
 				<!--  PDF -->
 				<button
+					(click)="downloadPDF()"
 					class="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
 					nz-tooltip
 					nzTooltipTitle="Descargar PDF"
@@ -44,6 +45,7 @@
 
 				<!--  Excel -->
 				<button
+					(click)="descargarExcel()"
 					class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
 					nz-tooltip
 					nzTooltipTitle="Descargar Excel"

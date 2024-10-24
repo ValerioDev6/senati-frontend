@@ -25,7 +25,8 @@ import { CrearMarcaComponent } from '../../components/crear-marca/crear-marca.co
 import { UpdateMarcaComponent } from '../../components/update-marca/update-marca.component';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { ReportesService } from '../../../../core/services/reports/reportes.service';
+import { ReportesPdfService } from '../../../../core/services/reports/reportes-pdf.service';
+import { ReportesExcelService } from '../../../../core/services/reports/reportes-excel.service';
 const NZ_MODULES = [
 	NzInputModule,
 	NzIconModule,
@@ -62,7 +63,8 @@ export default class MarcasListaComponent implements OnInit {
 		private readonly _marcasService: MarcasService,
 		private readonly _modal: NzModalService,
 		private readonly message: NzMessageService,
-		private reportesService: ReportesService
+		private reportePdfService: ReportesPdfService,
+		private reporteExcelService: ReportesExcelService
 	) {}
 
 	ngOnInit(): void {
@@ -70,36 +72,37 @@ export default class MarcasListaComponent implements OnInit {
 	}
 
 	descargarExcel(): void {
-		this.reportesService.descargarExcelMarcas().subscribe(
-			(blob: Blob) => {
+		this.reporteExcelService.descargarExcelMarcas().subscribe({
+			next: (blob: Blob) => {
 				const url = window.URL.createObjectURL(blob);
 				const link = document.createElement('a');
 				link.href = url;
-				link.download = 'reporte_marcas.xlsx'; // Nombre del archivo Excel
+				link.download = 'reporte_marcas.xlsx';
 				link.click();
 				window.URL.revokeObjectURL(url);
 			},
-			(error) => {
+			error: (error) => {
 				this.message.error('Error al descargar el Excel');
 				console.error('Error downloading Excel:', error);
-			}
-		);
+			},
+		});
 	}
-	downloadPDF() {
-		this.reportesService.downloadMarcasPDF().subscribe(
-			(blob: Blob) => {
+
+	downloadPDF(): void {
+		this.reportePdfService.downloadMarcasPDF().subscribe({
+			next: (blob: Blob) => {
 				const url = window.URL.createObjectURL(blob);
 				const link = document.createElement('a');
 				link.href = url;
-				link.download = 'reporte_categorias.pdf';
+				link.download = 'reporte_marcas.pdf';
 				link.click();
 				window.URL.revokeObjectURL(url);
 			},
-			(error) => {
+			error: (error) => {
 				this.message.error('Error al descargar el PDF');
 				console.error('Error downloading PDF:', error);
-			}
-		);
+			},
+		});
 	}
 	loadDataMarcas() {
 		this.loading = true;

@@ -8,4 +8,8 @@ export const SUCURSALES_ROUTES: Routes = [
 			breadcrumb: 'Sucursal',
 		},
 	},
+	{
+		path: '**',
+		redirectTo: 'sucursales-lista',
+	},
 ];

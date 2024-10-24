@@ -27,4 +27,7 @@ export const endpoint = {
 	PROVEEDORES_ENDPOINT: 'proveedores',
 
 	TIPOS_PROPIETARIOS: 'tipo-propietario',
+
+	REPORTES_EXCEL: 'basic-reports',
+	REPORTES_PDF: 'basic-reports-excel',
 };

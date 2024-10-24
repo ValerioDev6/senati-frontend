@@ -14,21 +14,43 @@
 			Gestión de Categorias
 		</h3>
 
-		<div class="flex items-center space-x-4">
-			<nz-input-group [nzSuffix]="suffixIconSearch" class="w-64">
-				<input type="text" nz-input placeholder="Buscar marcas" [(ngModel)]="search" (keyup.enter)="searchTo()" />
+		<div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+			<nz-input-group [nzSuffix]="suffixIconSearch" class="w-full md:w-64">
+				<input type="text" nz-input placeholder="Buscar producto" [(ngModel)]="search" (keyup.enter)="searchTo()" />
 			</nz-input-group>
 			<ng-template #suffixIconSearch>
 				<span nz-icon nzType="search"></span>
 			</ng-template>
+
 			<button
 				(click)="openAgregarCategoriasModal()"
 				nz-button
 				nzType="primary"
-				class="flex items-center justify-center"
+				class="h-10 px-4 rounded-lg uppercase font-bold bg-mantis-600 border-none hover:bg-mantis-500 focus:ring-2 focus:ring-mantis-400 transition"
 			>
-				<span nz-icon nzType="plus" nzTheme="outline"></span>
+				<span nz-icon nzType="plus"></span>
+				<span>Agregar</span>
 			</button>
+
+			<div class="flex space-x-2">
+				<!--  PDF -->
+				<button
+					class="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
+					nz-tooltip
+					nzTooltipTitle="Descargar PDF"
+				>
+					<span nz-icon nzType="file-pdf" nzTheme="outline"></span>
+				</button>
+
+				<!--  Excel -->
+				<button
+					class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
+					nz-tooltip
+					nzTooltipTitle="Descargar Excel"
+				>
+					<span nz-icon nzType="file-excel" nzTheme="outline"></span>
+				</button>
+			</div>
 		</div>
 	</div>
 

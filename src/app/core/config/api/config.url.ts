@@ -29,3 +29,6 @@ export const URL_TIPO_TELEFONO_ALL = `${BASE_URL}/${endpoint.TIPO_TELEFONO_ENDPO
 export const URL_PROVEEDORES_ALL = `${BASE_URL}/${endpoint.PROVEEDORES_ENDPOINT}`;
 
 export const URL_TIPO_PROPIETARIO = `${BASE_URL}/${endpoint.TIPOS_PROPIETARIOS}`;
+
+export const URL_REPORTE_EXCEL = `${BASE_URL}/${endpoint.REPORTES_EXCEL}`;
+export const URL_REPORTE_PDF = `${BASE_URL}/${endpoint.REPORTES_PDF}`;

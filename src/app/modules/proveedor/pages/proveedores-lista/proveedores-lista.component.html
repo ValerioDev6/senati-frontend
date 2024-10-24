@@ -11,13 +11,18 @@
 
 		<div class="flex items-center space-x-4">
 			<nz-input-group [nzSuffix]="suffixIconSearch" class="w-64">
-				<input type="text" nz-input placeholder="Buscar marcas" [(ngModel)]="search" (keyup.enter)="searchTo()" />
+				<input type="text" nz-input placeholder="Buscar proveedores" [(ngModel)]="search" (keyup.enter)="searchTo()" />
 			</nz-input-group>
 			<ng-template #suffixIconSearch>
 				<span nz-icon nzType="search"></span>
 			</ng-template>
-			<button nz-button nzType="primary" class="flex items-center justify-center">
-				<span nz-icon nzType="plus" nzTheme="outline"></span>
+			<button
+				nz-button
+				nzType="primary"
+				class="h-10 px-4 rounded-lg uppercase font-bold bg-mantis-600 border-none hover:bg-mantis-500 focus:ring-2 focus:ring-mantis-400 transition"
+			>
+				<span nz-icon nzType="plus"></span>
+				<span>Agregar</span>
 			</button>
 		</div>
 	</div>

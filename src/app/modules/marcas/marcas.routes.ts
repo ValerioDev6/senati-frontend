@@ -8,4 +8,8 @@ export const MARCAS_ROUTES: Routes = [
 			breadcrumb: 'Marcas',
 		},
 	},
+	{
+		path: '**',
+		redirectTo: 'marcas-lista',
+	},
 ];

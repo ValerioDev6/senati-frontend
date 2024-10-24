@@ -24,6 +24,8 @@ import { ProductoService } from '../../../../core/services/productos.service';
 import { IProductoResponse, Producto } from '../../../../core/interfaces/producto.interface';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { ReportesPdfService } from '../../../../core/services/reports/reportes-pdf.service';
+import { ReportesExcelService } from '../../../../core/services/reports/reportes-excel.service';
 const NZ_MODULES = [
 	NzInputModule,
 	NzIconModule,
@@ -54,7 +56,9 @@ export default class ProductosPageComponent implements OnInit {
 	constructor(
 		private readonly _modal: NzModalService,
 		private readonly _productoService: ProductoService,
-		private readonly message: NzMessageService
+		private readonly message: NzMessageService,
+		private reportePdfService: ReportesPdfService,
+		private reporteExcelService: ReportesExcelService
 	) {}
 
 	productos: Producto[] = [];
@@ -66,6 +70,40 @@ export default class ProductosPageComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.loadDataMarcas();
+	}
+
+	descargarExcel(): void {
+		this.reporteExcelService.descargarExcelProducto().subscribe({
+			next: (blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_productos.xlsx';
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			error: (error) => {
+				this.message.error('Error al descargar el Excel');
+				console.error('Error downloading Excel:', error);
+			},
+		});
+	}
+
+	downloadPDF(): void {
+		this.reportePdfService.downloadProductosPDF().subscribe({
+			next: (blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_productos.pdf';
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			error: (error) => {
+				this.message.error('Error al descargar el PDF');
+				console.error('Error downloading PDF:', error);
+			},
+		});
 	}
 
 	deleteProducto(producto: Producto) {
