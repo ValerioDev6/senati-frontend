@@ -1,6 +1,6 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -31,12 +31,13 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 		CommonModule,
 		NzBreadCrumbModule,
 		NzToolTipModule,
+		RouterLinkActive,
 	],
 	templateUrl: './main-layout.component.html',
 	styleUrl: './main-layout.component.scss',
 })
 export class MainLayoutComponent implements OnInit {
-	personal!: CheckStatusResponse;
+	personal: CheckStatusResponse | null = null;
 	isCollapsed = false;
 	private readonly _authService = inject(AuthService);
 

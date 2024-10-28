@@ -10,6 +10,7 @@ export const URL_AUTH_CHANGE_PASSWORD = `${BASE_URL}/${endpoint.CHANGE_PASSWORD}
 
 export const URL_PERSONAL_ALL = `${BASE_URL}/${endpoint.USUARIO_ENDPOINT}`;
 export const URL_ROLES_ALL = `${BASE_URL}/${endpoint.ROLES_ENDPOINT}`;
+export const URL_PERSONAS_ALL = `${BASE_URL}/${endpoint.PERSONA_ENDPOINT}`;
 
 export const URL_SEXO_ALL = `${BASE_URL}/${endpoint.SEXO_ENDPOINT}`;
 
@@ -25,10 +26,13 @@ export const URL_SUCURSAL_ALL = `${BASE_URL}/${endpoint.SUCURSAL_ENDPOINT}`;
 export const URL_DIRECCION_ALL = `${BASE_URL}/${endpoint.DIRECCION_ENDPOINT}`;
 export const URL_PAIS_ALL = `${BASE_URL}/${endpoint.PAIS_ENPOINT}`;
 export const URL_TIPO_TELEFONO_ALL = `${BASE_URL}/${endpoint.TIPO_TELEFONO_ENDPOINT}`;
+export const URL_TIPO_PERSONAS = `${BASE_URL}/${endpoint.TIPOS_PERSONAS}`;
 
 export const URL_PROVEEDORES_ALL = `${BASE_URL}/${endpoint.PROVEEDORES_ENDPOINT}`;
+export const URL_CLIENTE_ALL = `${BASE_URL}/${endpoint.CLIENTE_ENDPOINT}`;
 
 export const URL_TIPO_PROPIETARIO = `${BASE_URL}/${endpoint.TIPOS_PROPIETARIOS}`;
+export const URL_TIPO_DOCUMENTO = `${BASE_URL}/${endpoint.TIPO_DOCUMENTO}`;
 
 export const URL_REPORTE_EXCEL = `${BASE_URL}/${endpoint.REPORTES_EXCEL}`;
 export const URL_REPORTE_PDF = `${BASE_URL}/${endpoint.REPORTES_PDF}`;

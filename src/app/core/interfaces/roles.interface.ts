@@ -23,3 +23,9 @@ export interface IRoleSubmit {
 	descripcion: string;
 	estado: boolean;
 }
+export interface IRolCombo {
+	id_rol: string;
+	nombre_rol: string;
+	descripcion: string;
+	estado: boolean;
+}

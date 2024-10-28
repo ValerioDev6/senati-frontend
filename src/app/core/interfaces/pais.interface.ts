@@ -1,4 +1,4 @@
-export interface IPaisResponse {
+export interface IPaisCombo {
 	id_pais: string;
 	nombre: string;
 }

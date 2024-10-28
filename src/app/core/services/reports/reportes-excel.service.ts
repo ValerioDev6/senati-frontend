@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 export class ReportesExcelService {
 	constructor(private readonly _httpClient: HttpClient) {}
 
+  
+
 	descargarExcelMarcas(): Observable<Blob> {
 		return this._httpClient.get('http://localhost:3000/v1/api/basic-reports-excel/marcas', {
 			responseType: 'blob',

@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,6 +13,13 @@
 
 body {
   @apply font-normal text-base;
+}
+
+html, body {
+  font-family: "Outfit", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  
 }
 
 /* SweetAlert2 custom popup styling */

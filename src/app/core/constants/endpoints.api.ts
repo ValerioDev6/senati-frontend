@@ -6,6 +6,9 @@ export const endpoint = {
 	CHANGE_PASSWORD: 'auth/change-password',
 
 	// USUARIOS
+	PERSONA_ENDPOINT: 'persona',
+	CLIENTE_ENDPOINT: 'cliente',
+
 	USUARIO_ENDPOINT: 'personal',
 	ROLES_ENDPOINT: 'roles',
 	SEXO_ENDPOINT: 'sexo',
@@ -24,8 +27,11 @@ export const endpoint = {
 	TIPO_VIA: 'tipo-via',
 	TIPO_ZONA: 'tipo-zona',
 
+	TIPO_DOCUMENTO: 'tipo-documento',
+
 	PROVEEDORES_ENDPOINT: 'proveedores',
 
+	TIPOS_PERSONAS: 'tipo-persona',
 	TIPOS_PROPIETARIOS: 'tipo-propietario',
 
 	REPORTES_EXCEL: 'basic-reports',

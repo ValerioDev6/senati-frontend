@@ -19,6 +19,11 @@ import { RouterModule } from '@angular/router';
 import { PersonalService } from '../../../../core/services/personal.service';
 import { IPersonalResponse, Personal } from '../../../../core/interfaces/personal.interface';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import CreatePersonalComponent from '../create-personal/create-personal.component';
+import Swal from 'sweetalert2';
+import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
 	selector: 'app-personal-list',
@@ -43,13 +48,18 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 		NzTagModule,
 		NzIconModule,
 		NzBreadCrumbModule,
+		NzModalModule,
+		NzMessageModule,
+		NzSpinModule,
 	],
 	templateUrl: './personal-list.component.html',
 	styleUrl: './personal-list.component.scss',
 })
 export default class PersonalListComponent implements OnInit {
 	private readonly _personalService = inject(PersonalService);
+	private readonly message = inject(NzMessageService);
 
+	constructor(private readonly _modal: NzModalService) {}
 	personal: Personal[] = [];
 	loading = false;
 	search: string = '';
@@ -76,9 +86,21 @@ export default class PersonalListComponent implements OnInit {
 			},
 		});
 	}
+	openAgregarPersonalModal() {
+		const modal = this._modal.create({
+			nzTitle: 'Agregar nuevo Personal',
+			nzContent: CreatePersonalComponent,
+			nzFooter: null,
+		});
 
+		modal.afterClose.subscribe((result: boolean) => {
+			if (result) {
+				this.loadDataPersonal();
+			}
+		});
+	}
 	searchTo(): void {
-		this.page = 1; // Resetear a la primera página
+		this.page = 1;
 		this.loadDataPersonal();
 	}
 
@@ -87,7 +109,36 @@ export default class PersonalListComponent implements OnInit {
 		this.loadDataPersonal();
 	}
 	deletePersonal(personal: Personal): void {
-		// Implementa la lógica de eliminación aquí
-		console.log('Eliminar personal', personal);
+		Swal.fire({
+			title: '¿Está seguro?',
+			text: `Este proceso no es reversible, está a punto de eliminar su personal , ${personal.tb_personas.nombres}`,
+			showCancelButton: true,
+			confirmButtonText: 'Sí, eliminar',
+			cancelButtonText: 'No, cancelar',
+			customClass: {
+				popup: 'swal2-popup-custom',
+				title: 'swal2-title-custom',
+				htmlContainer: 'swal2-html-container-custom',
+				confirmButton: 'swal2-confirm-button-custom',
+				cancelButton: 'swal2-cancel-button-custom',
+			},
+			buttonsStyling: false,
+			iconHtml:
+				'<svg xmlns="http:www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-red-500"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				this.loading = true;
+				this._personalService.deletePersonalById(personal.id_personal).subscribe({
+					next: () => {
+						this.loadDataPersonal();
+						this.message.success('Personal eliminado con éxito');
+					},
+					error: () => {
+						this.loading = false;
+						this.message.error('Error al eliminar el personal');
+					},
+				});
+			}
+		});
 	}
 }

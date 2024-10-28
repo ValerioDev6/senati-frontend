@@ -14,9 +14,11 @@
 			<ng-template #suffixIconSearch>
 				<span nz-icon nzType="search"></span>
 			</ng-template>
+      <!-- routerLink="../crear-personal" -->
+
 			<button
-				routerLink="../crear-personal"
-				nz-button
+        (click)="openAgregarPersonalModal()"
+        nz-button
 				nzType="primary"
 				class="h-10 px-4 rounded-lg uppercase font-bold bg-mantis-600 border-none hover:bg-mantis-500 focus:ring-2 focus:ring-mantis-400 transition"
 			>
@@ -42,31 +44,34 @@
 				<th nzColumnKey="nombre">Nombre</th>
 				<th nzColumnKey="email">Email</th>
 				<th nzColumnKey="rol">Rol</th>
-				<th nzColumnKey="tipo">Tipo usuario</th>
+				<th nzColumnKey="Imagen">Imagen Usuario</th>
 				<th nzColumnKey="estado">Estado</th>
 				<th>Acciones</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let persona of basicTable.data">
-				<td>{{ persona.tb_personas.nombres }}</td>
-				<td>{{ persona.email }}</td>
-				<td>{{ persona.tb_rol.nombre_rol }}</td>
-				<td>{{ persona.personal_img }}</td>
-				<td>
-					<nz-tag [nzColor]="persona.estado ? 'success' : 'error'">
-						{{ persona.estado ? 'Activo' : 'Inactivo' }}
-					</nz-tag>
-				</td>
-				<td>
-					<a nz-button nzType="link" [routerLink]="['/admin/personal/configuracion', persona.id_personal]">
-						<span nz-icon nzType="edit" nzTheme="outline"></span>
-					</a>
-					<a nz-button nzType="link" nzDanger>
-						<span nz-icon nzType="delete" nzTheme="outline"></span>
-					</a>
-				</td>
-			</tr>
+      @for ( persona of personal; track persona.id_personal) {
+        <tr>
+          <td>{{ persona.tb_personas.nombres }}</td>
+          <td>{{ persona.email }}</td>
+          <td>{{ persona.tb_rol.nombre_rol }}</td>
+          <td>{{ persona.personal_img }}</td>
+          <td>
+            <nz-tag [nzColor]="persona.estado ? 'success' : 'error'">
+              {{ persona.estado ? 'Activo' : 'Inactivo' }}
+            </nz-tag>
+          </td>
+          <td>
+            <a nz-button nzType="link" [routerLink]="['/admin/personal/configuracion', persona.id_personal]">
+              <span nz-icon nzType="edit" nzTheme="outline"></span>
+            </a>
+            <a  (click)="deletePersonal(persona)" nz-button nzType="link" nzDanger>
+              <span nz-icon nzType="delete" nzTheme="outline"></span>
+            </a>
+          </td>
+        </tr>
+      }
+	
 		</tbody>
 	</nz-table>
 

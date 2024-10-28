@@ -7,8 +7,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { forkJoin } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { IPaisResponse } from '../../../../core/interfaces/pais.interface';
-import { ITelefonoResponse } from '../../../../core/interfaces/tipo-telefono.inteface';
+import { IPaisCombo } from '../../../../core/interfaces/pais.interface';
+import { ITelefonoCombo } from '../../../../core/interfaces/tipo-telefono.inteface';
 import { IComboBoxDireccion } from '../../../../core/interfaces/direcciones.interface';
 import { PaisService } from '../../../../core/services/pais.service';
 import { TipoTelefonoService } from '../../../../core/services/tipo-telefono.service';
@@ -37,8 +37,8 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 })
 export class CrearSucursalComponent implements OnInit {
 	sucursalForm: FormGroup;
-	paises: IPaisResponse[] = [];
-	tiposTelefono: ITelefonoResponse[] = [];
+	paises: IPaisCombo[] = [];
+	tiposTelefono: ITelefonoCombo[] = [];
 	direcciones: IComboBoxDireccion[] = [];
 	isLoading = true;
 

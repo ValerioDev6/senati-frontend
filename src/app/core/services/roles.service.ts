@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, delay, map, Observable, of } from 'rxjs';
-import { IRolesResponse, IRoleSubmit, Role } from '../interfaces/roles.interface';
+import { IRolCombo, IRolesResponse, IRoleSubmit, Role } from '../interfaces/roles.interface';
 import { URL_ROLES_ALL } from '../config/api/config.url';
 
 @Injectable({
@@ -13,6 +13,10 @@ export class RolesService {
 	getRolesData(page: number, limit: number, search: string = ''): Observable<IRolesResponse> {
 		const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString()).set('search', search);
 		return this._httpClient.get<IRolesResponse>(URL_ROLES_ALL, { params }).pipe(delay(1000));
+	}
+
+	getRolesCombo(): Observable<IRolCombo[]> {
+		return this._httpClient.get<IRolCombo[]>(`${URL_ROLES_ALL}/combo`);
 	}
 
 	createRoles(data: IRoleSubmit): Observable<IRoleSubmit> {

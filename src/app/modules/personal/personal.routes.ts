@@ -46,4 +46,8 @@ export const PERSONAL_ROUTES: Routes = [
 			},
 		],
 	},
+	{
+		path: '**',
+		redirectTo: 'lista-personal',
+	},
 ];

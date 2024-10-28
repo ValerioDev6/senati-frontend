@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, Observable } from 'rxjs';
-import { IProveedoresResponse } from '../interfaces/proveedores.interface';
+import { catchError, delay, map, Observable, of } from 'rxjs';
+import { IProveedoresResponse, Proveedore } from '../interfaces/proveedores.interface';
 import { URL_PROVEEDORES_ALL } from '../config/api/config.url';
 
 @Injectable({
@@ -13,5 +14,21 @@ export class ProveedoresService {
 	getProovedoresData(page: number, limit: number, search: string = ''): Observable<IProveedoresResponse> {
 		const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString()).set('search', search);
 		return this._httpClient.get<IProveedoresResponse>(URL_PROVEEDORES_ALL, { params }).pipe(delay(1000));
+	}
+
+	createProveedores(data: any): Observable<any> {
+		return this._httpClient.post<any>(`${URL_PROVEEDORES_ALL}`, data);
+	}
+	getProveedorById(id: string): Observable<Proveedore> {
+		return this._httpClient.get<Proveedore>(`${URL_PROVEEDORES_ALL}/${id}`);
+	}
+	updatePersonal(data: Proveedore): Observable<any> {
+		return this._httpClient.patch<any>(`${URL_PROVEEDORES_ALL}/${data.id_proveedor}`, data);
+	}
+	deleteProveedorById(id: string): Observable<boolean> {
+		return this._httpClient.delete(`${URL_PROVEEDORES_ALL}/${id}`).pipe(
+			catchError(() => of(false)),
+			map(() => true)
+		);
 	}
 }

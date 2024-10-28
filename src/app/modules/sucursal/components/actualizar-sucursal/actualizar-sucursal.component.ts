@@ -9,8 +9,6 @@ import { PaisService } from '../../../../core/services/pais.service';
 import { DireccionService } from '../../../../core/services/direccion.service';
 import { forkJoin } from 'rxjs';
 import { TipoTelefonoService } from '../../../../core/services/tipo-telefono.service';
-import { IPaisResponse } from '../../../../core/interfaces/pais.interface';
-import { ITelefonoResponse } from '../../../../core/interfaces/tipo-telefono.inteface';
 import { IComboBoxDireccion } from '../../../../core/interfaces/direcciones.interface';
 import { CommonModule } from '@angular/common';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
@@ -20,6 +18,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { RouterLink } from '@angular/router';
+import { ITelefonoCombo } from '../../../../core/interfaces/tipo-telefono.inteface';
+import { IPaisCombo } from '../../../../core/interfaces/pais.interface';
 interface ModalData {
 	id_sucursal: string;
 }
@@ -47,8 +47,8 @@ export class ActualizarSucursalComponent implements OnInit {
 	private readonly _tipoTelefonoService = inject(TipoTelefonoService);
 	private readonly _paisService = inject(PaisService);
 	private readonly _direccionService = inject(DireccionService);
-	paises: IPaisResponse[] = [];
-	tiposTelefono: ITelefonoResponse[] = [];
+	paises: IPaisCombo[] = [];
+	tiposTelefono: ITelefonoCombo[] = [];
 	direcciones: IComboBoxDireccion[] = [];
 	private readonly modalRef = inject(NzModalRef);
 	private readonly data = inject<ModalData>(NZ_MODAL_DATA);

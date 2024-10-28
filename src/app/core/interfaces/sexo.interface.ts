@@ -15,3 +15,7 @@ export interface Sexo {
 	id_sexo: string;
 	sexo: string;
 }
+export interface IGenerosCombo {
+	id_sexo: string;
+	sexo: string;
+}
