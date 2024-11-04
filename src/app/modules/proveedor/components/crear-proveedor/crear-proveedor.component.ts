@@ -11,15 +11,19 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { RouterModule } from '@angular/router';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { ProveedoresService } from '../../../../core/services/proveedores.service';
+import { PersonasService } from '../../../../core/services/personas.service';
+import { forkJoin } from 'rxjs';
+import { ITipoPersonaProveedorCombo } from '../../../../core/interfaces/personas.interface';
+import { PersonaFormularioComponent } from '../../../../shared/components/persona-formulario/persona-formulario.component';
 
 @Component({
 	selector: 'app-crear-proveedor',
@@ -53,13 +57,81 @@ import { ProveedoresService } from '../../../../core/services/proveedores.servic
 })
 export class CrearProveedorComponent implements OnInit {
 	private readonly _proveedorService = inject(ProveedoresService);
+	private readonly _personasService = inject(PersonasService);
+
+	tipoPersonasProveedor: ITipoPersonaProveedorCombo[] = [];
+
+	proveedorForm!: FormGroup;
+	loading: boolean = true;
 
 	ngOnInit(): void {
-		console.log('HOla');
+		this.loadData();
 	}
 
 	constructor(
+		private modalRef: NzModalRef,
+		private readonly fb: FormBuilder,
 		private readonly message: NzMessageService,
 		private readonly _modal: NzModalService
-	) {}
+	) {
+		this.proveedorForm = this.fb.group({
+			id_persona: ['', Validators.required],
+			estado_proveedor: ['', Validators.required],
+			nombre_comercial: ['', Validators.required],
+		});
+	}
+
+	private loadData() {
+		this.loading = false;
+		forkJoin({
+			tipoPersonasProveedor: this._personasService.getPersonasByProveedor(),
+		}).subscribe({
+			next: (result) => {
+				this.tipoPersonasProveedor = result.tipoPersonasProveedor;
+			},
+			error: (error) => {
+				this.message.error(error);
+			},
+		});
+	}
+
+	openPersonaModal() {
+		const modal = this._modal.create({
+			nzFooter: null,
+			nzContent: PersonaFormularioComponent,
+			nzWidth: '1000px',
+			nzStyle: {
+				top: '10px',
+			},
+		});
+		modal.afterClose.subscribe((result: boolean) => {
+			if (result) {
+				this.loadData();
+			}
+		});
+	}
+
+	onSubmit() {
+		if (this.proveedorForm.valid) {
+			const proveedorData = this.proveedorForm.value;
+			this._proveedorService.createProveedores(proveedorData).subscribe({
+				next: () => {
+					this.message.success('Proveedor Creado exitosamente');
+					this.modalRef.close(true);
+					this.resetForm();
+				},
+				error: (err) => {
+					console.log('Error save proveedo', err);
+				},
+			});
+		}
+	}
+
+	cancelar(): void {
+		this.modalRef.close();
+	}
+
+	resetForm() {
+		this.proveedorForm.reset();
+	}
 }

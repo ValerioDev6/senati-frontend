@@ -1,0 +1,105 @@
+<div class="p-4">
+  
+  <!-- Form Card -->
+  <div class="bg-white rounded shadow p-4">
+  <!-- Header -->
+  <h1 class="text-lg font-semibold text-gray-800 mb-6">
+    Compras/Registro de una nueva compra
+    </h1>
+
+    <!-- Grid responsivo automático -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+      <!-- Cantidad -->
+      <div>
+        <label class="block text-sm mb-1">Cantidad *</label>
+        <input
+          type="number"
+          [(ngModel)]="quantity"
+          class="w-full outline-none p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          min="1"
+        />
+      </div>
+
+      <!-- Código -->
+      <div>
+        <label class="block text-sm mb-1">Código</label>
+        <div class="flex gap-1">
+          <input
+            type="text"
+            class="w-full  outline-none p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          <button (click)="openProductModal()" class="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            <i nz-icon nzType="search"></i>
+          </button>
+          <button  (click)="openAgregarProductosModal()" class="px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+            <i nz-icon nzType="plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Fecha -->
+      <div>
+        <label class="block text-sm mb-1">Fecha *</label>
+        <div class="relative">
+          <input
+            type="date"
+            placeholder="dd/mm/aaaa"
+            class="w-full px-3 py-2 border rounded outline-none"
+          />
+         
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto mb-4">
+      <nz-table class="w-full">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="p-2 text-left">Nro</th>
+            <th class="p-2 text-left">Código</th>
+            <th class="p-2 text-left">Cantidad</th>
+            <th class="p-2 text-left">Nombre</th>
+            <th class="p-2 text-left">Costo</th>
+            <th class="p-2 text-left">Total</th>
+            <th class="p-2 text-left">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (detail of purchaseDetails; track detail.id; let i = $index) {
+            <tr class="border-b">
+              <td class="p-2">{{ i + 1 }}</td>
+              <td class="p-2">{{ detail.code }}</td>
+              <td class="p-2">{{ detail.quantity }}</td>
+              <td class="p-2">{{ detail.name }}</td>
+              <td class="p-2">{{ detail.cost | number:'1.2-2' }}</td>
+              <td class="p-2">{{ detail.total | number:'1.2-2' }}</td>
+              <td class="p-2">
+                <button 
+                  (click)="removeDetail(detail.id)"
+                  class="p-1 bg-red-500 text-white rounded hover:bg-red-600"
+                >
+                  <i nz-icon nzType="delete"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </nz-table>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex gap-2">
+      <button  class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+        Cancelar
+      </button>
+      <button 
+        (click)="savePurchase()"
+        class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+      >
+        <i nz-icon nzType="save"></i>
+        Registrar
+      </button>
+    </div>
+  </div>
+</div>

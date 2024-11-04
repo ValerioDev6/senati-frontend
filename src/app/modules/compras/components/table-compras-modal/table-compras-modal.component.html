@@ -1,0 +1,73 @@
+<div class="p-4">
+  <div class="mb-4 relative">
+    <input
+    type="text"
+    placeholder="Buscar producto"
+    (keyup.enter)="searchProducts()"
+    [(ngModel)]="search"
+    class="pl-10 pr-4 py-2 border border-gray-300 rounded-md xl:w-[800px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  >
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+  </svg> 
+ </div>
+
+  <nz-table
+    #basicTable
+    [nzData]="products"
+    [nzBordered]="true"
+    [nzLoading]="loading"
+    [nzPageSize]="page"
+    [nzTotal]="total"
+    [nzPaginationPosition]="'bottom'"
+    (nzPageIndexChange)="onPageChange($event)"
+    [nzShowPagination]="true"
+    [nzFrontPagination]="false"
+  >
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Categoria</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Estado</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (product of basicTable.data; track product.id_producto) {
+        <tr class="border-b border-gray-200 hover:bg-gray-100">
+         
+          <td class="py-3 px-6 text-left">{{ product.nombre_producto }}</td>
+          <td class="py-3 px-6 text-left">{{ product.tb_categorias.nombre_cat }}</td>
+          <td class="py-3 px-6 text-left">{{ product.precio_venta  }}</td>
+          <td class="py-3 px-6 text-left">{{ product.stock }}</td>
+          <!-- <td class="py-3 px-6 text-left">
+            @if (product.estado_produto == 1) {
+              <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Activo</span>
+            } @else {
+              <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">Inactivo</span>
+            }
+          </td> -->
+          <td class="py-3 px-6 text-left">
+            <button
+            nz-button
+            nzType="primary"
+            (click)="selectProduct(product)"
+            [disabled]="product.stock <= 0"
+            class="bg-blue-500 text-white px-4 py-1 rounded"
+          >
+            Seleccionar
+          </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="9" class="py-3 px-6 text-center">No hay productos disponibles</td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>
+

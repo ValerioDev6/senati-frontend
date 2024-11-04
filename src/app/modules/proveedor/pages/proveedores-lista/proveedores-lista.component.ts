@@ -24,6 +24,7 @@ import { IProveedoresResponse, Proveedore } from '../../../../core/interfaces/pr
 import { ProveedoresService } from '../../../../core/services/proveedores.service';
 import { CrearProveedorComponent } from '../../components/crear-proveedor/crear-proveedor.component';
 import Swal from 'sweetalert2';
+import { ActualziarProveedorComponent } from '../../components/actualziar-proveedor/actualziar-proveedor.component';
 const NZ_MODULES = [
 	NzInputModule,
 	NzIconModule,
@@ -83,6 +84,22 @@ export default class ProveedoresListaComponent implements OnInit {
 			nzTitle: 'Agregar nuevo Proveedor',
 			nzContent: CrearProveedorComponent,
 			nzFooter: null,
+		});
+
+		modal.afterClose.subscribe((result: boolean) => {
+			if (result) {
+				this.loadDataProveedor();
+			}
+		});
+	}
+
+	openEditarModal(proveedor: Proveedore): void {
+		const modal = this._modal.create({
+			nzTitle: 'Editar Proveedor',
+			nzContent: ActualziarProveedorComponent,
+			nzData: { id_proveedor: proveedor.id_proveedor },
+			nzFooter: null,
+			nzWidth: '500px',
 		});
 
 		modal.afterClose.subscribe((result: boolean) => {
