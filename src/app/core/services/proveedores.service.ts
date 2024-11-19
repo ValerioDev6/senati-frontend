@@ -2,7 +2,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, delay, map, Observable, of } from 'rxjs';
-import { IProveedoresResponse, Proveedore } from '../interfaces/proveedores.interface';
+import { IProveedorCombo, IProveedoresResponse, Proveedore } from '../interfaces/proveedores.interface';
 import { URL_PROVEEDORES_ALL } from '../config/api/config.url';
 
 @Injectable({
@@ -14,6 +14,10 @@ export class ProveedoresService {
 	getProovedoresData(page: number, limit: number, search: string = ''): Observable<IProveedoresResponse> {
 		const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString()).set('search', search);
 		return this._httpClient.get<IProveedoresResponse>(URL_PROVEEDORES_ALL, { params }).pipe(delay(1000));
+	}
+
+	getProveedresCombo(): Observable<IProveedorCombo[]> {
+		return this._httpClient.get<IProveedorCombo[]>(`${URL_PROVEEDORES_ALL}/combo`);
 	}
 
 	createProveedores(data: any): Observable<any> {

@@ -73,3 +73,22 @@ export interface TBSucursales {
 export interface TBTipoPropietario {
 	descripcion: string;
 }
+
+// export interface IProductosComboResponse {
+// 	id_producto: string;
+// 	nombre_producto: string;
+// 	precio_venta: string;
+// 	stock: number;
+// }
+
+export interface IProductosComboResponse {
+	id_producto: string;
+	nombre_producto: string;
+	precio_venta: string;
+	stock: number;
+	tb_marcas: TBMarcas;
+}
+
+export interface TBMarcas {
+	nombre_marca: string;
+}

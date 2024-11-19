@@ -36,6 +36,7 @@ export class LoginPageComponent {
 	togglePasswordVisibility(): void {
 		this.passwordVisible = !this.passwordVisible;
 	}
+
 	validateForm: FormGroup<{
 		email: FormControl<string>;
 		password: FormControl<string>;
@@ -64,7 +65,6 @@ export class LoginPageComponent {
 				)
 				.subscribe();
 		} else {
-			// Manejo de validaciones de formulario
 			Object.values(this.validateForm.controls).forEach((control) => {
 				if (control.invalid) {
 					control.markAsDirty();
@@ -78,7 +78,7 @@ export class LoginPageComponent {
 		Swal.fire({
 			icon: 'error',
 			title: 'Error',
-			text: message, // El mensaje personalizado del backend se muestra aquí
+			text: message,
 		});
 	}
 	constructor(private fb: NonNullableFormBuilder) {}

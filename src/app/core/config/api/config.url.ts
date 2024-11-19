@@ -36,3 +36,6 @@ export const URL_TIPO_DOCUMENTO = `${BASE_URL}/${endpoint.TIPO_DOCUMENTO}`;
 
 export const URL_REPORTE_EXCEL = `${BASE_URL}/${endpoint.REPORTES_EXCEL}`;
 export const URL_REPORTE_PDF = `${BASE_URL}/${endpoint.REPORTES_PDF}`;
+
+export const URL_COMPRAS_ALL = `${BASE_URL}/${endpoint.COMPRAS}`;
+export const URL_METODOS_PAGOS = `${BASE_URL}/${endpoint.METODO_PAGO}`;

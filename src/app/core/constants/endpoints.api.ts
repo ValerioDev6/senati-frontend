@@ -36,4 +36,8 @@ export const endpoint = {
 
 	REPORTES_EXCEL: 'basic-reports',
 	REPORTES_PDF: 'basic-reports-excel',
+
+	COMPRAS: 'compras',
+
+	METODO_PAGO: 'metodo-pagos',
 };

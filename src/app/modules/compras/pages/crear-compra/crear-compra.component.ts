@@ -1,93 +1,290 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { CommonModule } from '@angular/common';
-import { TableComprasModalComponent } from '../../components/table-compras-modal/table-compras-modal.component';
-import CrearProductosComponent from '../../../productos/pages/crear-productos/crear-productos.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
-interface PurchaseDetail {
-	id: number;
-	code: string;
-	quantity: number;
-	name: string;
-	cost: number;
+import { MetodoPagoService } from '../../../../core/services/metodo-pago.service';
+import { ProveedoresService } from '../../../../core/services/proveedores.service';
+import { IProveedorCombo } from '../../../../core/interfaces/proveedores.interface';
+import { IMetodoPagoCombo } from '../../../../core/interfaces/metodos-pago.interface';
+import { forkJoin } from 'rxjs';
+import { IProductosComboResponse } from '../../../../core/interfaces/producto.interface';
+import { ProductoService } from '../../../../core/services/productos.service';
+import { IComboBoxCategorie } from '../../../../core/interfaces/categories.interface';
+import { CategoriesService } from '../../../../core/services/categories.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { ComprasService } from '../../../../core/services/compras.service';
+interface DetalleProducto {
+	id_producto: string;
+	categoria: string;
+	producto: string;
+	marca: string;
+	precio_venta: number;
+	cantidad: number;
 	total: number;
 }
+
+interface RequestDetalleCompraDto {
+	id_producto: string;
+	id_categoria: string;
+	cantidad: number;
+	precio_unitario: number;
+}
+
+interface RequestCompraDto {
+	proveedor_id: string;
+	proveedor_ruc: string;
+	proveedor_correo: string;
+	id_metodo_pago: string;
+	numero_documento: string;
+	compra_comentario?: string;
+	detalles: RequestDetalleCompraDto[];
+}
+
 @Component({
 	selector: 'app-crear-compra',
 	standalone: true,
-	imports: [FormsModule, NzIconModule, CommonModule, NzTableModule],
+	imports: [FormsModule, NzIconModule, CommonModule, NzTableModule, ReactiveFormsModule],
 	templateUrl: './crear-compra.component.html',
 	styleUrl: './crear-compra.component.scss',
 	providers: [NzModalService],
 })
-export default class CrearCompraComponent {
-	private modal = inject(NzModalService);
-	private readonly _modal = inject(NzModalService);
+export default class CrearCompraComponent implements OnInit {
+	compraForm!: FormGroup;
+	proveedores: IProveedorCombo[] = [];
+	metodosPago: IMetodoPagoCombo[] = [];
+	productos: IProductosComboResponse[] = [];
+	categorias: IComboBoxCategorie[] = [];
+	detalleProductos: DetalleProducto[] = [];
 
-	quantity: number = 1;
-	purchaseDetails: PurchaseDetail[] = [];
+	cantidad: number = 1; // Default cantidad
+	subtotal: number = 0;
+	igv: number = 0;
+	total: number = 0;
 
-	openProductModal() {
-		this.modal
-			.create({
-				nzTitle: 'Seleccionar Producto',
-				nzContent: TableComprasModalComponent,
-				nzWidth: '75%',
-				nzFooter: null,
-				nzStyle: {
-					top: '10px',
-				},
-			})
-			.afterClose.subscribe((product) => {
-				if (product) {
-					this.addProductToDetails(product);
-				}
-			});
-	}
+	proveedorSeleccionado = {
+		ruc: '',
+		direccion: '',
+		telefono: '',
+		correo: '',
+	};
 
-	openAgregarProductosModal() {
-		const modal = this._modal.create({
-			nzTitle: 'Agregar Nuevo Producto',
-			nzWidth: '70%',
-			nzContent: CrearProductosComponent,
-			nzFooter: null,
-			nzStyle: {
-				top: '10px',
+	productoSelecionado = {
+		precio_venta: '',
+		stock: 0,
+	};
+
+	constructor(
+		private readonly _compraService: ComprasService,
+		private readonly _proveedoresService: ProveedoresService,
+		private readonly _productosService: ProductoService,
+		private readonly _categoriaSerivce: CategoriesService,
+		private readonly _metodosPagos: MetodoPagoService,
+		private readonly _fb: FormBuilder,
+		private readonly _message: NzMessageService
+	) {}
+
+	ngOnInit() {
+		forkJoin({
+			categorias: this._categoriaSerivce.getComboBoxCategoriaAll(),
+			proveedores: this._proveedoresService.getProveedresCombo(),
+			productos: this._productosService.getProductosCombo(),
+			metodosPago: this._metodosPagos.metodoPagoCombo(),
+		}).subscribe({
+			next: (response) => {
+				this.proveedores = response.proveedores;
+				this.productos = response.productos;
+				this.categorias = response.categorias;
+				this.metodosPago = response.metodosPago;
 			},
+			error: (error) => console.error('Error cargando datos:', error),
 		});
 
-		modal.afterClose.subscribe((result: boolean) => {
-			if (result) {
-				this._modal.closeAll();
-			}
+		this.initForm();
+	}
+
+	onMetodoPagoChange(event: any) {
+		const metodoPagoId = event.target.value;
+		this.compraForm.patchValue({ metodoPago: metodoPagoId });
+	}
+
+	private initForm() {
+		this.compraForm = this._fb.group({
+			proveedor: ['', [Validators.required]],
+			metodoPago: ['', [Validators.required]],
+			ruc: [{ value: '', disabled: true }],
+			direccion: [{ value: '', disabled: true }],
+			telefono: [{ value: '', disabled: true }],
+			correo: [{ value: '', disabled: true }],
+			categoria: [''],
+			producto: [''],
+			comentario: [''],
 		});
 	}
 
-	addProductToDetails(product: any) {
-		const total = this.quantity * product.price;
+	onProveedorChange(event: any) {
+		const proveedorId = event.target.value;
+		this.compraForm.patchValue({ proveedor: proveedorId });
 
-		const detail: PurchaseDetail = {
-			id: Date.now(), // Temporal ID
-			code: product.code,
-			quantity: this.quantity,
-			name: product.name,
-			cost: product.price,
-			total: total,
+		const proveedor = this.proveedores.find((p) => p.id_proveedor === proveedorId);
+		if (proveedor) {
+			const { tb_personas } = proveedor;
+			this.proveedorSeleccionado = {
+				ruc: tb_personas.numero_documento,
+				direccion: tb_personas.tb_direccion.direccion,
+				telefono: tb_personas.telefono,
+				correo: tb_personas.correo,
+			};
+		}
+	}
+	onProductoChange(event: any) {
+		const idProducto = event.target.value;
+		const producto = this.productos.find((p) => p.id_producto === idProducto);
+		if (producto) {
+			this.productoSelecionado = {
+				precio_venta: producto.precio_venta,
+				stock: producto.stock,
+			};
+		}
+	}
+
+	agregarProducto() {
+		const productoSeleccionado = this.productos.find((p) => p.id_producto === this.compraForm.get('producto')?.value);
+
+		const categoriaSeleccionada = this.categorias.find(
+			(c) => c.id_categoria === this.compraForm.get('categoria')?.value
+		);
+
+		if (!productoSeleccionado || !categoriaSeleccionada || !this.cantidad) {
+			// Aquí podrías agregar un mensaje de error usando tu sistema de notificaciones
+			return;
+		}
+
+		const nuevoDetalle: DetalleProducto = {
+			id_producto: productoSeleccionado.id_producto,
+			categoria: categoriaSeleccionada.nombre_cat,
+			producto: productoSeleccionado.nombre_producto,
+			marca: productoSeleccionado.tb_marcas.nombre_marca || '-',
+			precio_venta: Number(productoSeleccionado.precio_venta),
+			cantidad: this.cantidad,
+			total: Number(productoSeleccionado.precio_venta) * this.cantidad,
 		};
 
-		this.purchaseDetails = [...this.purchaseDetails, detail];
-		this.quantity = 1; // Reset quantity
+		this.detalleProductos.push(nuevoDetalle);
+		this.calcularTotales();
+		this.resetearFormularioProducto();
 	}
 
-	removeDetail(id: number) {
-		this.purchaseDetails = this.purchaseDetails.filter((d) => d.id !== id);
+	private calcularTotales() {
+		this.subtotal = this.detalleProductos.reduce((acc, item) => acc + item.total, 0);
+		this.igv = this.subtotal * 0.18;
+		this.total = this.subtotal + this.igv;
 	}
 
-	savePurchase() {
-		// Implementar la lógica de guardado
-		console.log('Detalles de compra:', this.purchaseDetails);
+	private resetearFormularioProducto() {
+		this.compraForm.patchValue({
+			categoria: '',
+			producto: '',
+		});
+		this.cantidad = 1;
+		this.productoSelecionado = {
+			precio_venta: '',
+			stock: 0,
+		};
+	}
+
+	saveCompra() {
+		// Validar campos requeridos específicamente
+		if (!this.compraForm.get('proveedor')?.value) {
+			this._message.error('Debe seleccionar un proveedor');
+			return;
+		}
+
+		if (!this.compraForm.get('metodoPago')?.value) {
+			this._message.error('Debe seleccionar un método de pago');
+			return;
+		}
+
+		if (this.detalleProductos.length === 0) {
+			this._message.error('Debe agregar al menos un producto');
+			return;
+		}
+
+		const proveedorId = this.compraForm.get('proveedor')?.value;
+		const proveedor = this.proveedores.find((p) => p.id_proveedor === proveedorId);
+
+		if (!proveedor) {
+			this._message.error('Proveedor no válido');
+			return;
+		}
+
+		try {
+			const requestData: RequestCompraDto = {
+				proveedor_id: proveedorId,
+				proveedor_ruc: this.proveedorSeleccionado.ruc,
+				proveedor_correo: this.proveedorSeleccionado.correo,
+				id_metodo_pago: this.compraForm.get('metodoPago')?.value,
+				numero_documento: `COM-${new Date().getTime()}`,
+				compra_comentario: this.compraForm.get('comentario')?.value || '',
+				detalles: this.detalleProductos.map((detalle) => {
+					const categoriaId = this.getCategoriaIdByName(detalle.categoria);
+					return {
+						id_producto: detalle.id_producto,
+						id_categoria: categoriaId,
+						cantidad: detalle.cantidad,
+						precio_unitario: detalle.precio_venta,
+					};
+				}),
+			};
+
+			this._compraService.createCompra(requestData).subscribe({
+				next: (response) => {
+					this._message.success('Compra registrada exitosamente');
+					this.resetForm();
+				},
+				error: (error) => {
+					this._message.error('Error al registrar la compra: ' + (error.error?.message || error.message));
+				},
+			});
+		} catch (error: any) {
+			this._message.error(error.message);
+		}
+	}
+	eliminarProducto(index: number) {
+		this.detalleProductos.splice(index, 1);
+		this.calcularTotales();
+	}
+
+	private getCategoriaIdByName(nombreCategoria: string): string {
+		const categoria = this.categorias.find((c) => c.nombre_cat === nombreCategoria);
+		if (!categoria) {
+			throw new Error(`Categoría no encontrada: ${nombreCategoria}`);
+		}
+		return categoria.id_categoria;
+	}
+
+	private resetForm() {
+		this.initForm();
+		this.detalleProductos = [];
+		this.subtotal = 0;
+		this.igv = 0;
+		this.total = 0;
+		this.proveedorSeleccionado = {
+			ruc: '',
+			direccion: '',
+			telefono: '',
+			correo: '',
+		};
+		this.productoSelecionado = {
+			precio_venta: '',
+			stock: 0,
+		};
+	}
+	limpiarFormulario() {
+		this.resetForm();
+		this._message.success('Formulario limpiado exitosamente');
 	}
 }

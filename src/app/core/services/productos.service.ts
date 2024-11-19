@@ -3,7 +3,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, delay, map, Observable, of } from 'rxjs';
 import { URL_PRODUCTOS_ALL } from '../config/api/config.url';
-import { IProductoResponse, IProductoSubmit, Producto } from '../interfaces/producto.interface';
+import {
+	IProductoResponse,
+	IProductosComboResponse,
+	IProductoSubmit,
+	Producto,
+} from '../interfaces/producto.interface';
 
 @Injectable({
 	providedIn: 'root',
@@ -14,6 +19,10 @@ export class ProductoService {
 	getProductosData(page: number, limit: number, search: string = ''): Observable<IProductoResponse> {
 		const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString()).set('search', search);
 		return this._httpClient.get<IProductoResponse>(URL_PRODUCTOS_ALL, { params }).pipe(delay(1000));
+	}
+
+	getProductosCombo(): Observable<IProductosComboResponse[]> {
+		return this._httpClient.get<IProductosComboResponse[]>(`${URL_PRODUCTOS_ALL}/combo`);
 	}
 
 	getProductoById(id: string): Observable<Producto> {

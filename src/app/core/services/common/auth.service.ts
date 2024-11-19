@@ -28,16 +28,6 @@ export class AuthService {
 
 	isLoggedIn$: Observable<boolean> = this.jwt$.pipe(map(Boolean));
 
-	// login(email: string, password: string): Observable<IResponseSingIn> {
-	//   return this._httpClient.post<IResponseSingIn>(URL_AUTH_SIGNIN, { email, password })
-	//     .pipe(
-	//       delay(1000),
-	//       tap((response: IResponseSingIn) => this.handleLoginResponse(response)),
-	//       tap(() => this.redirectToDahboard()),
-	//       ignoreElements()
-	//     );
-	//
-
 	login(email: string, password: string): Observable<IResponseSingIn> {
 		return this._httpClient.post<IResponseSingIn>(URL_AUTH_SIGNIN, { email, password }).pipe(
 			map((response: IResponseSingIn) => {
@@ -54,18 +44,6 @@ export class AuthService {
 			tap(() => this.redirectToDahboard()),
 			catchError(this.handleError)
 		);
-	}
-
-	private handleError(error: HttpErrorResponse) {
-		let errorMessage = 'Ocurrió un error inesperado';
-
-		if (error.error instanceof ErrorEvent) {
-			errorMessage = `Error: ${error.error.message}`;
-		} else {
-			errorMessage = error.error.message || 'Error del servidor';
-		}
-
-		return throwError(() => new Error(errorMessage));
 	}
 
 	checkAuthStatus(): Observable<CheckStatusResponse> {
@@ -127,10 +105,15 @@ export class AuthService {
 	private pushNewUser(user: Personal | null): void {
 		this.user.next(user);
 	}
+	private handleError(error: HttpErrorResponse) {
+		let errorMessage = 'Ocurrió un error inesperado';
 
-	// calcular el tiempo de vida
-	// private isTokenExpired(token: string) {
-	//   const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
-	//   return expiry * 1000 > Date.now();
-	// }
+		if (error.error instanceof ErrorEvent) {
+			errorMessage = `Error: ${error.error.message}`;
+		} else {
+			errorMessage = error.error.message || 'Error del servidor';
+		}
+
+		return throwError(() => new Error(errorMessage));
+	}
 }

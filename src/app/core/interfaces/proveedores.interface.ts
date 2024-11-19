@@ -77,3 +77,20 @@ export interface TBTipoTelefono {
 	tipo_telefono: string;
 	descripcion: string;
 }
+
+export interface IProveedorCombo {
+	id_proveedor: string;
+	tb_personas: TBPersonas;
+}
+
+export interface TBPersonas {
+	numero_documento: string;
+	correo: string;
+	telefono: string;
+	tb_direccion: TBDireccion;
+	nombres: string;
+}
+
+export interface TBDireccion {
+	direccion: string;
+}

@@ -72,6 +72,26 @@ export default class ProductosPageComponent implements OnInit {
 		this.loadDataMarcas();
 	}
 
+	loadDataMarcas() {
+		this.loading = true;
+		this._productoService.getProductosData(this.page, this.limit, this.search).subscribe({
+			next: (response: IProductoResponse) => {
+				this.productos = response.productos;
+				this.total = response.info.total;
+				this.loading = false;
+			},
+		});
+	}
+	searchTo() {
+		this.page = 1;
+		this.loadDataMarcas();
+	}
+
+	onPageChange(page: number) {
+		this.page = page;
+		this.loadDataMarcas();
+	}
+
 	descargarExcel(): void {
 		this.reporteExcelService.descargarExcelProducto().subscribe({
 			next: (blob: Blob) => {
@@ -138,24 +158,5 @@ export default class ProductosPageComponent implements OnInit {
 				});
 			}
 		});
-	}
-	loadDataMarcas() {
-		this.loading = true;
-		this._productoService.getProductosData(this.page, this.limit, this.search).subscribe({
-			next: (response: IProductoResponse) => {
-				this.productos = response.productos;
-				this.total = response.info.total;
-				this.loading = false;
-			},
-		});
-	}
-	searchTo() {
-		this.page = 1;
-		this.loadDataMarcas();
-	}
-
-	onPageChange(page: number) {
-		this.page = page;
-		this.loadDataMarcas();
 	}
 }

@@ -15,7 +15,13 @@ export const COMPRAS_ROUTES: Routes = [
 			breadcrumb: 'Crear Compra',
 		},
 	},
-
+	{
+		path: ':id',
+		loadComponent: () => import('./pages/compra-detalles/compra-detalles.component'),
+		data: {
+			breadcrumb: 'Información compra',
+		},
+	},
 	{
 		path: '**',
 		redirectTo: 'lista-compra',

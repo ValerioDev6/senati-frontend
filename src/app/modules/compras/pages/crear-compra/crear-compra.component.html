@@ -1,105 +1,265 @@
-<div class="p-4">
-  
-  <!-- Form Card -->
-  <div class="bg-white rounded shadow p-4">
-  <!-- Header -->
-  <h1 class="text-lg font-semibold text-gray-800 mb-6">
-    Compras/Registro de una nueva compra
-    </h1>
+<div class="p-2">
+  <form [formGroup]="compraForm">
+	<!-- Tipo de Pago -->
+	<div class="mb-6 bg-gray-100 p-6 rounded-md">
+		<div class="flex items-center gap-2 mb-4">
+			<i nz-icon nzType="credit-card" nzTheme="outline" class="text-blue-500"></i>
+			<h3 class="text-base font-medium text-gray-800">Tipo de Pago</h3>
+			<span class="text-red-500">*</span>
+		</div>
+		<div>
+			<label class="block text-sm text-gray-600 mb-2">Pago</label>
+      <select
+      formControlName="metodoPago"
+      class="w-full outline-none p-2.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+      (change)="onMetodoPagoChange($event)">
+      <option value="">Seleccionar</option>
+      <option *ngFor="let metodo of metodosPago" [value]="metodo.id_metodo_pago">
+          {{ metodo.nombre_metodo_pago }}
+      </option>
+  </select>
+		</div>
+	</div>
 
-    <!-- Grid responsivo automático -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-      <!-- Cantidad -->
-      <div>
-        <label class="block text-sm mb-1">Cantidad *</label>
+	<!-- Datos del Proveedor -->
+	<div class="bg-gray-100 p-6 rounded-md mb-6"> 
+		<div class="flex items-center gap-2 mb-4">
+			<i nz-icon nzType="user" nzTheme="outline" class="text-blue-500"></i>
+			<h3 class="text-base font-medium text-gray-800">Datos del Proveedor</h3>
+			<span class="text-red-500">*</span>
+		</div>
+
+		<!-- Grid Layout -->
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+			<!-- Proveedor -->
+			<div>
+				<label class="block text-sm text-gray-600 mb-2">Proveedor</label>
+        <select
+        formControlName="proveedor"
+        class="w-full p-2.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+        (change)="onProveedorChange($event)">
+        <option value="">Seleccionar</option>
+        <option *ngFor="let prov of proveedores" [value]="prov.id_proveedor">
+            {{ prov.tb_personas.nombres }}
+        </option>
+    </select>
+			</div>
+
+			<!-- RUC -->
+			<div>
+				<label class="block text-sm text-gray-600 mb-2">RUC</label>
+				<input
+					type="text"
+					class="w-full p-2.5 border border-gray-200 rounded bg-gray-50"
+					[value]="proveedorSeleccionado.ruc || ''"
+					disabled
+					placeholder="RUC"
+				/>
+			</div>
+
+			<!-- Dirección -->
+			<div>
+				<label class="block text-sm text-gray-600 mb-2">Dirección</label>
+				<input
+					type="text"
+					class="w-full p-2.5 border border-gray-200 rounded bg-gray-50"
+					[value]="proveedorSeleccionado.direccion || ''"
+					disabled
+					placeholder="Dirección"
+				/>
+			</div>
+		</div>
+
+		<!-- Segunda fila -->
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+			<!-- Correo -->
+			<div>
+				<label class="block text-sm text-gray-600 mb-2">Correo</label>
+				<input
+					type="email"
+					class="w-full p-2.5 border border-gray-200 rounded bg-gray-50"
+					[value]="proveedorSeleccionado.correo || ''"
+					disabled
+					placeholder="Correo Electrónico"
+				/>
+			</div>
+
+			<!-- Teléfono -->
+			<div>
+				<label class="block text-sm text-gray-600 mb-2">Teléfono</label>
+				<input
+					type="tel"
+					class="w-full p-2.5 border border-gray-200 rounded bg-gray-50"
+					[value]="proveedorSeleccionado.telefono || ''"
+					disabled
+					placeholder="Teléfono"
+				/>
+			</div>
+		</div>
+	</div>
+
+	<!-- Agregar Producto -->
+	<div class="bg-gray-100 p-6 rounded-md mb-6">
+		<div class="flex items-center gap-2 mb-4">
+			<i nz-icon nzType="shopping-cart" nzTheme="outline" class="text-blue-500"></i>
+			<h3 class="text-base font-medium text-gray-800">Agregar Producto</h3>
+		</div>
+
+		<!-- Fila de Categoría, Producto, Precio, Stock y Cantidad -->
+		<div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
+			<!-- Categoría -->
+			<div>
+				<label class="block text-sm text-gray-600 mb-2">Categoría</label>
+        <select
+        formControlName="categoria"
+        class="w-full p-2.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+        <option value="">Seleccionar</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">
+            {{categoria.nombre_cat}}
+        </option>
+    </select>
+			</div>
+
+			<!-- Producto -->
+			<div>
+				<label class="block text-sm text-gray-600 mb-2">Producto</label>
+				<select
+          formControlName="producto"
+          class="w-full p-2.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+          (change)="onProductoChange($event)">
+          <option value="">Seleccionar</option>
+          <option *ngFor="let producto of productos" [value]="producto.id_producto">
+              {{producto.nombre_producto}}
+          </option>
+      </select>
+			</div>
+
+			<!-- Precio -->
+			<div>
+				<label class="block text-sm text-gray-600 mb-2">Precio</label>
+				<input
+					type="text"
+					class="w-full p-2.5 border border-gray-200 rounded bg-gray-50"
+					[value]="productoSelecionado.precio_venta || ''"
+					disabled
+					placeholder="Precio"
+				/>
+			</div>
+
+			<!-- Stock -->
+			<div>
+				<label class="block text-sm text-gray-600 mb-2">Stock</label>
+				<input
+					type="text"
+					class="w-full p-2.5 border border-gray-200 rounded bg-gray-50"
+					[value]="productoSelecionado.stock || ''"
+					disabled
+					placeholder="Stock"
+				/>
+			</div>
+
+			<!-- Cantidad -->
+			<div>
+        <label class="block text-sm text-gray-600 mb-2">Cantidad</label>
         <input
-          type="number"
-          [(ngModel)]="quantity"
-          class="w-full outline-none p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          min="1"
+            type="number"
+            class="w-full p-2.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+            [(ngModel)]="cantidad"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Cantidad"
         />
-      </div>
-
-      <!-- Código -->
-      <div>
-        <label class="block text-sm mb-1">Código</label>
-        <div class="flex gap-1">
-          <input
-            type="text"
-            class="w-full  outline-none p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          <button (click)="openProductModal()" class="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-            <i nz-icon nzType="search"></i>
-          </button>
-          <button  (click)="openAgregarProductosModal()" class="px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-            <i nz-icon nzType="plus"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Fecha -->
-      <div>
-        <label class="block text-sm mb-1">Fecha *</label>
-        <div class="relative">
-          <input
-            type="date"
-            placeholder="dd/mm/aaaa"
-            class="w-full px-3 py-2 border rounded outline-none"
-          />
-         
-        </div>
-      </div>
     </div>
+		</div>
 
-    <!-- Table -->
-    <div class="overflow-x-auto mb-4">
-      <nz-table class="w-full">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="p-2 text-left">Nro</th>
-            <th class="p-2 text-left">Código</th>
-            <th class="p-2 text-left">Cantidad</th>
-            <th class="p-2 text-left">Nombre</th>
-            <th class="p-2 text-left">Costo</th>
-            <th class="p-2 text-left">Total</th>
-            <th class="p-2 text-left">Acción</th>
+		<!-- Botón Agregar -->
+		<div class="flex justify-end">
+			<button
+				class="bg-blue-500 flex items-center text-white px-4 py-2 rounded hover:bg-blue-600 focus:ring-1 focus:ring-blue-500"
+				(click)="agregarProducto()"
+			>
+				<i nz-icon nzType="plus-circle" nzTheme="outline" class="mr-2"></i>
+				<!-- Ícono de agregar -->
+				Agregar
+			</button>
+		</div>
+	</div>
+
+	<!-- Detalles Compra -->
+	<div class="bg-gray-100 p-6 rounded-md shadow-md">
+		<!-- Título -->
+		<h3 class="text-lg font-semibold text-gray-800 mb-4">Detalle de Compra</h3>
+
+		<!-- Tabla -->
+    <div class="overflow-x-auto mb-6">
+      <table class="table-auto w-full border border-gray-200 rounded">
+        <thead class="bg-gray-100 text-gray-700">
+          <tr class="bg-[#4644CD] text-white">
+            <th class="px-4 py-2 text-left">Categoría</th>
+            <th class="px-4 py-2 text-left">Producto</th>
+            <th class="px-4 py-2 text-center">Marca</th>
+            <th class="px-4 py-2 text-center">P. Compra</th>
+            <th class="px-4 py-2 text-center">Cant</th>
+            <th class="px-4 py-2 text-center">Total</th>
+            <th class="px-4 py-2 text-center">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          @for (detail of purchaseDetails; track detail.id; let i = $index) {
-            <tr class="border-b">
-              <td class="p-2">{{ i + 1 }}</td>
-              <td class="p-2">{{ detail.code }}</td>
-              <td class="p-2">{{ detail.quantity }}</td>
-              <td class="p-2">{{ detail.name }}</td>
-              <td class="p-2">{{ detail.cost | number:'1.2-2' }}</td>
-              <td class="p-2">{{ detail.total | number:'1.2-2' }}</td>
-              <td class="p-2">
-                <button 
-                  (click)="removeDetail(detail.id)"
-                  class="p-1 bg-red-500 text-white rounded hover:bg-red-600"
-                >
-                  <i nz-icon nzType="delete"></i>
-                </button>
-              </td>
-            </tr>
-          }
+          <tr class="border-t" *ngFor="let detalle of detalleProductos; let i = index">
+            <td class="px-4 py-2">{{detalle.categoria}}</td>
+            <td class="px-4 py-2">{{detalle.producto}}</td>
+            <td class="px-4 py-2 text-center">{{detalle.marca}}</td>
+            <td class="px-4 py-2 text-center">{{detalle.precio_venta | number:'1.2-2'}}</td>
+            <td class="px-4 py-2 text-center">{{detalle.cantidad}}</td>
+            <td class="px-4 py-2 text-center">{{detalle.total | number:'1.2-2'}}</td>
+            <td class="px-4 py-2 text-center">
+              <button 
+                class="text-red-500 hover:text-red-700"
+                (click)="eliminarProducto(i)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+              </button>
+            </td>
+          </tr>
         </tbody>
-      </nz-table>
+      </table>
     </div>
 
-    <!-- Buttons -->
-    <div class="flex gap-2">
-      <button  class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-        Cancelar
-      </button>
-      <button 
-        (click)="savePurchase()"
-        class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-      >
-        <i nz-icon nzType="save"></i>
-        Registrar
-      </button>
-    </div>
-  </div>
+		<!-- Subtotal, IGV y Total -->
+		<div class="mt-4 ml-auto w-72">
+			<div class="flex justify-between py-2">
+				<span class="text-gray-600">Sub Total</span>
+				<span class="font-medium">{{ subtotal | number: '1.2-2' }}</span>
+			</div>
+			<div class="flex justify-between py-2">
+				<span class="text-gray-600">IGV (18%)</span>
+				<span class="font-medium">{{ igv | number: '1.2-2' }}</span>
+			</div>
+			<div class="flex justify-between py-2 border-t border-gray-200">
+				<span class="font-medium">Total</span>
+				<span class="font-medium">{{ total | number: '1.2-2' }}</span>
+			</div>
+		</div>
+
+		<!-- Comentario -->
+		<div class="mb-6">
+			<label for="comentario" class="block text-sm text-gray-600 mb-2">Comentario</label>
+			<textarea
+    formControlName="comentario"
+    id="comentario"
+    rows="3"
+    class="w-full outline-none p-3 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500 bg-blue-50"
+    placeholder="Comentario">
+</textarea>
+		</div>
+
+		<!-- Botones -->
+		<div class="flex gap-4 justify-start">
+			<button (click)="saveCompra()" class="flex items-center bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600">
+				<i nz-icon nzType="save" nzTheme="outline" class="mr-2"></i> Guardar
+			</button>
+			<button (click)="limpiarFormulario()" class="flex items-center bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+				<i nz-icon nzType="delete" nzTheme="outline" class="mr-2"></i> Limpiar
+			</button>
+		</div>
+	</div>
+</form>
 </div>

@@ -1,1 +1,136 @@
-<p>compras-lista works!</p>
+<div>
+	<nz-breadcrumb class="font-bold text-sm" [nzAutoGenerate]="true"> </nz-breadcrumb>
+</div>
+<div class="container mx-auto py-6">
+	<div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
+		<!-- Título de la sección con icono -->
+		<h3 class="text-xl font-semibold text-gray-800 flex items-center">
+			<svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24" class="mr-2">
+				<path
+					fill="#000000"
+					d="M22 3H2v6h1v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9h1zM4 5h16v2H4zm15 15H5V9h14zM9 11h6a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2"
+				/>
+			</svg>
+			Gestión de Compras
+		</h3>
+
+		<div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+			<nz-input-group [nzSuffix]="suffixIconSearch" class="w-full md:w-64">
+				<input type="text" nz-input placeholder="Buscar producto" [(ngModel)]="search" (keyup.enter)="searchTo()" />
+			</nz-input-group>
+			<ng-template #suffixIconSearch>
+				<span nz-icon nzType="search"></span>
+			</ng-template>
+
+			<button
+				routerLink="../crear-compra"
+				nz-button
+				nzType="primary"
+				class="h-10 px-4 rounded-lg uppercase font-bold bg-mantis-600 border-none hover:bg-mantis-500 focus:ring-2 focus:ring-mantis-400 transition"
+			>
+				<span nz-icon nzType="plus"></span>
+				<span>Agregar</span>
+			</button>
+
+			<div class="flex space-x-2">
+				<!--  PDF -->
+				<button
+					class="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
+					nz-tooltip
+					nzTooltipTitle="Descargar PDF"
+				>
+					<span nz-icon nzType="file-pdf" nzTheme="outline"></span>
+				</button>
+
+				<!--  Excel -->
+				<button
+					class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
+					nz-tooltip
+					nzTooltipTitle="Descargar Excel"
+				>
+					<span nz-icon nzType="file-excel" nzTheme="outline"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="w-full overflow-hidden">
+		<nz-table
+			#basicTable
+			[nzData]="compras"
+			[nzLoading]="loading"
+			[nzPageSize]="limit"
+			[nzTotal]="total"
+			[nzFrontPagination]="false"
+			(nzPageIndexChange)="onPageChange($event)"
+			nzShowSizeChanger
+			[nzBordered]="true"
+			[nzShowQuickJumper]="true"
+			class="w-full overflow-x-auto"
+		>
+			
+    <thead class="sticky top-0 z-10">
+      <tr class="bg-gray-100">
+          <th nzWidth="150px" nzLeft="0px" nzColumnKey="numero_documento" class="font-semibold text-gray-700">N° Documento</th>
+          <th nzWidth="200px" nzColumnKey="proveedor" class="font-semibold text-gray-700">Proveedor</th>
+          <th nzWidth="150px" nzColumnKey="fecha_compra" class="font-semibold text-gray-700">Fecha</th>
+          <th nzWidth="150px" nzColumnKey="metodo_pago" class="font-semibold text-gray-700">Método Pago</th>
+          <th nzWidth="120px" nzColumnKey="compra_subtotal" class="font-semibold text-gray-700">Subtotal</th>
+          <th nzWidth="120px" nzColumnKey="compra_igv" class="font-semibold text-gray-700">IGV</th>
+          <th nzWidth="120px" nzColumnKey="compra_total" class="font-semibold text-gray-700">Total</th>
+          <th nzWidth="120px" nzRight="0px" class="font-semibold text-gray-700 bg-gray-100">Acciones</th>
+      </tr>
+  </thead>
+  <tbody>
+      @for (compra of compras; track compra.id_compra) {
+          <tr>
+              <td nzLeft="0px">{{ compra.numero_documento }}</td>
+              <td>{{ compra.tb_proveedores.tb_personas.nombres }}</td>
+              <td>{{ compra.fecha_compra | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ compra.tb_metodo_pago.nombre_metodo_pago }}</td>
+              <td>{{ compra.compra_subtotal |  number: '1.2-2' }}</td>
+              <td>{{ compra.compra_igv | number: '1.2-2' }}</td>
+              <td>{{ compra.compra_total | number: '1.2-2' }}</td>
+              <td nzRight="0px" nzAlign="left" class="bg-white">
+                  <nz-space [nzSize]="8">
+                      <ng-container *nzSpaceItem>
+                          <button
+                              [routerLink]="['/admin/compras', compra.id_compra]"
+
+                              nz-button
+                              nzType="primary"
+                              nzShape="circle"
+                              nzSize="small"
+                              nz-tooltip
+                              nzTooltipTitle="Ver Compra"
+                          >
+                              <span nz-icon nzType="eye" nzTheme="outline"></span>
+                          </button>
+                      </ng-container>
+                      <ng-container *nzSpaceItem>
+                          <button
+                              (click)="deleleCompra(compra)"
+                              nz-button
+                              nzType="primary"
+                              nzDanger
+                              nzShape="circle"
+                              nzSize="small"
+                              nz-tooltip
+                              nzTooltipTitle="Eliminar"
+                          >
+                              <span nz-icon nzType="delete" nzTheme="outline"></span>
+                          </button>
+                      </ng-container>
+                  </nz-space>
+              </td>
+          </tr>
+      }
+  </tbody>
+
+		</nz-table>
+	</div>
+
+	<div class="mt-4 text-right text-sm text-gray-600">
+		<strong>Total de Productos: {{ total }}</strong>
+	</div>
+</div>
