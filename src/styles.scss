@@ -15,11 +15,12 @@ body {
   @apply font-normal text-base;
 }
 
-html, body {
+html,
+body {
   font-family: "Outfit", serif;
   font-optical-sizing: auto;
   font-style: normal;
-  
+
 }
 
 /* SweetAlert2 custom popup styling */
@@ -77,9 +78,37 @@ html, body {
 
 .ant-table-thead>tr>th {
   color: rgb(240, 236, 236);
-  background-color: #1890FF;
+  background-color: #4C59CF;
 }
 
 // .ant-layout-sider-children {
 //   background-color: rebeccapurple;
 // }
+
+
+.view-btn {
+  background-color: #6A6CF1;
+  border: none;
+
+  &:hover {
+    background-color: #5658d8;
+  }
+}
+
+.edit-btn {
+  background-color: #2C7787;
+  border: none;
+
+  &:hover {
+    background-color: #236473;
+  }
+}
+
+.delete-btn {
+  background-color: #EC8F98;
+  border: none;
+
+  &:hover {
+    background-color: #e57881;
+  }
+}

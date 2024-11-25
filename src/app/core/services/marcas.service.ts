@@ -12,7 +12,7 @@ export class MarcasService {
 
 	getMarcasData(page: number, limit: number, search: string = ''): Observable<IMarcasResponseData> {
 		const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString()).set('search', search);
-		return this._httpClient.get<IMarcasResponseData>(URL_MARCAS_ALL, { params }).pipe(delay(1000));
+		return this._httpClient.get<IMarcasResponseData>(URL_MARCAS_ALL, { params }).pipe(delay(400));
 	}
 
 	getComboBoxMarcasAll(): Observable<IMarcaComboBox[]> {

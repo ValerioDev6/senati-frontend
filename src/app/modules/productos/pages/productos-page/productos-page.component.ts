@@ -26,6 +26,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { ReportesPdfService } from '../../../../core/services/reports/reportes-pdf.service';
 import { ReportesExcelService } from '../../../../core/services/reports/reportes-excel.service';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 const NZ_MODULES = [
 	NzInputModule,
 	NzIconModule,
@@ -45,10 +46,11 @@ const NZ_MODULES = [
 	NzSpaceModule,
 	NzPopconfirmModule,
 ];
+
 @Component({
 	selector: 'app-productos-page',
 	standalone: true,
-	imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule, NZ_MODULES, NzModalModule],
+	imports: [CommonModule, NgxBarcode6Module, RouterModule, ReactiveFormsModule, FormsModule, NZ_MODULES, NzModalModule],
 	templateUrl: './productos-page.component.html',
 	styleUrl: './productos-page.component.scss',
 })
@@ -65,14 +67,14 @@ export default class ProductosPageComponent implements OnInit {
 	loading = false;
 	search: string = '';
 	page: number = 1;
-	limit: number = 10;
+	limit: number = 8;
 	total: number = 0;
 
 	ngOnInit(): void {
-		this.loadDataMarcas();
+		this.loadDataProducto();
 	}
 
-	loadDataMarcas() {
+	loadDataProducto() {
 		this.loading = true;
 		this._productoService.getProductosData(this.page, this.limit, this.search).subscribe({
 			next: (response: IProductoResponse) => {
@@ -84,12 +86,12 @@ export default class ProductosPageComponent implements OnInit {
 	}
 	searchTo() {
 		this.page = 1;
-		this.loadDataMarcas();
+		this.loadDataProducto();
 	}
 
 	onPageChange(page: number) {
 		this.page = page;
-		this.loadDataMarcas();
+		this.loadDataProducto();
 	}
 
 	descargarExcel(): void {
@@ -125,7 +127,9 @@ export default class ProductosPageComponent implements OnInit {
 			},
 		});
 	}
-
+	refreshPage() {
+		this.loadDataProducto();
+	}
 	deleteProducto(producto: Producto) {
 		Swal.fire({
 			title: '¿Está seguro?',
@@ -148,7 +152,7 @@ export default class ProductosPageComponent implements OnInit {
 				this.loading = true;
 				this._productoService.deleteProductoById(producto.id_producto).subscribe({
 					next: () => {
-						this.loadDataMarcas();
+						this.loadDataProducto();
 						this.message.success('Producto eliminado con éxito');
 					},
 					error: () => {

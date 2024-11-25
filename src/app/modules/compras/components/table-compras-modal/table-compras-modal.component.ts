@@ -1,55 +1,68 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, inject, OnInit } from '@angular/core';
-import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { ProductoService } from '../../../../core/services/productos.service';
-import { IProductoResponse, Producto } from '../../../../core/interfaces/producto.interface';
+import { ComprasService } from '../../../../core/services/compras.service';
+import { DetalleCompras, Resumen } from '../../../../core/interfaces/compras-detalles.interface';
+import { finalize } from 'rxjs';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+interface ModalData {
+	id_compra: string;
+}
+
 @Component({
 	selector: 'app-table-compras-modal',
 	standalone: true,
-	imports: [CommonModule, NzTableModule, NzButtonModule, FormsModule, NzPaginationModule],
+	imports: [CommonModule, NzSpinModule, NzTableModule, NzButtonModule, FormsModule, NzPaginationModule],
 	templateUrl: './table-compras-modal.component.html',
 	styleUrl: './table-compras-modal.component.scss',
 })
 export class TableComprasModalComponent implements OnInit {
+	private comprasService = inject(ComprasService);
 	private modalRef = inject(NzModalRef);
-	private productoService = inject(ProductoService);
+	private readonly data = inject<ModalData>(NZ_MODAL_DATA);
 
-	search: string = '';
-	products!: Producto[];
+	detalles: DetalleCompras[] = [];
 	loading = false;
-	page: number = 1;
-	limit: number = 10;
-	total: number = 0;
+	total = 0;
+	page = 1;
+	pageSize = 5;
+	resumen?: Resumen;
 
 	ngOnInit() {
-		this.listarProductos();
+		this.loadDetallesCompra();
 	}
 
-	listarProductos() {
+	loadDetallesCompra(page: number = 1) {
 		this.loading = true;
-		this.productoService.getProductosData(this.page, this.limit, this.search).subscribe({
-			next: (response: IProductoResponse) => {
-				this.products = response.productos;
-				this.total = response.info.total;
-				this.loading = false;
-			},
-		});
+		this.comprasService
+			.getComprasDetallesData(this.data.id_compra, page, this.pageSize)
+			.pipe(
+				finalize(() => {
+					this.loading = false;
+				})
+			)
+			.subscribe({
+				next: (response) => {
+					this.detalles = response.detalles;
+					this.total = response.info.total;
+					this.resumen = response.resumen;
+				},
+				error: (err) => {
+					console.error('Error al cargar detalles:', err);
+				},
+			});
 	}
-	searchProducts() {
-		this.listarProductos();
-	}
-
 	onPageChange(page: number) {
 		this.page = page;
-		this.listarProductos();
+		this.loadDetallesCompra(page);
 	}
 
-	selectProduct(product: any) {
-		this.modalRef.close(product);
+	closeModal() {
+		this.modalRef.close();
 	}
 }

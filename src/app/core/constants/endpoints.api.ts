@@ -40,4 +40,8 @@ export const endpoint = {
 	COMPRAS: 'compras',
 
 	METODO_PAGO: 'metodo-pagos',
+
+	VENTAS: 'ventas',
+
+	KARDEX_ENDOINT: 'kardex',
 };

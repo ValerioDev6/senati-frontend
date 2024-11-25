@@ -188,4 +188,8 @@ export default class MarcasListaComponent implements OnInit {
 			}
 		});
 	}
+
+	refreshPage() {
+		this.loadDataMarcas();
+	}
 }

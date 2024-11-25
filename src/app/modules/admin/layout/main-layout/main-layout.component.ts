@@ -1,4 +1,4 @@
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -19,7 +19,6 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 	standalone: true,
 	imports: [
 		RouterLink,
-		AsyncPipe,
 		RouterOutlet,
 		NzIconModule,
 		NzLayoutModule,

@@ -34,7 +34,7 @@ export const ADMIN_ROUTES: Routes = [
 			{
 				path: 'marcas',
 				loadChildren: () => import('../marcas/marcas.routes').then((m) => m.MARCAS_ROUTES),
-				title: 'App - Roles',
+				title: 'App - Marcas',
 				data: { breadcrumb: 'Mantenimiento Marcas' },
 			},
 
@@ -69,7 +69,12 @@ export const ADMIN_ROUTES: Routes = [
 				title: 'App - Proveedores',
 				data: { breadcrumb: 'Mantenimiento de Proveedores' },
 			},
-
+			{
+				path: 'cliente',
+				loadChildren: () => import('../clientes/clientes.routes').then((m) => m.CLIENTES_ROUTES),
+				title: 'App - Clientes',
+				data: { breadcrumb: 'Mantenimiento de Clientes' },
+			},
 			{
 				path: 'compras',
 				loadChildren: () => import('../compras/compras.routes').then((m) => m.COMPRAS_ROUTES),
@@ -81,6 +86,13 @@ export const ADMIN_ROUTES: Routes = [
 				loadChildren: () => import('../ventas/ventas.routes').then((m) => m.VENTAS_ROUTES),
 				title: 'App - Ventas',
 				data: { breadcrumb: 'Mantenimiento de Ventas' },
+			},
+
+			{
+				path: 'kardex',
+				loadChildren: () => import('../kardex/kardex.routes').then((m) => m.KARDEX_ROUTES),
+				title: 'App - Kardex',
+				data: { breadcrumb: 'KARDEX' },
 			},
 		],
 	},

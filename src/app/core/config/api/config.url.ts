@@ -38,4 +38,7 @@ export const URL_REPORTE_EXCEL = `${BASE_URL}/${endpoint.REPORTES_EXCEL}`;
 export const URL_REPORTE_PDF = `${BASE_URL}/${endpoint.REPORTES_PDF}`;
 
 export const URL_COMPRAS_ALL = `${BASE_URL}/${endpoint.COMPRAS}`;
+export const URL_VENTAS_ALL = `${BASE_URL}/${endpoint.VENTAS}`;
 export const URL_METODOS_PAGOS = `${BASE_URL}/${endpoint.METODO_PAGO}`;
+
+export const URL_kARDEX_ALL = `${BASE_URL}/${endpoint.KARDEX_ENDOINT}`;

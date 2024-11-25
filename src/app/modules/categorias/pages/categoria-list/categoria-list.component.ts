@@ -24,6 +24,8 @@ import { CategoriesService } from '../../../../core/services/categories.service'
 import { CrearCategorieComponent } from '../../components/crear-categorie/crear-categorie.component';
 import Swal from 'sweetalert2';
 import { ActualizarCategorieComponent } from '../../components/actualizar-categorie/actualizar-categorie.component';
+import { ReportesExcelService } from '../../../../core/services/reports/reportes-excel.service';
+import { ReportesPdfService } from '../../../../core/services/reports/reportes-pdf.service';
 
 const NZ_MODULES = [
 	NzInputModule,
@@ -53,7 +55,9 @@ export default class CategoriaListComponent implements OnInit {
 	constructor(
 		private readonly _modal: NzModalService,
 		private readonly _categorieService: CategoriesService,
-		private readonly message: NzMessageService
+		private readonly message: NzMessageService,
+		private reportePdfService: ReportesPdfService,
+		private reporteExcelService: ReportesExcelService
 	) {}
 
 	categorias: Category[] = [];
@@ -77,6 +81,38 @@ export default class CategoriaListComponent implements OnInit {
 			error: (err) => {
 				console.error('Error al cargar categorias', err);
 				this.loading = false;
+			},
+		});
+	}
+
+	descargarExcel(): void {
+		this.reporteExcelService.descargarExcelCategoria().subscribe({
+			next: (blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_categorias.xlsx';
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			error: () => {
+				this.message.error('Error al descargar el Excel');
+			},
+		});
+	}
+
+	downloadPDF(): void {
+		this.reportePdfService.downloadCategoriasPDF().subscribe({
+			next: (blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_categorias.pdf';
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			error: () => {
+				this.message.error('Error al descargar el PDF');
 			},
 		});
 	}
@@ -152,5 +188,9 @@ export default class CategoriaListComponent implements OnInit {
 				});
 			}
 		});
+	}
+
+	refreshPage() {
+		this.loadDataCategorias();
 	}
 }

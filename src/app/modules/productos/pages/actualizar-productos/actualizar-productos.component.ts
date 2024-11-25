@@ -71,7 +71,6 @@ export default class ActualizarProductosComponent implements OnInit, OnDestroy {
 			id_marca: ['', [Validators.required]],
 			precio_compra: ['', [Validators.required]],
 			precio_venta: ['', [Validators.required]],
-			codigo_producto: ['', [Validators.required]],
 			estado_produto: ['', [Validators.required]],
 			id_sucursal: ['', [Validators.required]],
 			id_tipo_propietario: ['', [Validators.required]],
@@ -104,9 +103,6 @@ export default class ActualizarProductosComponent implements OnInit, OnDestroy {
 
 	get nombreProductoControl() {
 		return this.productoForm.get('nombre_producto');
-	}
-	get codigoProductoControl() {
-		return this.productoForm.get('codigo_producto');
 	}
 
 	get descripcionProductoControl() {

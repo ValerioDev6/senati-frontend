@@ -17,6 +17,7 @@ import { IComboBoxCategorie } from '../../../../core/interfaces/categories.inter
 import { CategoriesService } from '../../../../core/services/categories.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ComprasService } from '../../../../core/services/compras.service';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 interface DetalleProducto {
 	id_producto: string;
 	categoria: string;
@@ -47,7 +48,7 @@ interface RequestCompraDto {
 @Component({
 	selector: 'app-crear-compra',
 	standalone: true,
-	imports: [FormsModule, NzIconModule, CommonModule, NzTableModule, ReactiveFormsModule],
+	imports: [FormsModule, NzIconModule, CommonModule, NzTableModule, ReactiveFormsModule, NzBreadCrumbModule],
 	templateUrl: './crear-compra.component.html',
 	styleUrl: './crear-compra.component.scss',
 	providers: [NzModalService],

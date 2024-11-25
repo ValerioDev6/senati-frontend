@@ -11,41 +11,43 @@
 
 		<div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
 			<nz-input-group [nzSuffix]="suffixIconSearch" class="w-full md:w-64">
-				<input type="text" nz-input placeholder="Buscar producto" [(ngModel)]="search" (keyup.enter)="searchTo()" />
+				<input type="text" nz-input placeholder="Buscar marca" [(ngModel)]="search" (keyup.enter)="searchTo()" />
 			</nz-input-group>
 			<ng-template #suffixIconSearch>
 				<span nz-icon nzType="search"></span>
 			</ng-template>
-
-			<button
-				(click)="openAgregarMarcaModal()"
-				nz-button
-				nzType="primary"
-				class="h-10 px-4 rounded-lg uppercase font-bold bg-mantis-600 border-none hover:bg-mantis-500 focus:ring-2 focus:ring-mantis-400 transition"
-			>
-				<span nz-icon nzType="plus"></span>
-				<span>Agregar</span>
-			</button>
-
-			<div class="flex space-x-2">
-				<!--  PDF -->
+			<div class="flex">
+				<button
+					(click)="refreshPage()"
+					nz-tooltip
+					nzTooltipTitle="Refrescar"
+					class="flex items-center justify-center h-9 px-3 bg-[#22c55e] hover:bg-[#1ea352] transition-colors"
+				>
+					<span nz-icon nzType="sync" nzTheme="outline" class="text-white text-lg font-bold"></span>
+				</button>
+				<button
+					(click)="openAgregarMarcaModal()"
+					class="flex items-center justify-center h-9 px-4 bg-[#6366f1] hover:bg-[#5558e4] transition-colors"
+				>
+					<span nz-icon nzType="plus-circle" nzTheme="fill" class="text-white text-lg font-bold mr-2"></span>
+					<span class="text-white font-medium">Crear</span>
+				</button>
 				<button
 					(click)="downloadPDF()"
-					class="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
 					nz-tooltip
 					nzTooltipTitle="Descargar PDF"
+					class="flex items-center justify-center h-9 px-3 bg-red-500 hover:bg-red-600 transition-colors"
 				>
-					<span nz-icon nzType="file-pdf" nzTheme="outline"></span>
+					<span nz-icon nzType="file-pdf" nzTheme="fill" class="text-white text-lg font-bold"></span>
 				</button>
 
-				<!--  Excel -->
 				<button
 					(click)="descargarExcel()"
-					class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
 					nz-tooltip
 					nzTooltipTitle="Descargar Excel"
+					class="flex items-center justify-center h-9 px-3 bg-[#1D6F42] hover:bg-[#185c37] transition-colors"
 				>
-					<span nz-icon nzType="file-excel" nzTheme="outline"></span>
+					<span nz-icon nzType="file-excel" nzTheme="fill" class="text-white text-lg font-bold"></span>
 				</button>
 			</div>
 		</div>
@@ -84,29 +86,22 @@
 					<nz-space [nzSize]="8">
 						<ng-container *nzSpaceItem>
 							<button
-								nz-button
-								nzType="primary"
-								nzShape="circle"
-								nzSize="small"
 								nz-tooltip
 								nzTooltipTitle="Editar"
+								class="edit-btn flex items-center justify-center w-8 h-7"
 								(click)="openEditarModal(marca)"
 							>
-								<span nz-icon nzType="edit" nzTheme="outline"></span>
+								<span nz-icon nzType="edit" nzTheme="fill" class="text-white"></span>
 							</button>
 						</ng-container>
 						<ng-container *nzSpaceItem>
 							<button
-								nz-button
-								nzType="primary"
-								nzDanger
-								nzShape="circle"
-								nzSize="small"
 								nz-tooltip
+								class="delete-btn flex items-center justify-center w-8 h-7"
 								nzTooltipTitle="Eliminar"
 								(click)="deleteMarca(marca)"
 							>
-								<span nz-icon nzType="delete" nzTheme="outline"></span>
+								<span nz-icon nzType="delete" nzTheme="fill" class="text-white"></span>
 							</button>
 						</ng-container>
 					</nz-space>

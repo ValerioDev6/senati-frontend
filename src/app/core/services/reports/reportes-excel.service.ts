@@ -1,23 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ReportesExcelService {
+	private readonly API_URL = environment.BACKEND_URL;
+
 	constructor(private readonly _httpClient: HttpClient) {}
 
-  
-
 	descargarExcelMarcas(): Observable<Blob> {
-		return this._httpClient.get('http://localhost:3000/v1/api/basic-reports-excel/marcas', {
+		return this._httpClient.get(`${this.API_URL}/reports-excel/marcas`, {
+			responseType: 'blob',
+		});
+	}
+
+	descargarExcelCategoria(): Observable<Blob> {
+		return this._httpClient.get(`${this.API_URL}/reports-excel/categorias`, {
 			responseType: 'blob',
 		});
 	}
 
 	descargarExcelProducto(): Observable<Blob> {
-		return this._httpClient.get('http://localhost:3000/v1/api/basic-reports-excel/productos', {
+		return this._httpClient.get(`${this.API_URL}/reports-excel/productos`, {
 			responseType: 'blob',
 		});
 	}

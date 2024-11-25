@@ -59,7 +59,6 @@ export default class CrearProductosComponent implements OnInit {
 	) {
 		this.productForm = this.fb.group({
 			nombre_producto: ['', [Validators.required]],
-			codigo_producto: ['', [Validators.required]],
 			descripcion: ['', [Validators.required]],
 			stock: [0, [Validators.required, Validators.min(0)]],
 			id_categoria: ['', [Validators.required]],
@@ -78,9 +77,7 @@ export default class CrearProductosComponent implements OnInit {
 	get nombreProductoControl() {
 		return this.productForm.get('nombre_producto');
 	}
-	get codigoProductoControl() {
-		return this.productForm.get('codigo_producto');
-	}
+	
 
 	get descripcionProductoControl() {
 		return this.productForm.get('descripcion');

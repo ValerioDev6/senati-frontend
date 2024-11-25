@@ -24,6 +24,13 @@ export const PRODUCTOS_ROUTES: Routes = [
 			breadcrumb: 'Actualizar Productos',
 		},
 	},
+	{
+		path: ':id',
+		loadComponent: () => import('./pages/producto-individual/producto-individual.component'),
+		data: {
+			breadcrumb: 'Información Producto',
+		},
+	},
 
 	{
 		path: '**',

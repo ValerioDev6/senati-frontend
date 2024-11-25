@@ -19,6 +19,8 @@ import { ComprasService } from '../../../../core/services/compras.service';
 import { Compra, IComprasPaginationResponse } from '../../../../core/interfaces/compras.interface';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import Swal from 'sweetalert2';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { TableComprasModalComponent } from '../../components/table-compras-modal/table-compras-modal.component';
 
 @Component({
 	selector: 'app-compras-lista',
@@ -42,14 +44,18 @@ import Swal from 'sweetalert2';
 		NzBreadCrumbModule,
 		NzSpaceModule,
 		CommonModule,
+		NzBreadCrumbModule,
+		NzModalModule,
 	],
 	templateUrl: './compras-lista.component.html',
 	styleUrl: './compras-lista.component.scss',
+	providers: [NzModalService],
 })
 export default class ComprasListaComponent implements OnInit {
 	constructor(
 		private readonly _comprasService: ComprasService,
-		private readonly message: NzMessageService
+		private readonly message: NzMessageService,
+		private readonly _modal: NzModalService
 	) {}
 	compras: Compra[] = [];
 	loading = false;
@@ -83,6 +89,26 @@ export default class ComprasListaComponent implements OnInit {
 	onPageChange(page: number) {
 		this.page = page;
 		this.loadComprasData();
+	}
+
+	openDetallesModal(compra: Compra) {
+		const modal = this._modal.create({
+			nzTitle: `Detalles de Compra realizada #${compra.fecha_compra}`,
+			nzContent: TableComprasModalComponent,
+			nzData: {
+				id_compra: compra.id_compra,
+			},
+			nzWidth: '60%',
+			nzFooter: null,
+			nzStyle: {
+				top: '10px',
+			},
+		});
+		modal.afterClose.subscribe((result: boolean) => {
+			if (result) {
+				this.loadComprasData();
+			}
+		});
 	}
 
 	deleleCompra(compra: Compra) {

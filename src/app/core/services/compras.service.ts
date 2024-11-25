@@ -5,6 +5,7 @@ import { catchError, delay, map, Observable, of } from 'rxjs';
 import { IComprasPaginationResponse } from '../interfaces/compras.interface';
 import { URL_COMPRAS_ALL } from '../config/api/config.url';
 import { IDetalleCompraResponse } from '../interfaces/detalle-compra.interface';
+import { IComprasDetallesResponse } from '../interfaces/compras-detalles.interface';
 
 @Injectable({
 	providedIn: 'root',
@@ -21,7 +22,13 @@ export class ComprasService {
 		const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString()).set('search', search);
 		return this._httpCliente.get<IComprasPaginationResponse>(URL_COMPRAS_ALL, { params }).pipe(delay(600));
 	}
+	getComprasDetallesData(id_compra: string, page: number = 1, limit: number = 5): Observable<IComprasDetallesResponse> {
+		const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
 
+		return this._httpCliente
+			.get<IComprasDetallesResponse>(`${URL_COMPRAS_ALL}/${id_compra}/detalles`, { params })
+			.pipe(delay(1000));
+	}
 	getCompraById(id: number): Observable<IDetalleCompraResponse | undefined> {
 		return this._httpCliente.get<IDetalleCompraResponse>(`${URL_COMPRAS_ALL}/${id}`).pipe(
 			catchError((error) => {

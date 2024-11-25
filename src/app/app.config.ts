@@ -4,21 +4,21 @@ import { provideNzConfig } from 'ng-zorro-antd/core/config';
 
 import { routes } from './app.routes';
 import { provideNzIcons } from './icons-provider';
-import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
-import { registerLocaleData } from '@angular/common';
-import en from '@angular/common/locales/en';
+import { es_ES, provideNzI18n } from 'ng-zorro-antd/i18n';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthInterceptorHttpService } from './core/interceptors/api.interceptor';
+import es from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
 
-registerLocaleData(en);
+registerLocaleData(es);
 
 export const appConfig: ApplicationConfig = {
 	providers: [
 		provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
 		provideNzIcons(),
-		provideNzI18n(en_US),
+		provideNzI18n(es_ES),
 		importProvidersFrom(FormsModule),
 		provideAnimationsAsync(),
 		provideNzConfig({

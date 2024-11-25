@@ -1,0 +1,123 @@
+<div>
+	<nz-breadcrumb class="font-bold text-sm" [nzAutoGenerate]="true"> </nz-breadcrumb>
+</div>
+<div class="container mx-auto py-6">
+	<div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
+		<!-- Título de la sección con icono -->
+		<h3 class="text-xl font-semibold text-gray-800 flex items-center">
+			<svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24" class="mr-2">
+				<defs>
+					<linearGradient id="movementGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+						<stop offset="0%" style="stop-color: #4a90e2; stop-opacity: 1" />
+						<stop offset="100%" style="stop-color: #50c878; stop-opacity: 1" />
+					</linearGradient>
+				</defs>
+				<path
+					fill="url(#movementGradient)"
+					d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59L3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
+				/>
+			</svg>
+			Kardex de Movimientos
+		</h3>
+
+		<div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+			<nz-input-group [nzSuffix]="suffixIconSearch" class="w-full md:w-64">
+				<input type="text" nz-input placeholder="Buscar producto" [(ngModel)]="search" (keyup.enter)="searchTo()" />
+			</nz-input-group>
+			<ng-template #suffixIconSearch>
+				<span nz-icon nzType="search"></span>
+			</ng-template>
+
+			<div class="flex space-x-2">
+				<!--  PDF -->
+				<button
+					class="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
+					nz-tooltip
+					nzTooltipTitle="Descargar PDF"
+				>
+					<span nz-icon nzType="file-pdf" nzTheme="outline"></span>
+				</button>
+
+				<!--  Excel -->
+				<button
+					class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
+					nz-tooltip
+					nzTooltipTitle="Descargar Excel"
+				>
+					<span nz-icon nzType="file-excel" nzTheme="outline"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="w-full overflow-hidden">
+		<nz-table
+			#basicTable
+			[nzData]="kardex"
+			[nzLoading]="loading"
+			[nzPageSize]="limit"
+			[nzTotal]="total"
+			[nzFrontPagination]="false"
+			(nzPageIndexChange)="onPageChange($event)"
+			nzShowSizeChanger
+			[nzBordered]="true"
+			[nzShowQuickJumper]="true"
+			class="w-full overflow-x-auto"
+		>
+			<thead class="sticky top-0 z-10">
+				<tr class="bg-gray-100">
+					<th nzWidth="120px" nzLeft="0px" nzColumnKey="numero_documento">N° Documento</th>
+					<th nzWidth="180px" nzColumnKey="producto">Producto</th>
+					<th nzWidth="120px" nzColumnKey="fecha_movimiento">Fecha</th>
+					<th nzWidth="100px" nzColumnKey="tipo_movimiento">Tipo</th>
+					<th nzWidth="100px" nzColumnKey="cantidad">Cantidad</th>
+					<th nzWidth="100px" nzColumnKey="precio_unitario">P. Unitario</th>
+					<th nzWidth="100px" nzColumnKey="total">Total</th>
+					<th nzWidth="100px" nzColumnKey="stock_anterior">Stock Anterior</th>
+					<th nzWidth="100px" nzRight="0px" nzColumnKey="stock_actual">Stock Actual</th>
+					<th nzWidth="100px" nzRight="0px" class="bg-gray-100">Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (item of kardex; track item.id_kardex) {
+					<tr>
+						<td nzLeft="0px">{{ item.numero_documento }}</td>
+						<td>{{ item.tb_productos.nombre_producto }}</td>
+						<td>{{ item.fecha_movimiento | date: 'dd/MM/yyyy' }}</td>
+						<td class="font-bold">
+							<nz-tag [nzColor]="item.tipo_movimiento === 'ENTRADA' ? 'green' : 'blue'">
+								{{ item.tipo_movimiento }}
+							</nz-tag>
+						</td>
+						<td class="text-right">{{ item.cantidad | number: '1.0-0' }}</td>
+						<td class="text-right">{{ item.precio_unitario | currency: 'S/ ' }}</td>
+						<td class="text-right">{{ item.total | currency: 'S/ ' }}</td>
+						<td class="text-right">{{ item.stock_anterior | number: '1.0-0' }}</td>
+						<td class="text-right">{{ item.stock_actual | number: '1.0-0' }}</td>
+						<td nzRight="0px" nzAlign="center" class="bg-white">
+							<nz-space [nzSize]="8">
+								<ng-container *nzSpaceItem>
+									<button
+										(click)="deleteKardex(item)"
+										nz-button
+										nzType="primary"
+										nzDanger
+										nzShape="circle"
+										nzSize="small"
+										nz-tooltip
+										nzTooltipTitle="Eliminar"
+									>
+										<span nz-icon nzType="delete" nzTheme="outline"></span>
+									</button>
+								</ng-container>
+							</nz-space>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</nz-table>
+	</div>
+
+	<div class="mt-4 text-right text-sm text-gray-600">
+		<strong>Total de Movimientos: {{ total }}</strong>
+	</div>
+</div>
