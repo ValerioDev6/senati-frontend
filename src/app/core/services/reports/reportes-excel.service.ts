@@ -28,4 +28,16 @@ export class ReportesExcelService {
 			responseType: 'blob',
 		});
 	}
+
+	descargarExcelCompras(): Observable<Blob> {
+		return this._httpClient.get(`${this.API_URL}/reports-excel/compras`, {
+			responseType: 'blob',
+		});
+	}
+
+	descargarExcelProveedores(): Observable<Blob> {
+		return this._httpClient.get(`${this.API_URL}/reports-excel/proveedores`, {
+			responseType: 'blob',
+		});
+	}
 }

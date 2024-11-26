@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { catchError, delay, map, Observable, of } from 'rxjs';
 import { IProveedorCombo, IProveedoresResponse, Proveedore } from '../interfaces/proveedores.interface';
 import { URL_PROVEEDORES_ALL } from '../config/api/config.url';
+import { IProveedorByIDResponseIndividual } from '../interfaces/proveedor-by-id.interface';
 
 @Injectable({
 	providedIn: 'root',
@@ -26,6 +27,11 @@ export class ProveedoresService {
 	getProveedorById(id: string): Observable<Proveedore> {
 		return this._httpClient.get<Proveedore>(`${URL_PROVEEDORES_ALL}/${id}`);
 	}
+
+	getProveedorDetallesById(id: string): Observable<IProveedorByIDResponseIndividual> {
+		return this._httpClient.get<IProveedorByIDResponseIndividual>(`${URL_PROVEEDORES_ALL}/${id}`);
+	}
+
 	updatePersonal(data: Proveedore): Observable<any> {
 		return this._httpClient.patch<any>(`${URL_PROVEEDORES_ALL}/${data.id_proveedor}`, data);
 	}

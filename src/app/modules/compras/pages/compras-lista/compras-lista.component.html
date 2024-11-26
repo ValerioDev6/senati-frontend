@@ -24,13 +24,7 @@
 
 			<div class="flex">
 				<button
-					routerLink="../crear-compra"
-					class="flex items-center justify-center h-9 px-4 bg-[#6366f1] hover:bg-[#5558e4] transition-colors"
-				>
-					<span nz-icon nzType="plus-circle" nzTheme="fill" class="text-white text-lg font-bold mr-2"></span>
-					<span class="text-white font-medium">Crear</span>
-				</button>
-				<button
+					(click)="downloadPDF()"
 					nz-tooltip
 					nzTooltipTitle="Descargar PDF"
 					class="flex items-center justify-center h-9 px-3 bg-red-500 hover:bg-red-600 transition-colors"
@@ -38,11 +32,20 @@
 					<span nz-icon nzType="file-pdf" nzTheme="fill" class="text-white text-lg font-bold"></span>
 				</button>
 				<button
+					(click)="descargarExcel()"
 					nz-tooltip
 					nzTooltipTitle="Descargar Excel"
 					class="flex items-center justify-center h-9 px-3 bg-[#1D6F42] hover:bg-[#185c37] transition-colors"
 				>
 					<span nz-icon nzType="file-excel" nzTheme="fill" class="text-white text-lg font-bold"></span>
+				</button>
+
+				<button
+					routerLink="../crear-compra"
+					class="flex items-center justify-center h-9 px-4 bg-[#6366f1] hover:bg-[#5558e4] transition-colors"
+				>
+					<span nz-icon nzType="plus-circle" nzTheme="fill" class="text-white text-lg font-bold mr-2"></span>
+					<span class="text-white font-medium">Crear</span>
 				</button>
 			</div>
 		</div>

@@ -35,14 +35,22 @@ export class ReportesPdfService {
 			})
 			.pipe(catchError(this.handleError));
 	}
+	downloadComprasPDF(): Observable<Blob> {
+		return this._httpClient.get(`${this.API_URL}/reports-pdf/compras`, {
+			responseType: 'blob',
+		});
+	}
+	downloadProveedoresPDF(): Observable<Blob> {
+		return this._httpClient.get(`${this.API_URL}/reports-pdf/proveedores`, {
+			responseType: 'blob',
+		});
+	}
 
 	private handleError(error: HttpErrorResponse) {
 		let errorMessage = 'Ocurrió un error al descargar el PDF';
 		if (error.error instanceof ErrorEvent) {
-			// Error del cliente
 			errorMessage = `Error: ${error.error.message}`;
 		} else {
-			// Error del servidor
 			errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
 		}
 		return throwError(() => new Error(errorMessage));

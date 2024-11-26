@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 export const VENTAS_ROUTES: Routes = [
 	{
-		path: 'ventas-lista',
+		path: 'lista-venta',
 		loadComponent: () => import('./pages/ventas-lista/ventas-lista.component'),
 		data: {
 			breadcrumb: 'Listado Ventas',
@@ -22,5 +22,10 @@ export const VENTAS_ROUTES: Routes = [
 		data: {
 			breadcrumb: 'Información Venta',
 		},
+	},
+
+	{
+		path: '**',
+		redirectTo: 'lista-venta',
 	},
 ];

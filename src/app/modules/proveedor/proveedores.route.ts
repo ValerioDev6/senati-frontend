@@ -8,4 +8,16 @@ export const PROVEEOR_ROUTES: Routes = [
 			breadcrumb: 'Proveedores',
 		},
 	},
+	{
+		path: ':id',
+		loadComponent: () => import('./pages/info-proveedor/info-proveedor.component'),
+		data: {
+			breadcrumb: 'Información Proveedor',
+		},
+	},
+
+	{
+		path: '**',
+		redirectTo: 'proveedor-lista',
+	},
 ];

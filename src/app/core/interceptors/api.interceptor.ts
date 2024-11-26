@@ -4,27 +4,23 @@ import { first, switchMap } from 'rxjs';
 import { AuthService } from '../services/common/auth.service';
 
 export const AuthInterceptorHttpService: HttpInterceptorFn = (req, next) => {
+	const authService: AuthService = inject(AuthService);
 
-  const authService: AuthService = inject(AuthService);
+	return authService.isLoggedIn$.pipe(
+		first(),
+		switchMap((isLoggedIn) => {
+			if (isLoggedIn === false) {
+				return next(req);
+			}
+			console.log('PAsando beared token');
 
-  return authService.isLoggedIn$.pipe(
-    first(),
-    switchMap((isLoggedIn) => {
-      if (isLoggedIn === false) {
-        return next(req);
-      }
-      console.log('PAsando beared token');
-
-      return authService.jwt$.pipe(
-        first(Boolean),
-        switchMap((jwt) => {
-          const headers = req.headers.append(
-            'Authorization',
-            `Bearer ${jwt}`
-          );
-          return next(req.clone({ headers }));
-        })
-      );
-    })
-  );
-}
+			return authService.jwt$.pipe(
+				first(Boolean),
+				switchMap((jwt) => {
+					const headers = req.headers.append('Authorization', `Bearer ${jwt}`);
+					return next(req.clone({ headers }));
+				})
+			);
+		})
+	);
+};

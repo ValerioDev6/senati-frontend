@@ -7,7 +7,7 @@ export interface Info {
 	page: number;
 	limit: number;
 	total: number;
-	next: null;
+	next: string;
 	prev: null;
 }
 
@@ -18,6 +18,8 @@ export interface Proveedore {
 	created_at: Date;
 	updated_at: Date;
 	nombre_comercial: string;
+	total_compras: string;
+	ultima_compra: null;
 	tb_personas: TBPersonas;
 }
 

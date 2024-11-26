@@ -21,6 +21,8 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import Swal from 'sweetalert2';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { TableComprasModalComponent } from '../../components/table-compras-modal/table-compras-modal.component';
+import { ReportesPdfService } from '../../../../core/services/reports/reportes-pdf.service';
+import { ReportesExcelService } from '../../../../core/services/reports/reportes-excel.service';
 
 @Component({
 	selector: 'app-compras-lista',
@@ -54,6 +56,8 @@ import { TableComprasModalComponent } from '../../components/table-compras-modal
 export default class ComprasListaComponent implements OnInit {
 	constructor(
 		private readonly _comprasService: ComprasService,
+		private readonly reportePdfService: ReportesPdfService,
+		private readonly reporteExcelService: ReportesExcelService,
 		private readonly message: NzMessageService,
 		private readonly _modal: NzModalService
 	) {}
@@ -89,6 +93,39 @@ export default class ComprasListaComponent implements OnInit {
 	onPageChange(page: number) {
 		this.page = page;
 		this.loadComprasData();
+	}
+
+	downloadPDF(): void {
+		this.reportePdfService.downloadComprasPDF().subscribe({
+			next: (blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_compras.pdf';
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			error: (error) => {
+				this.message.error('Error al descargar el PDF');
+				console.error('Error downloading PDF:', error);
+			},
+		});
+	}
+	descargarExcel(): void {
+		this.reporteExcelService.descargarExcelCompras().subscribe({
+			next: (blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_compras.xlsx';
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			error: (error) => {
+				this.message.error('Error al descargar el Excel');
+				console.error('Error downloading Excel:', error);
+			},
+		});
 	}
 
 	openDetallesModal(compra: Compra) {

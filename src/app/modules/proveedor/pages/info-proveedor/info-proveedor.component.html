@@ -1,0 +1,64 @@
+<div>
+	<nz-breadcrumb class="font-bold text-sm" [nzAutoGenerate]="true"> </nz-breadcrumb>
+</div>
+<div class="bg-white shadow-lg rounded-lg w-full max-w-4xl mx-auto">
+	<div class="flex items-center p-6 border-b">
+		<div class="w-16 h-16 rounded-full bg-gray-200 mr-4"></div>
+		<div>
+			<h2 class="text-xl font-bold text-gray-800">{{ proveedor.nombre_comercial }}</h2>
+			<p class="text-gray-600 text-sm">{{ proveedor.id_proveedor }}</p>
+		</div>
+	</div>
+	<div class="grid grid-cols-2 gap-6 p-6">
+		<div>
+			<h3 class="text-gray-600 font-medium mb-2">Compra total</h3>
+			<p class="text-3xl font-bold text-gray-900">${{ proveedor.total_compras }}</p>
+		</div>
+	</div>
+	<div class="grid grid-cols-2 gap-6 p-6 border-t border-gray-200">
+		<div>
+			<h3 class="text-gray-600 font-medium mb-2">Correo electrónico</h3>
+			<p class="text-gray-800">{{ proveedor.tb_personas.correo }}</p>
+		</div>
+		<div>
+			<h3 class="text-gray-600 font-medium mb-2">Número de contacto</h3>
+			<p class="text-gray-800">{{ proveedor.tb_personas.telefono }}</p>
+		</div>
+	</div>
+	<div class="grid grid-cols-2 gap-6 p-6 border-t border-gray-200">
+		<div>
+			<h3 class="text-gray-600 font-medium mb-2">Nombre de empresa</h3>
+			<p class="text-gray-800">{{ proveedor.nombre_comercial }}</p>
+		</div>
+		<div>
+			<h3 class="text-gray-600 font-medium mb-2">Dirección</h3>
+			<p class="text-gray-800">{{ proveedor.tb_personas.tb_direccion.direccion }}</p>
+		</div>
+	</div>
+	<div class="p-6 border-t border-gray-200">
+		<button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">Activo</button>
+	</div>
+</div>
+
+<div class="mt-8 w-full max-w-4xl mx-auto">
+	<table class="w-full border-collapse shadow-lg rounded-lg overflow-hidden">
+		<thead>
+			<tr class="bg-gray-100">
+				<th class="py-3 px-4 text-left text-gray-600 font-medium">ID Proveedor</th>
+				<th class="py-3 px-4 text-left text-gray-600 font-medium">ID Persona</th>
+				<th class="py-3 px-4 text-left text-gray-600 font-medium">Estado Proveedor</th>
+				<th class="py-3 px-4 text-left text-gray-600 font-medium">Fecha Creación</th>
+				<th class="py-3 px-4 text-left text-gray-600 font-medium">Fecha Actualización</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="border-b border-gray-200">
+				<td class="py-3 px-4 text-gray-800">{{ proveedor.id_proveedor }}</td>
+				<td class="py-3 px-4 text-gray-800">{{ proveedor.id_persona }}</td>
+				<td class="py-3 px-4 text-gray-800">{{ proveedor.estado_proveedor }}</td>
+				<td class="py-3 px-4 text-gray-800">{{ proveedor.created_at | date: 'yyyy-MM-dd' }}</td>
+				<td class="py-3 px-4 text-gray-800">{{ proveedor.updated_at | date: 'yyyy-MM-dd' }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

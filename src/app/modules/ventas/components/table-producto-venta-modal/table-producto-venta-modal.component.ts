@@ -37,12 +37,12 @@ export class TableProductoVentaModalComponent implements OnInit {
 	}
 
 	loadDetallesCompra(page: number = 1) {
-		this.loading = true; // Activamos el loading antes de la petición
+		this.loading = true;
 		this.ventasService
 			.getVentasDetallesData(this.data.id_venta, page, this.pageSize)
 			.pipe(
 				finalize(() => {
-					this.loading = false; // Desactivamos el loading cuando termine
+					this.loading = false;
 				})
 			)
 			.subscribe({

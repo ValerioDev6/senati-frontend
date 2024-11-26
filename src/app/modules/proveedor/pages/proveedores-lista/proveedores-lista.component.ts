@@ -25,6 +25,8 @@ import { ProveedoresService } from '../../../../core/services/proveedores.servic
 import { CrearProveedorComponent } from '../../components/crear-proveedor/crear-proveedor.component';
 import Swal from 'sweetalert2';
 import { ActualziarProveedorComponent } from '../../components/actualziar-proveedor/actualziar-proveedor.component';
+import { ReportesPdfService } from '../../../../core/services/reports/reportes-pdf.service';
+import { ReportesExcelService } from '../../../../core/services/reports/reportes-excel.service';
 const NZ_MODULES = [
 	NzInputModule,
 	NzIconModule,
@@ -62,11 +64,48 @@ export default class ProveedoresListaComponent implements OnInit {
 
 	constructor(
 		private readonly _proveedorService: ProveedoresService,
+		private readonly reportePdfService: ReportesPdfService,
+		private readonly reporteExcelService: ReportesExcelService,
+
 		private readonly _modal: NzModalService,
 		private readonly message: NzMessageService
 	) {}
 	ngOnInit(): void {
 		this.loadDataProveedor();
+	}
+
+	descargarExcel(): void {
+		this.reporteExcelService.descargarExcelMarcas().subscribe({
+			next: (blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_marcas.xlsx';
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			error: (error) => {
+				this.message.error('Error al descargar el Excel');
+				console.error('Error downloading Excel:', error);
+			},
+		});
+	}
+
+	downloadPDF(): void {
+		this.reportePdfService.downloadProveedoresPDF().subscribe({
+			next: (blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_proveedores.pdf';
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			error: (error) => {
+				this.message.error('Error al descargar el PDF');
+				console.error('Error downloading PDF:', error);
+			},
+		});
 	}
 
 	loadDataProveedor() {

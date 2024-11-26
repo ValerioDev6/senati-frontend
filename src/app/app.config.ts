@@ -34,3 +34,5 @@ export const appConfig: ApplicationConfig = {
 		provideHttpClient(withInterceptors([AuthInterceptorHttpService])),
 	],
 };
+
+// mysql-c79f8f8
