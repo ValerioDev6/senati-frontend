@@ -99,10 +99,7 @@ export class CrearProveedorComponent implements OnInit {
 		const modal = this._modal.create({
 			nzFooter: null,
 			nzContent: PersonaFormularioComponent,
-			nzWidth: '1000px',
-			nzStyle: {
-				top: '10px',
-			},
+			nzWidth: '800px',
 		});
 		modal.afterClose.subscribe((result: boolean) => {
 			if (result) {

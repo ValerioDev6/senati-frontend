@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withViewTransitions } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withHashLocation, withViewTransitions } from '@angular/router';
 import { provideNzConfig } from 'ng-zorro-antd/core/config';
 
 import { routes } from './app.routes';
@@ -16,7 +16,7 @@ registerLocaleData(es);
 
 export const appConfig: ApplicationConfig = {
 	providers: [
-		provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
+		provideRouter(routes, withViewTransitions(), withComponentInputBinding(), withHashLocation()),
 		provideNzIcons(),
 		provideNzI18n(es_ES),
 		importProvidersFrom(FormsModule),

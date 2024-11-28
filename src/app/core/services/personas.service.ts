@@ -8,11 +8,13 @@ import {
 	ITipoPersonaPersonalCombo,
 	ITipoPersonaProveedorCombo,
 } from '../interfaces/personas.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class PersonasService {
+	private RENIEC_API = environment.RENIEC_URL;
 	constructor(private readonly _httpClient: HttpClient) {}
 
 	createPersonas(data: any): Observable<any> {
@@ -30,4 +32,5 @@ export class PersonasService {
 	getPersonasByProveedor(): Observable<ITipoPersonaProveedorCombo[]> {
 		return this._httpClient.get<ITipoPersonaProveedorCombo[]>(`${URL_PERSONAS_ALL}/proveedor`);
 	}
+  
 }
