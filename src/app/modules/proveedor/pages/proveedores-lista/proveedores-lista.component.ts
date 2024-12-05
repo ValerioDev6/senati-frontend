@@ -20,7 +20,7 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { CommonModule } from '@angular/common';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { IProveedoresResponse, Proveedore } from '../../../../core/interfaces/proveedores.interface';
+import { IProveedoresResponse, Proveedore, TBPersonas } from '../../../../core/interfaces/proveedores.interface';
 import { ProveedoresService } from '../../../../core/services/proveedores.service';
 import { CrearProveedorComponent } from '../../components/crear-proveedor/crear-proveedor.component';
 import Swal from 'sweetalert2';
@@ -138,7 +138,7 @@ export default class ProveedoresListaComponent implements OnInit {
 			nzContent: ActualziarProveedorComponent,
 			nzData: { id_proveedor: proveedor.id_proveedor },
 			nzFooter: null,
-			nzWidth: '500px',
+			nzWidth: '800px',
 		});
 
 		modal.afterClose.subscribe((result: boolean) => {
@@ -202,5 +202,25 @@ export default class ProveedoresListaComponent implements OnInit {
 				});
 			}
 		});
+	}
+
+	obtenerNombreMostrar(persona: TBPersonas): string {
+		if (persona.razon_social && persona.razon_social !== 'null') {
+			return persona.razon_social;
+		}
+
+		// Construir nombre completo
+		const nombreCompleto = [persona.nombres, persona.apellido_paterno, persona.apellido_materno]
+			.filter(Boolean)
+			.join(' ')
+			.trim();
+
+		// Si nombre completo no está vacío, mostrar nombre completo
+		if (nombreCompleto) {
+			return nombreCompleto;
+		}
+
+		// Si todo está vacío, mostrar valor por defecto
+		return 'Sin nombre';
 	}
 }

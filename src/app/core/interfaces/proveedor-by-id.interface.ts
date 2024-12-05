@@ -5,14 +5,30 @@ export interface IProveedorByIDResponseIndividual {
 	created_at: Date;
 	updated_at: Date;
 	nombre_comercial: string;
-	total_compras: string;
-	ultima_compra: null;
+	total_compras: number;
+	ultima_compra: Date;
 	tb_personas: TBPersonas;
+	tb_compra: TBCompra[];
+}
+
+export interface TBCompra {
+	id_compra: string;
+	id_metodo_pago: string;
+	proveedor_id: string;
+	proveedor_ruc: string;
+	proveedor_correo: string;
+	numero_documento: string;
+	compra_subtotal: string;
+	compra_igv: string;
+	compra_total: string;
+	compra_comentario: string;
+	fecha_compra: Date;
 }
 
 export interface TBPersonas {
 	nombres: string;
 	correo: string;
+	razon_social: string;
 	fecha_nacimiento: Date;
 	numero_documento: string;
 	telefono: string;

@@ -11,7 +11,7 @@ export interface VentaDetalle {
 	cantidad: number;
 	precio_unitario: string;
 	subtotal: string;
-	precio: string;
+	precio: null;
 	descuento: string;
 	created_at: Date;
 	tb_productos: TBProductos;
@@ -35,6 +35,7 @@ export interface TBProductos {
 	estado_produto: string;
 	id_sucursal: string;
 	id_tipo_propietario: string;
+	precio_base_sin_igv: null;
 }
 
 export interface Info {
@@ -47,7 +48,9 @@ export interface Info {
 
 export interface Resumen {
 	cantidad_items: number;
-	subtotal: number;
-	descuento_total: number;
-	monto_total: number;
+	subtotal: string;
+	descuento_total: string;
+	monto_total: string;
+	igv: string;
+	precio_total: string;
 }

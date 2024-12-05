@@ -77,7 +77,7 @@ export default class ProductoIndividualComponent implements OnInit {
 		}
 	}
 	downloadPDF(producto: IProductoByIDResponse): void {
-		this._reportPdfService.downloadProductDetalles(producto.id_producto).subscribe({
+		this._reportPdfService.downloadProductDetalles(producto!.id_producto).subscribe({
 			next: (blob: Blob) => {
 				const url = window.URL.createObjectURL(blob);
 				const link = document.createElement('a');

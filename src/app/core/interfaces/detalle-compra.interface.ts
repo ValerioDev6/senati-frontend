@@ -6,7 +6,7 @@ export interface IDetalleCompraResponse {
 	metodo_pago: string;
 	subtotal: string;
 	igv: string;
-	total: string;
+	total: number;
 	comentario: string;
 	detalles: Detalle[];
 }

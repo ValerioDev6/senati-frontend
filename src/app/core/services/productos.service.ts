@@ -29,9 +29,11 @@ export class ProductoService {
 	getProductoById(id: string): Observable<Producto> {
 		return this._httpClient.get<Producto>(`${URL_PRODUCTOS_ALL}/${id}`);
 	}
+  
 	getProductoDetallesById(id: string): Observable<IProductoByIDResponse> {
 		return this._httpClient.get<IProductoByIDResponse>(`${URL_PRODUCTOS_ALL}/${id}`);
 	}
+
 	createProducto(data: any): Observable<any> {
 		return this._httpClient.post<any>(URL_PRODUCTOS_ALL, data);
 	}

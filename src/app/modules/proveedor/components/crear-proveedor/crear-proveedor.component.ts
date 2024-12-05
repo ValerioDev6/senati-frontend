@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -99,7 +100,10 @@ export class CrearProveedorComponent implements OnInit {
 		const modal = this._modal.create({
 			nzFooter: null,
 			nzContent: PersonaFormularioComponent,
-			nzWidth: '800px',
+			nzWidth: '1000px',
+			nzStyle: {
+				top: '30px',
+			},
 		});
 		modal.afterClose.subscribe((result: boolean) => {
 			if (result) {
@@ -130,5 +134,16 @@ export class CrearProveedorComponent implements OnInit {
 
 	resetForm() {
 		this.proveedorForm.reset();
+	}
+	obtenerNombreMostrar(persona: ITipoPersonaProveedorCombo): string {
+		if (persona.razon_social && persona.razon_social !== 'null') {
+			return persona.razon_social;
+		}
+
+		if (persona.nombre_completo && persona.nombre_completo !== 'null') {
+			return persona.nombre_completo;
+		}
+
+		return 'Sin nombre';
 	}
 }

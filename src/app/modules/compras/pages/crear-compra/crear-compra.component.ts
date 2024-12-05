@@ -56,12 +56,13 @@ interface RequestCompraDto {
 export default class CrearCompraComponent implements OnInit {
 	compraForm!: FormGroup;
 	proveedores: IProveedorCombo[] = [];
+
 	metodosPago: IMetodoPagoCombo[] = [];
 	productos: IProductosComboResponse[] = [];
 	categorias: IComboBoxCategorie[] = [];
 	detalleProductos: DetalleProducto[] = [];
 
-	cantidad: number = 1; // Default cantidad
+	cantidad: number = 1;
 	subtotal: number = 0;
 	igv: number = 0;
 	total: number = 0;
@@ -160,7 +161,6 @@ export default class CrearCompraComponent implements OnInit {
 		);
 
 		if (!productoSeleccionado || !categoriaSeleccionada || !this.cantidad) {
-			// Aquí podrías agregar un mensaje de error usando tu sistema de notificaciones
 			return;
 		}
 
@@ -198,7 +198,6 @@ export default class CrearCompraComponent implements OnInit {
 	}
 
 	saveCompra() {
-		// Validar campos requeridos específicamente
 		if (!this.compraForm.get('proveedor')?.value) {
 			this._message.error('Debe seleccionar un proveedor');
 			return;
@@ -287,5 +286,26 @@ export default class CrearCompraComponent implements OnInit {
 	limpiarFormulario() {
 		this.resetForm();
 		this._message.success('Formulario limpiado exitosamente');
+	}
+
+	obtenerNombreMostrarProveedor(proveedor: IProveedorCombo): string {
+		if (proveedor.tb_personas.razon_social && proveedor.tb_personas.razon_social !== 'null') {
+			return proveedor.tb_personas.razon_social;
+		}
+
+		const nombreCompleto = [
+			proveedor.tb_personas.nombres,
+			proveedor.tb_personas.apellido_paterno,
+			proveedor.tb_personas.apellido_materno,
+		]
+			.filter(Boolean)
+			.join(' ')
+			.trim();
+
+		if (nombreCompleto) {
+			return nombreCompleto;
+		}
+
+		return 'Sin nombre';
 	}
 }

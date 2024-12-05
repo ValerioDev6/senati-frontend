@@ -29,6 +29,7 @@ export interface Producto {
 	estado_produto: string;
 	id_sucursal: string;
 	id_tipo_propietario: string;
+	precio_base_sin_igv: number;
 	tb_marcas: TBMarcas;
 	tb_categorias: TBCategorias;
 	tb_tipo_propietario: TBTipoPropietario;
@@ -111,6 +112,7 @@ export interface IProductoByIDResponse {
 	estado_produto: string;
 	id_sucursal: string;
 	id_tipo_propietario: string;
+	precio_base_sin_igv: number;
 	tb_tipo_propietario: TBTipoPropietarioResponse;
 	tb_categorias: TBCategoriasResponse;
 	tb_marcas: TBMarcasResponse;

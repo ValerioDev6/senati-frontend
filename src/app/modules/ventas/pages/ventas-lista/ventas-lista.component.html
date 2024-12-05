@@ -22,33 +22,31 @@
 				<span nz-icon nzType="search"></span>
 			</ng-template>
 
-			<button
-				routerLink="../crear-venta"
-				nz-button
-				nzType="primary"
-				class="h-10 px-4 rounded-lg uppercase font-bold bg-mantis-600 border-none hover:bg-mantis-500 focus:ring-2 focus:ring-mantis-400 transition"
-			>
-				<span nz-icon nzType="plus"></span>
-				<span>Agregar</span>
-			</button>
-
-			<div class="flex space-x-2">
+			<div class="flex">
 				<!--  PDF -->
 				<button
-					class="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
+					(click)="downloadPDF()"
 					nz-tooltip
 					nzTooltipTitle="Descargar PDF"
+					class="flex items-center justify-center h-9 px-3 bg-red-500 hover:bg-red-600 transition-colors"
 				>
-					<span nz-icon nzType="file-pdf" nzTheme="outline"></span>
+					<span nz-icon nzType="file-pdf" nzTheme="fill" class="text-white text-lg font-bold"></span>
 				</button>
-
-				<!--  Excel -->
 				<button
-					class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white h-10 w-10 rounded-full shadow transition duration-200"
+					(click)="descargarExcel()"
 					nz-tooltip
 					nzTooltipTitle="Descargar Excel"
+					class="flex items-center justify-center h-9 px-3 bg-[#1D6F42] hover:bg-[#185c37] transition-colors"
 				>
-					<span nz-icon nzType="file-excel" nzTheme="outline"></span>
+					<span nz-icon nzType="file-excel" nzTheme="fill" class="text-white text-lg font-bold"></span>
+				</button>
+
+				<button
+					routerLink="../nueva-venta"
+					class="flex items-center justify-center h-9 px-4 bg-[#6366f1] hover:bg-[#5558e4] transition-colors"
+				>
+					<span nz-icon nzType="plus-circle" nzTheme="fill" class="text-white text-lg font-bold mr-2"></span>
+					<span class="text-white font-medium">Crear</span>
 				</button>
 			</div>
 		</div>

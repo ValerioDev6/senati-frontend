@@ -24,6 +24,7 @@ import CreatePersonalComponent from '../create-personal/create-personal.componen
 import Swal from 'sweetalert2';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { ChangePasswordPersonalComponent } from '../../components/change-password-personal/change-password-personal.component';
 
 @Component({
 	selector: 'app-personal-list',
@@ -78,7 +79,6 @@ export default class PersonalListComponent implements OnInit {
 				this.personal = response.personal;
 				this.total = response.info.total;
 				this.loading = false;
-				console.log(response);
 			},
 			error: (err) => {
 				console.error('Error al cargar datos personales', err);
@@ -91,6 +91,9 @@ export default class PersonalListComponent implements OnInit {
 			nzTitle: 'Agregar nuevo Personal',
 			nzContent: CreatePersonalComponent,
 			nzFooter: null,
+			nzStyle: {
+				top: '10px',
+			},
 		});
 
 		modal.afterClose.subscribe((result: boolean) => {
@@ -99,6 +102,26 @@ export default class PersonalListComponent implements OnInit {
 			}
 		});
 	}
+	openCambiarPasswordPersonalModal(personal: Personal) {
+		const modal = this._modal.create({
+			nzTitle: 'Cambiar Contraseña del Personal',
+			nzContent: ChangePasswordPersonalComponent,
+			nzFooter: null,
+			nzData: {
+				id_personal: personal.id_personal,
+			},
+			nzStyle: {
+				top: '10px',
+			},
+		});
+
+		modal.afterClose.subscribe((result: boolean) => {
+			if (result) {
+				this.loadDataPersonal();
+			}
+		});
+	}
+
 	searchTo(): void {
 		this.page = 1;
 		this.loadDataPersonal();

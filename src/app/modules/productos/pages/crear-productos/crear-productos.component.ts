@@ -77,7 +77,6 @@ export default class CrearProductosComponent implements OnInit {
 	get nombreProductoControl() {
 		return this.productForm.get('nombre_producto');
 	}
-	
 
 	get descripcionProductoControl() {
 		return this.productForm.get('descripcion');

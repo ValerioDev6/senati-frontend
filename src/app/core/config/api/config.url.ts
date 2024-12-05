@@ -43,3 +43,5 @@ export const URL_VENTAS_ALL = `${BASE_URL}/${endpoint.VENTAS}`;
 export const URL_METODOS_PAGOS = `${BASE_URL}/${endpoint.METODO_PAGO}`;
 
 export const URL_kARDEX_ALL = `${BASE_URL}/${endpoint.KARDEX_ENDOINT}`;
+
+export const URL_TOTALES_ALL = `${BASE_URL}/${endpoint.SALES}`;

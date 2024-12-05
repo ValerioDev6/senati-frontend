@@ -46,7 +46,7 @@
 					>
 						<option value="">Seleccionar</option>
 						<option *ngFor="let prov of proveedores" [value]="prov.id_proveedor">
-							{{ prov.tb_personas.nombres }}
+							{{ obtenerNombreMostrarProveedor(prov) }}
 						</option>
 					</select>
 				</div>

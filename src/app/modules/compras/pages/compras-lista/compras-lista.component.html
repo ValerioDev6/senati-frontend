@@ -83,7 +83,7 @@
 				@for (compra of compras; track compra.id_compra) {
 					<tr>
 						<td nzLeft="0px">{{ compra.numero_documento }}</td>
-						<td>{{ compra.tb_proveedores.tb_personas.nombres }}</td>
+						<td>{{ obtenerNombreProveedor(compra) }}</td>
 						<td>{{ compra.fecha_compra | date: 'dd/MM/yyyy' }}</td>
 						<td>{{ compra.tb_metodo_pago.nombre_metodo_pago }}</td>
 						<td>{{ compra.compra_subtotal | number: '1.2-2' }}</td>

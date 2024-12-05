@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Component, inject, OnInit } from '@angular/core';
 import { PersonasService } from '../../../core/services/personas.service';
@@ -51,10 +52,12 @@ export class PersonaFormularioComponent implements OnInit {
 	private readonly _tipoTelefonoService = inject(TipoTelefonoService);
 	private readonly _paisService = inject(PaisService);
 	private readonly _reniecService = inject(ReniecService);
+	selectedDocumentType: string | null = null;
 
 	dniToSearch!: number;
-
+	rucToSearch!: number;
 	data!: any;
+	ruc!: any;
 
 	generos: IGenerosCombo[] = [];
 	direcciones: IComboBoxDireccion[] = [];
@@ -62,9 +65,9 @@ export class PersonaFormularioComponent implements OnInit {
 	tipoDocumentos: ITipoDocumentoCombo[] = [];
 	tipoTelefonos: ITelefonoCombo[] = [];
 	paises: IPaisCombo[] = [];
-
 	isLoading = true;
 	isVisible = false;
+
 	personaForm!: FormGroup;
 
 	constructor(
@@ -81,14 +84,13 @@ export class PersonaFormularioComponent implements OnInit {
 			id_tipo_persona: [''],
 			id_tipo_documento: [''],
 			id_sexo: [''],
-			fecha_nacimiento: [''],
+			fecha_nacimiento: ['', Validators.required],
 			id_direccion: [''],
 			id_pais: [''],
-			id_tipo_telefono: [''],
+			id_tipo_telefono: ['', Validators.required],
 			numero_documento: ['', Validators.required],
 			telefono: [''],
 
-			// Nuevos campos
 			razon_social: [''],
 			estado_documento: [''],
 			condicion_documento: [''],
@@ -99,12 +101,14 @@ export class PersonaFormularioComponent implements OnInit {
 			actividad_economica: [''],
 		});
 	}
+
 	ngOnInit() {
 		this.loadData();
 	}
 
 	private loadData() {
 		this.isLoading = true;
+
 		forkJoin({
 			generos: this._generoService.getGenerosCombo(),
 			direcciones: this._direccionService.getComboBoxDireccionesAll(),
@@ -122,6 +126,7 @@ export class PersonaFormularioComponent implements OnInit {
 				this.paises = results.paises;
 				this.isLoading = false;
 			},
+
 			error: (error) => {
 				this.message.error(`Error fech data: ${error}`);
 			},
@@ -131,6 +136,7 @@ export class PersonaFormularioComponent implements OnInit {
 	onSubmit() {
 		if (this.personaForm.valid) {
 			const personaData = this.personaForm.value;
+
 			this.personasService.createPersonas(personaData).subscribe({
 				next: () => {
 					this.message.success('Persona Creada Exitosamente');
@@ -147,6 +153,7 @@ export class PersonaFormularioComponent implements OnInit {
 			this.validateForm();
 		}
 	}
+
 	private validateForm(): void {
 		Object.values(this.personaForm.controls).forEach((control) => {
 			if (control.invalid) {
@@ -156,8 +163,23 @@ export class PersonaFormularioComponent implements OnInit {
 		});
 	}
 
+	searchDocumentoInfo() {
+		// Obtén el tipo de documento seleccionado
+
+		const tipoDocumentoId = this.personaForm.get('id_tipo_documento')?.value;
+		const tipoDocumento = this.tipoDocumentos.find((tipo) => tipo.id_tipo_documento === tipoDocumentoId);
+		// Lógica de búsqueda según el tipo de documento
+
+		if (tipoDocumento?.documento === 'DNI') {
+			this.searchDniInfo();
+		} else if (tipoDocumento?.documento === 'RUC') {
+			this.searchToRucInfo();
+		}
+	}
+
 	searchDniInfo() {
 		// Puedes eliminar el toString si ya es number.
+
 		this._reniecService.getDniInfo(this.dniToSearch).subscribe({
 			next: (result) => {
 				this.personaForm.patchValue({
@@ -166,40 +188,127 @@ export class PersonaFormularioComponent implements OnInit {
 					apellido_materno: result.apellidoMaterno,
 					numero_documento: result.numeroDocumento,
 				});
+
 				this.data = result;
+
 				console.log(result);
 			},
+
 			error: (err) => {
 				this.message.error('Error fetching DNI information');
 				console.error(err);
 			},
 		});
 	}
+
 	resetForm() {
 		this.personaForm.reset();
 	}
+
 	cancelar(): void {
 		this.modalRef.close();
 	}
 
-	// En la clase PersonaFormularioComponent
-	selectedDocumentType: string | null = null;
+	searchToRucInfo() {
+		this._reniecService.getRucInfo(this.rucToSearch).subscribe({
+			next: (result) => {
+				this.personaForm.patchValue({
+					razon_social: result.razonSocial,
+					numero_documento: result.numeroDocumento,
+					estado_documento: result.estado,
+					condicion_documento: result.condicion,
+					distrito: result.distrito,
+					provincia: result.provincia,
+					departamento: result.departamento,
+					tipo_persona: result.tipo,
+					actividad_economica: result.actividadEconomica,
+				});
 
+				this.ruc = result;
+			},
+
+			error: (err) => {
+				this.message.error('Error fetching RUC information');
+				console.error(err);
+			},
+		});
+	}
 	onDocumentTypeChange(documentTypeId: string) {
-		const selectedType = this.tipoDocumentos.find((tipo) => tipo.id_tipo_documento === documentTypeId);
-		this.selectedDocumentType = selectedType ? selectedType.documento : null;
+		// Encuentra el documento seleccionado por su ID
+		const selectedDoc = this.tipoDocumentos.find((tipo) => tipo.id_tipo_documento === documentTypeId);
 
-		// Reiniciar campos específicos según el tipo de documento
-		if (this.selectedDocumentType !== 'RUC') {
-			this.personaForm.patchValue({
-				razon_social: null,
-				actividad_economica: null,
-				tipo_persona: null,
+		// Establece el tipo de documento seleccionado
+		this.selectedDocumentType = selectedDoc ? selectedDoc.documento : null;
+
+		// Resetea los campos del formulario dependiendo del tipo de documento
+		this.resetFormFields();
+	}
+	// onDocumentTypeChange(documentTypeId: string) {
+	// 	const selectedType = this.tipoDocumentos.find((tipo) => tipo.id_tipo_documento === documentTypeId);
+
+	// 	this.selectedDocumentType = selectedType ? selectedType.documento : null;
+
+	// 	if (this.selectedDocumentType !== 'RUC') {
+	// 		this.personaForm.patchValue({
+	// 			razon_social: null,
+
+	// 			actividad_economica: null,
+
+	// 			tipo_persona: null,
+	// 		});
+	// 	}
+	// }
+
+	resetFormFields() {
+		const form = this.personaForm;
+
+		if (this.selectedDocumentType === 'DNI') {
+			const rucFields = [
+				'razon_social',
+				'estado_documento',
+				'condicion_documento',
+				'distrito',
+				'provincia',
+				'departamento',
+				'tipo_persona',
+				'actividad_economica',
+			];
+
+			rucFields.forEach((field) => {
+				form.get(field)?.reset('');
+				form.get(field)?.disable();
+			});
+
+			const dniFields = ['nombres', 'apellido_paterno', 'apellido_materno'];
+
+			dniFields.forEach((field) => {
+				form.get(field)?.enable();
+			});
+		} else if (this.selectedDocumentType === 'RUC') {
+			const dniFields = ['nombres', 'apellido_paterno', 'apellido_materno'];
+
+			dniFields.forEach((field) => {
+				form.get(field)?.reset('');
+				form.get(field)?.disable();
+			});
+
+			const rucFields = [
+				'razon_social',
+				'estado_documento',
+				'condicion_documento',
+				'distrito',
+				'provincia',
+				'departamento',
+				'tipo_persona',
+				'actividad_economica',
+			];
+
+			rucFields.forEach((field) => {
+				form.get(field)?.enable();
 			});
 		}
 	}
 
-	// Método para verificar si se debe mostrar la pestaña de Información Adicional
 	shouldShowInfoAdicionalTab(): boolean {
 		return this.selectedDocumentType === 'RUC' || this.selectedDocumentType === 'DNI';
 	}

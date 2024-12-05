@@ -8,4 +8,16 @@ export const CLIENTES_ROUTES: Routes = [
 			breadcrumb: 'Clientes',
 		},
 	},
+	{
+		path: ':id',
+		loadComponent: () => import('./pages/cliente-detalles/cliente-detalles.component'),
+		data: {
+			breadcrumb: 'Información Cliente',
+		},
+	},
+
+	{
+		path: '**',
+		redirectTo: 'clientes-lista',
+	},
 ];

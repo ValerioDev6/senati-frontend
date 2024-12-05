@@ -3,6 +3,7 @@ export const endpoint = {
 	LOGIN_ENDPOINT: 'auth/login',
 	CHECK_STATUS_ENDPOINT: 'auth/check-auth-status',
 	REFRESH_ENDPOINT: 'auth/refresh',
+
 	CHANGE_PASSWORD: 'auth/change-password',
 
 	// USUARIOS
@@ -44,4 +45,6 @@ export const endpoint = {
 	VENTAS: 'ventas',
 
 	KARDEX_ENDOINT: 'kardex',
+
+	SALES: 'sales',
 };

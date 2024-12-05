@@ -1,10 +1,10 @@
 export interface IComprasDetallesResponse {
 	info: Info;
-	detalles: DetalleCompras[];
+	detalles: DetalleCompra[];
 	resumen: Resumen;
 }
 
-export interface DetalleCompras {
+export interface DetalleCompra {
 	id_detalle_compra: string;
 	id_compra: string;
 	id_producto: string;
@@ -12,6 +12,8 @@ export interface DetalleCompras {
 	cantidad: number;
 	precio_unitario: string;
 	subtotal: string;
+	fecha_compra: Date;
+	created_at: Date;
 	tb_productos: TBProductos;
 	tb_categorias: TBCategorias;
 }
@@ -54,5 +56,7 @@ export interface Info {
 
 export interface Resumen {
 	cantidad_items: number;
+	monto_subtotal: number;
+	monto_igv: number;
 	monto_total: number;
 }

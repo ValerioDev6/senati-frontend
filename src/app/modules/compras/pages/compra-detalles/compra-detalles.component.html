@@ -1,3 +1,26 @@
+<div>
+	<nz-breadcrumb class="font-bold text-sm" [nzAutoGenerate]="true"> </nz-breadcrumb>
+</div>
+<div class="flex justify-end my-4">
+	<button
+		*ngIf="compra!.id_compra"
+		(click)="downloadPDF(compra)"
+		class="flex px-2 py-1.5 items-center bg-[#6366F1] gap-2 text-white font-bold"
+		[disabled]="isDownloading"
+	>
+		<span nz-icon [nzType]="isDownloading ? 'loading' : 'download'"></span>
+		{{ isDownloading ? 'Descargando...' : 'Descargar' }}
+	</button>
+
+	<button
+		(click)="back()"
+		class="flex px-2 py-1.5 items-center gap-2 bg-gray-200 text-gray-700 font-bold hover:bg-gray-300"
+	>
+		<span nz-icon nzType="arrow-left"></span>
+		atrás
+	</button>
+</div>
+
 <nz-spin [nzSpinning]="loading">
 	<div class="min-h-screen bg-gray-50 py-4">
 		<div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
@@ -89,7 +112,7 @@
 						</div>
 						<div class="flex justify-between text-sm font-bold pt-2 border-t">
 							<span>Total</span>
-							<span>S/ {{ compra?.total }}</span>
+							<span>S/ {{ compra!.total | peruvianCurrency }}</span>
 						</div>
 					</div>
 				</div>
@@ -106,7 +129,7 @@
 				<div class="mt-6 flex justify-end space-x-3">
 					<button
 						routerLink="./compras/lista-compra"
-						(click)="goBack()"
+						(click)="back()"
 						class="px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50"
 					>
 						Volver

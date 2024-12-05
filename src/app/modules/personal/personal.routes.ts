@@ -24,6 +24,14 @@ export const PERSONAL_ROUTES: Routes = [
 	},
 
 	{
+		path: ':id',
+		loadComponent: () => import('./pages/info-personal/info-personal.component'),
+		data: {
+			breadcrumb: 'Información Personal',
+		},
+	},
+
+	{
 		path: 'configuracion/:id',
 		loadComponent: () => import('./pages/configuracion-personal/configuracion-personal.component'),
 		data: {

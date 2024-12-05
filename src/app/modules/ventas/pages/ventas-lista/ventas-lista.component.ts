@@ -21,6 +21,8 @@ import { VentasService } from '../../../../core/services/ventas.service';
 import { IVentasResponse, Venta } from '../../../../core/interfaces/ventas.interface';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { TableProductoVentaModalComponent } from '../../components/table-producto-venta-modal/table-producto-venta-modal.component';
+import { ReportesPdfService } from '../../../../core/services/reports/reportes-pdf.service';
+import { ReportesExcelService } from '../../../../core/services/reports/reportes-excel.service';
 
 @Component({
 	selector: 'app-ventas-lista',
@@ -53,7 +55,9 @@ export default class VentasListaComponent implements OnInit {
 	constructor(
 		private readonly _ventasService: VentasService,
 		private readonly message: NzMessageService,
-		private readonly _modal: NzModalService
+		private readonly _modal: NzModalService,
+		private readonly reportePdfService: ReportesPdfService,
+		private readonly reporteExcelService: ReportesExcelService
 	) {}
 	ventas: Venta[] = [];
 	loading = false;
@@ -64,6 +68,39 @@ export default class VentasListaComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.loadVentaData();
+	}
+
+	downloadPDF(): void {
+		this.reportePdfService.downloadVentasPDF().subscribe({
+			next: (blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_venta.pdf';
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			error: (error) => {
+				this.message.error('Error al descargar el PDF');
+				console.error('Error downloading PDF:', error);
+			},
+		});
+	}
+	descargarExcel(): void {
+		this.reporteExcelService.descargarExcelCompras().subscribe({
+			next: (blob: Blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = 'reporte_compras.xlsx';
+				link.click();
+				window.URL.revokeObjectURL(url);
+			},
+			error: (error) => {
+				this.message.error('Error al descargar el Excel');
+				console.error('Error downloading Excel:', error);
+			},
+		});
 	}
 
 	loadVentaData() {
@@ -125,7 +162,6 @@ export default class VentasListaComponent implements OnInit {
 
 	openDetallesModal(venta: Venta) {
 		const modal = this._modal.create({
-			nzTitle: `Detalles de Compra realizada #${venta.created_at}`,
 			nzContent: TableProductoVentaModalComponent,
 			nzData: {
 				id_venta: venta.id_venta,

@@ -6,13 +6,13 @@ export interface IClienteResponse {
 export interface Cliente {
 	id_cliente: string;
 	id_persona: string;
-	estado: boolean;
+	estado: number;
 	fecha_registro: Date;
 	tipo_cliente: string;
 	clasificacion: string;
 	ultima_compra: null;
 	total_compras: string;
-	observaciones: null;
+	observaciones: string;
 	codigo_cliente: string;
 	tb_personas: TBPersonas;
 }
@@ -40,4 +40,22 @@ export interface Info {
 	total: number;
 	next: string;
 	prev: null;
+}
+
+export interface IClienteComboResponse {
+	id_cliente: string;
+	tb_personas: TBPersona;
+}
+
+export interface TBPersona {
+	numero_documento: string;
+	correo: string;
+	telefono: string;
+	nombres: string;
+	razon_social: string;
+	tb_direccion: TBDireccion;
+}
+
+export interface TBDireccion {
+	direccion: string;
 }

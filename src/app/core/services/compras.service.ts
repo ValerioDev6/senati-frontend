@@ -29,6 +29,7 @@ export class ComprasService {
 			.get<IComprasDetallesResponse>(`${URL_COMPRAS_ALL}/${id_compra}/detalles`, { params })
 			.pipe(delay(1000));
 	}
+
 	getCompraById(id: number): Observable<IDetalleCompraResponse | undefined> {
 		return this._httpCliente.get<IDetalleCompraResponse>(`${URL_COMPRAS_ALL}/${id}`).pipe(
 			catchError((error) => {

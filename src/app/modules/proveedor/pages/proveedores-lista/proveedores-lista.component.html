@@ -57,12 +57,11 @@
 	>
 		<thead>
 			<tr>
-				<th nzColumnKey="Proveedor">Proveedor</th>
+				<th nzColumnKey="Proveedor">Nombre \ Razon Social</th>
 				<th nzColumnKey="Correo">Correo</th>
 				<th nzColumnKey="Tipo Personal">Tipo Persona</th>
-				<th nzColumnKey="Numero Documento">Documento</th>
 				<th nzColumnKey="Telefono">Teléfono</th>
-				<th nzColumnKey="Nombre Comercial">Comercial</th>
+				<th nzColumnKey="Nombre Comercial">Nombre de Empresa</th>
 				<th nzColumnKey="Estado">Estado</th>
 
 				<th>Acciones</th>
@@ -71,10 +70,9 @@
 		<tbody>
 			@for (proveedor of basicTable.data; track proveedor.id_proveedor) {
 				<tr>
-					<td>{{ proveedor.tb_personas.nombres }}</td>
+					<td>{{ obtenerNombreMostrar(proveedor.tb_personas) }}</td>
 					<td>{{ proveedor.tb_personas.correo }}</td>
 					<td>{{ proveedor.tb_personas.tb_tipo_persona.tipo_persona }}</td>
-					<td>{{ proveedor.tb_personas.numero_documento }}</td>
 					<td>{{ proveedor.tb_personas.telefono }}</td>
 					<td>{{ proveedor.nombre_comercial }}</td>
 

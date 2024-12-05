@@ -27,6 +27,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { ReportesPdfService } from '../../../../core/services/reports/reportes-pdf.service';
 import { ReportesExcelService } from '../../../../core/services/reports/reportes-excel.service';
 import { NgxBarcode6Module } from 'ngx-barcode6';
+import { PeruvianCurrencyPipe } from '../../../../shared/pipes/pipe-currency.pipe';
 const NZ_MODULES = [
 	NzInputModule,
 	NzIconModule,
@@ -50,7 +51,16 @@ const NZ_MODULES = [
 @Component({
 	selector: 'app-productos-page',
 	standalone: true,
-	imports: [CommonModule, NgxBarcode6Module, RouterModule, ReactiveFormsModule, FormsModule, NZ_MODULES, NzModalModule],
+	imports: [
+		CommonModule,
+		NgxBarcode6Module,
+		RouterModule,
+		ReactiveFormsModule,
+		FormsModule,
+		NZ_MODULES,
+		NzModalModule,
+		PeruvianCurrencyPipe,
+	],
 	templateUrl: './productos-page.component.html',
 	styleUrl: './productos-page.component.scss',
 })

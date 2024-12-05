@@ -13,7 +13,7 @@ export class ReniecService {
 		return this.httpClient.get(`${URL_PERSONAS_ALL}/consulta/${dni}`);
 	}
 
-	getRucInfo(ruc: string): Observable<any> {
+	getRucInfo(ruc: number): Observable<any> {
 		return this.httpClient.get(`${URL_PERSONAS_ALL}/consulta-ruc/${ruc}`);
 	}
 }

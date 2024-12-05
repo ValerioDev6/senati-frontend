@@ -137,7 +137,11 @@
 					</div>
 					<div class="flex justify-between">
 						<span class="text-gray-600">Subtotal:</span>
-						<span class="font-semibold">{{ resumen.monto_total | currency: 'PEN ' : 'symbol-narrow' }}</span>
+						<span class="font-semibold">{{ resumen.monto_subtotal | currency: 'PEN ' : 'symbol-narrow' }}</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="text-gray-600">IGV (18%):</span>
+						<span class="font-semibold">{{ resumen.monto_igv | currency: 'PEN ' : 'symbol-narrow' }}</span>
 					</div>
 					<div class="flex justify-between pt-2 border-t border-gray-200">
 						<span class="text-gray-600">Monto Total:</span>
@@ -149,7 +153,6 @@
 			</div>
 		</div>
 	</ng-template>
-
 	<!-- Footer -->
 	<div class="flex justify-between mt-6 pt-4 border-t border-gray-200">
 		<div class="text-sm text-gray-500">

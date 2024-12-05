@@ -101,5 +101,6 @@ export interface ITipoPersonaPersonalCombo {
 
 export interface ITipoPersonaProveedorCombo {
 	id_persona: string;
+	razon_social: string;
 	nombre_completo: string;
 }

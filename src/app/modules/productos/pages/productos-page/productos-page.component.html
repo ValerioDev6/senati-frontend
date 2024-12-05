@@ -78,6 +78,7 @@
 			[nzTotal]="total"
 			[nzFrontPagination]="false"
 			(nzPageIndexChange)="onPageChange($event)"
+			[nzScroll]="{ x: '1500px' }"
 			nzShowSizeChanger
 			[nzBordered]="true"
 			[nzShowQuickJumper]="true"
@@ -92,6 +93,7 @@
 					<th nzWidth="120px" nzColumnKey="id_marca" class="font-semibold text-gray-700">Marca</th>
 					<th nzWidth="140px" nzColumnKey="precio_compra" class="font-semibold text-gray-700">Precio Compra</th>
 					<th nzWidth="150px" nzColumnKey="precio_venta" class="font-semibold text-gray-700">Precio Venta</th>
+					<th nzWidth="150px" nzColumnKey="precio_venta" class="font-semibold text-gray-700">Precio sin IGV</th>
 					<th nzWidth="150px" nzColumnKey="fecha_ingreso" class="font-semibold text-gray-700">Fecha Ingreso</th>
 					<th nzWidth="150px" nzColumnKey="sucursal" class="font-semibold text-gray-700">Sucursal</th>
 					<th nzWidth="150px" nzColumnKey="estado_produto" class="font-semibold text-gray-700">Disponibilidad</th>
@@ -119,6 +121,8 @@
 						<td>{{ producto.tb_marcas.nombre_marca }}</td>
 						<td>{{ producto.precio_compra }}</td>
 						<td>{{ producto.precio_venta }}</td>
+						<td>{{ producto.precio_base_sin_igv | peruvianCurrency }}</td>
+
 						<td>{{ producto.fecha_ingreso | date: 'short' }}</td>
 						<td>{{ producto.tb_sucursales.nombre_sucursal }}</td>
 						<td>

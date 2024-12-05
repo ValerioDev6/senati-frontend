@@ -130,7 +130,6 @@ export default class ComprasListaComponent implements OnInit {
 
 	openDetallesModal(compra: Compra) {
 		const modal = this._modal.create({
-			nzTitle: `Detalles de Compra realizada #${compra.fecha_compra}`,
 			nzContent: TableComprasModalComponent,
 			nzData: {
 				id_compra: compra.id_compra,
@@ -180,5 +179,22 @@ export default class ComprasListaComponent implements OnInit {
 				});
 			}
 		});
+	}
+
+	obtenerNombreProveedor(compra: Compra): string {
+		const proveedor = compra.tb_proveedores;
+		if (!proveedor) return 'Sin nombre'; // Manejar si tb_proveedores es null o undefined
+
+		// Revisar razon_social
+		if (proveedor.tb_personas?.razon_social && proveedor.tb_personas.razon_social !== 'null') {
+			return proveedor.tb_personas.razon_social;
+		}
+
+		// Devolver nombres directamente si están disponibles
+		if (proveedor.tb_personas?.nombres) {
+			return proveedor.tb_personas.nombres;
+		}
+
+		return 'Sin nombre'; // Valor predeterminado
 	}
 }

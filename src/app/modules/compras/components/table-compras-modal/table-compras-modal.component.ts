@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { ComprasService } from '../../../../core/services/compras.service';
-import { DetalleCompras, Resumen } from '../../../../core/interfaces/compras-detalles.interface';
+import { DetalleCompra, Resumen } from '../../../../core/interfaces/compras-detalles.interface';
 import { finalize } from 'rxjs';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 interface ModalData {
@@ -26,7 +26,7 @@ export class TableComprasModalComponent implements OnInit {
 	private modalRef = inject(NzModalRef);
 	private readonly data = inject<ModalData>(NZ_MODAL_DATA);
 
-	detalles: DetalleCompras[] = [];
+	detalles: DetalleCompra[] = [];
 	loading = false;
 	total = 0;
 	page = 1;

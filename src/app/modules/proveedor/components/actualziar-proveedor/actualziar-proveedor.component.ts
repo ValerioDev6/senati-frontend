@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -30,7 +29,6 @@ interface ModalData {
 		NzSelectModule,
 		NzButtonModule,
 		NzIconModule,
-		RouterLink,
 		NzMessageModule,
 	],
 	templateUrl: './actualziar-proveedor.component.html',
@@ -121,7 +119,6 @@ export class ActualziarProveedorComponent implements OnInit {
 				},
 				error: (error) => {
 					console.error('Error al actualizar el proveedor', error);
-					// this.handleUpdateCategoriaError(error);
 				},
 			});
 		} else {
@@ -136,17 +133,17 @@ export class ActualziarProveedorComponent implements OnInit {
 			}
 		});
 	}
-	// private handleUpdateCategoriaError(error: HttpErrorResponse): void {
-	// 	console.error('Error completo:', error);
+	obtenerNombreMostrar(persona: ITipoPersonaProveedorCombo): string {
+		if (persona.razon_social && persona.razon_social !== 'null') {
+			return persona.razon_social;
+		}
 
-	// 	if (error.status === 400) {
-	// 		const errorMessage = error.error?.message || 'Error al actualizar la categoría';
-	// 		this.message.error(errorMessage);
-	// 	} else {
-	// 		this.message.error('Error al actualizar la categoría. Por favor, inténtelo de nuevo.');
-	// 	}
-	// }
+		if (persona.nombre_completo && persona.nombre_completo !== 'null') {
+			return persona.nombre_completo;
+		}
 
+		return 'Sin nombre';
+	}
 	cancelar(): void {
 		this.modalRef.close();
 	}

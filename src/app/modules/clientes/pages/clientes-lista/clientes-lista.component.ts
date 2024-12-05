@@ -20,6 +20,9 @@ import Swal from 'sweetalert2';
 import { ClienteService } from '../../../../core/services/cliente.service';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { Cliente, IClienteResponse } from '../../../../core/interfaces/cliente.interface';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { CrearClienteComponent } from '../../components/crear-cliente/crear-cliente.component';
+import { EditarClienteComponent } from '../../components/editar-cliente/editar-cliente.component';
 @Component({
 	selector: 'app-clientes-lista',
 	standalone: true,
@@ -43,6 +46,7 @@ import { Cliente, IClienteResponse } from '../../../../core/interfaces/cliente.i
 		NzSpaceModule,
 		CommonModule,
 		NzTagModule,
+		NzModalModule,
 	],
 	templateUrl: './clientes-lista.component.html',
 	styleUrl: './clientes-lista.component.scss',
@@ -50,7 +54,8 @@ import { Cliente, IClienteResponse } from '../../../../core/interfaces/cliente.i
 export default class ClientesListaComponent implements OnInit {
 	constructor(
 		private readonly _clienteService: ClienteService,
-		private readonly message: NzMessageService
+		private readonly message: NzMessageService,
+		private readonly _modal: NzModalService
 	) {}
 	clientes: Cliente[] = [];
 	loading = false;
@@ -85,11 +90,44 @@ export default class ClientesListaComponent implements OnInit {
 		this.page = page;
 		this.loadDataCliente();
 	}
+	openAgregarClienteModal() {
+		const modal = this._modal.create({
+			nzTitle: 'Agregar nuevo Cliente',
+			nzContent: CrearClienteComponent,
+			nzFooter: null,
+			nzStyle: {
+				top: '10px',
+			},
+		});
 
-	deleleCompra(cliente: Cliente) {
+		modal.afterClose.subscribe((result: boolean) => {
+			if (result) {
+				this.loadDataCliente();
+			}
+		});
+	}
+	openEditarModal(cliente: Cliente) {
+		const modal = this._modal.create({
+			nzTitle: 'Editar  Cliente',
+			nzContent: EditarClienteComponent,
+			nzData: { id_cliente: cliente.id_cliente },
+			nzFooter: null,
+			nzStyle: {
+				top: '10px',
+			},
+		});
+
+		modal.afterClose.subscribe((result: boolean) => {
+			if (result) {
+				this.loadDataCliente();
+			}
+		});
+	}
+
+	deleteCliente(cliente: Cliente) {
 		Swal.fire({
 			title: '¿Está seguro?',
-			text: `Este proceso no es reversible, está a punto de eliminar su compra`,
+			text: `Este proceso no es reversible, está a punto de eliminar su cliente`,
 			showCancelButton: true,
 			confirmButtonText: 'Sí, eliminar',
 			cancelButtonText: 'No, cancelar',

@@ -9,11 +9,13 @@ import { CommonModule } from '@angular/common';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { PeruvianCurrencyPipe } from '../../../../shared/pipes/pipe-currency.pipe';
+import { DateFormatPipe } from '../../../../shared/pipes/fecha.pipe';
 
 @Component({
 	selector: 'app-info-proveedor',
 	standalone: true,
-	imports: [CommonModule, NzSpinModule, NzIconModule, NzBreadCrumbModule],
+	imports: [CommonModule, NzSpinModule, NzIconModule, NzBreadCrumbModule, PeruvianCurrencyPipe, DateFormatPipe],
 	templateUrl: './info-proveedor.component.html',
 	styleUrl: './info-proveedor.component.scss',
 })
@@ -56,12 +58,36 @@ export default class InfoProveedorComponent implements OnInit {
 	}
 
 	back() {
-		this._routes.navigate(['/admin/productos']);
+		this._routes.navigate(['/admin/proveedor']);
 	}
 
-	edit() {
-		if (this.proveedor.id_proveedor) {
-			this._routes.navigate(['/admin/proveedor/actualizar', this.proveedor.id_proveedor]);
+	obtenerNombreMostrar(persona: IProveedorByIDResponseIndividual): string {
+		if (persona.tb_personas.razon_social && persona.tb_personas.razon_social !== 'null') {
+			return persona.tb_personas.razon_social;
 		}
+
+		// Devolver nombres directamente si están disponibles
+		if (persona.tb_personas.nombres) {
+			return persona.tb_personas.nombres;
+		}
+
+		// Si todo está vacío, mostrar valor por defecto
+		return 'Sin nombre';
+	}
+	downloadPDF(): void {
+		// this._reportPdfService.downloadProductDetalles(proveedor.id_proveedor).subscribe({
+		// 	next: (blob: Blob) => {
+		// 		const url = window.URL.createObjectURL(blob);
+		// 		const link = document.createElement('a');
+		// 		link.href = url;
+		// 		link.download = 'reporte_producto.pdf';
+		// 		link.click();
+		// 		window.URL.revokeObjectURL(url);
+		// 	},
+		// 	error: (error) => {
+		// 		this.message.error('Error al descargar el PDF');
+		// 		console.error('Error downloading PDF:', error);
+		// 	},
+		// });
 	}
 }
