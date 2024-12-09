@@ -81,5 +81,6 @@ export class LoginPageComponent {
 			text: message,
 		});
 	}
+
 	constructor(private fb: NonNullableFormBuilder) {}
 }

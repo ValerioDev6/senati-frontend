@@ -243,21 +243,7 @@ export class PersonaFormularioComponent implements OnInit {
 		// Resetea los campos del formulario dependiendo del tipo de documento
 		this.resetFormFields();
 	}
-	// onDocumentTypeChange(documentTypeId: string) {
-	// 	const selectedType = this.tipoDocumentos.find((tipo) => tipo.id_tipo_documento === documentTypeId);
 
-	// 	this.selectedDocumentType = selectedType ? selectedType.documento : null;
-
-	// 	if (this.selectedDocumentType !== 'RUC') {
-	// 		this.personaForm.patchValue({
-	// 			razon_social: null,
-
-	// 			actividad_economica: null,
-
-	// 			tipo_persona: null,
-	// 		});
-	// 	}
-	// }
 
 	resetFormFields() {
 		const form = this.personaForm;

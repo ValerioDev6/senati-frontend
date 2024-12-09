@@ -52,6 +52,20 @@
 						<option class="outline-none" value="NOTA_DEBITO">NOTA DE DÉBITO</option>
 					</select>
 				</div>
+				<!-- Fecha -->
+				<nz-form-item>
+					<nz-form-label [nzSpan]="24" nzFor="created_at" class="text-lg font-semibold">
+						<span nz-icon nzType="calendar" nzTheme="outline" class="mr-2"></span>Fecha de Creación
+					</nz-form-label>
+					<nz-form-control [nzSpan]="24" [nzErrorTip]="'La fecha de creación es requerida'">
+						<nz-date-picker
+							formControlName="fecha_venta"
+							id="created_at"
+							class="w-full"
+							[nzFormat]="'dd/MM/yyyy'"
+						></nz-date-picker>
+					</nz-form-control>
+				</nz-form-item>
 			</div>
 		</div>
 

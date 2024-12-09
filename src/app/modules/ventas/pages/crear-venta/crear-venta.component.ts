@@ -16,6 +16,9 @@ import { MetodoPagoService } from '../../../../core/services/metodo-pago.service
 import { ProductoService } from '../../../../core/services/productos.service';
 import { SucursalService } from '../../../../core/services/sucursales.service';
 import { VentasService } from '../../../../core/services/ventas.service';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 interface DetalleProducto {
 	id_producto: string;
 	producto: string;
@@ -51,7 +54,17 @@ interface RequestVentaDto {
 @Component({
 	selector: 'app-crear-venta',
 	standalone: true,
-	imports: [FormsModule, NzIconModule, CommonModule, NzTableModule, ReactiveFormsModule, NzBreadCrumbModule],
+	imports: [
+		FormsModule,
+		NzIconModule,
+		NzInputModule,
+		NzDatePickerModule,
+		NzFormModule,
+		CommonModule,
+		NzTableModule,
+		ReactiveFormsModule,
+		NzBreadCrumbModule,
+	],
 	templateUrl: './crear-venta.component.html',
 	styleUrl: './crear-venta.component.scss',
 })
@@ -120,6 +133,7 @@ export default class CrearVentaComponent implements OnInit {
 			cliente: ['', [Validators.required]],
 			metodoPago: ['', [Validators.required]],
 			// personal: ['9f5fb672-83d6-11ef-8655-00e04cf010f7'],
+			fecha_venta: [new Date()],
 			sucursal: ['', [Validators.required]],
 			ruc: [{ value: '', disabled: true }],
 			direccion: [{ value: '', disabled: true }],
